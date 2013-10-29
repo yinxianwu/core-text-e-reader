@@ -10,4 +10,9 @@
 
 @protocol CTEChapter <NSObject>
 
+@property (nonatomic, retain) NSNumber * id;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * subtitle;
+@property (nonatomic, retain) NSString * body;
+
 @end
