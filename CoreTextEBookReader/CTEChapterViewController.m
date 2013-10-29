@@ -7,6 +7,7 @@
 
 #import "CTEChapterViewController.h"
 #import "CTEImageViewController.h"
+#import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
 @interface CTEChapterViewController ()
@@ -15,8 +16,8 @@
 
 @implementation CTEChapterViewController
 
-//@synthesize currentChapter = _currentChapter;
-//@synthesize previousChapter = _previousChapter;
+@synthesize currentChapter = _currentChapter;
+@synthesize previousChapter = _previousChapter;
 
 @synthesize ctView;
 @synthesize pageControl;
@@ -205,11 +206,10 @@
 
 }
 
-//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-////sets current chapter and caches previous
-//- (void) setCurrentChapter:(Chapter *)chapter {
-//    _previousChapter = _currentChapter;
-//    _currentChapter = chapter;
-//}
+//sets current chapter and caches previous
+- (void) setCurrentChapter:(id<CTEChapter>) chapter {
+    _previousChapter = _currentChapter;
+    _currentChapter = chapter;
+}
 
 @end

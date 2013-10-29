@@ -11,5 +11,6 @@
 @interface CTEConstants : NSObject
 
 extern NSString * const ShowSideMenu;
+extern NSString * const HideSideMenu;
 
 @end

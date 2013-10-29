@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 com.davidjed. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-@interface CoreTextEBookReader : NSObject
-
-@end
+#import "CTEConstants.h"
+#import "CTEContentViewController.h"
+#import "CTEColumnView.h"

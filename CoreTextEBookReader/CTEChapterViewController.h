@@ -6,16 +6,15 @@
 //  Copyright (c) 2012 Holocene Press. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "CTEContentViewController.h"
 #import "CTEView.h"
 #import "CTEMarkupParser.h"
+#import "CTEChapter.h"
 
 @interface CTEChapterViewController : CTEContentViewController<UIScrollViewDelegate>
 
-//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//@property (nonatomic, strong) Chapter *currentChapter;
-//@property (nonatomic, strong) Chapter *previousChapter;
+@property (nonatomic, strong) id <CTEChapter> currentChapter;
+@property (nonatomic, strong) id <CTEChapter> previousChapter;
 
 @property (nonatomic, strong) IBOutlet CTEView *ctView;
 @property (nonatomic, strong) IBOutlet UIPageControl *pageControl;

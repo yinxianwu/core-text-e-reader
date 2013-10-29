@@ -7,9 +7,8 @@
 //
 
 #import "CTEMenuViewController.h"
-
-@interface CTEMenuViewController()
-@end
+#import "CTEChapter.h"
+#import "CTEConstants.h"
 
 @implementation CTEMenuViewController
 
@@ -19,34 +18,6 @@
 @synthesize panGesture;
 @synthesize chapterTableView;
 @synthesize chapterData;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-
-        //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//        WTRDataAccess *loader = [WTRDataAccess sharedInstance];
-//        self.chapterData = [loader getAllChapters];
-//        
-//        //TEMPORARY!!! Load chapter data -- this will be done via a readonly sqlite file
-//        if([self.chapterData count] == 0) {
-//            [loader writeChapterData];
-//            self.chapterData = [loader getAllChapters];
-//            [loader writeItineraryData:self.chapterData];
-//        }
-//        
-//        //TEMPORARY!!! Load itinerary data -- this will be done via a readonly sqlite file
-//        if([[loader itineraryForChapter:[NSNumber numberWithInt:1]] count] == 0) {
-//            [loader writeItineraryData:self.chapterData];
-//        }
-//        
-//        //TEMPORARY!!! Load hidd data -- this will be done via a readonly sqlite file
-//        if([[loader howIDidItForChapter:[NSNumber numberWithInt:4]] count] == 0) {
-//            [loader writeHIDDData:self.chapterData];
-//        }
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -140,10 +111,10 @@
         cell.selectedBackgroundView.backgroundColor = [UIColor darkGrayColor];
     }
 
-    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    Chapter *chapter = (Chapter *)[self.chapterData objectAtIndex:indexPath.row];
-//    cell.textLabel.text = chapter.title;
-//    cell.detailTextLabel.text = chapter.subtitle;
+    id <CTEChapter> chapter = [self.chapterData objectAtIndex:indexPath.row];
+    cell.textLabel.text = chapter.title;
+    cell.detailTextLabel.text = chapter.subtitle;
+
     return cell;
 }
 
@@ -156,17 +127,16 @@
 // it tells the app delegate using the completion block of the animation
 -(void) slideThenHide {
     NSIndexPath *indexPath = [chapterTableView indexPathForSelectedRow];
-    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    __block Chapter *chapter = [self.chapterData objectAtIndex:indexPath.row];
-//    [UIView animateWithDuration:0.15
-//                          delay:0
-//                        options:UIViewAnimationOptionCurveEaseInOut
-//                     animations:^{
-//                         [screenShotImageView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-//                     }
-//                     completion:^(BOOL finished){
-//                         [app_delegate hideSideMenu:chapter];
-//                     }];
+    __block id <CTEChapter> chapter = [self.chapterData objectAtIndex:indexPath.row];
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         [screenShotImageView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+                     }
+                     completion:^(BOOL finished){
+                         [[NSNotificationCenter defaultCenter] postNotificationName:HideSideMenu object:chapter];
+                     }];
 }
 
 //TODO this might change...

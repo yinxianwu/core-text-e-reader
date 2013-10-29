@@ -11,5 +11,6 @@
 @implementation CTEConstants
 
 NSString * const ShowSideMenu = @"ShowSideMenu";
+NSString * const HideSideMenu = @"HideSideMenu";
 
 @end
