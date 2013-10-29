@@ -10,4 +10,9 @@
 
 @implementation CTESampleChapter
 
+@synthesize id;
+@synthesize title;
+@synthesize subtitle;
+@synthesize body;
+
 @end

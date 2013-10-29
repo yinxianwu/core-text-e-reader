@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CTEChapter.h"
 
-@interface CTESampleChapter : NSObject
+@interface CTESampleChapter : NSObject <CTEChapter>
 
 @end
