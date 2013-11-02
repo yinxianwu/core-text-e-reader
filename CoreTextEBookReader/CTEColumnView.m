@@ -7,6 +7,7 @@
 //
 
 #import "CTEColumnView.h"
+#import "CTEUtils.h"
 
 @interface CTEColumnView()
 @property NSArray *spinnerViews;
@@ -93,8 +94,8 @@ float const yAdjustmentFactor = 1.3;
         int imgLocation = [[imageMetadata objectForKey:@"location"] intValue];
         
         //means image was touched
-        int indexMin = index - 3;
-        int indexMax = index + 3;
+        long indexMin = index - 3;
+        long indexMax = index + 3;
         if(imgLocation >= indexMin && imgLocation <= indexMax) {
             imageTouched = imageMetadata;
             break;
@@ -149,8 +150,7 @@ float const yAdjustmentFactor = 1.3;
 
 //plays specified movie at path
 - (void)playMovie:(NSString *)clipPath {
-    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    self.spinnerViews = [WTRAppDelegate startSpinnerOnView:self.modalTarget.view];
+    self.spinnerViews = [CTEUtils startSpinnerOnView:self.modalTarget.view];
     self.player = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:clipPath]];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(moviePlayerLoadStateChanged:)
@@ -165,8 +165,7 @@ float const yAdjustmentFactor = 1.3;
     MPMovieLoadState loadState = self.player.moviePlayer.loadState;
     if(loadState == MPMovieLoadStatePlayable) {
         NSLog(@"MPMovieLoadStatePlaythroughOK; loading player...");
-        //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //        [WTRAppDelegate stopSpinnerOnView:self.modalTarget.view withSpinner:self.spinnerViews];
+        [CTEUtils stopSpinnerOnView:self.modalTarget.view withSpinner:self.spinnerViews];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
         [modalTarget presentMoviePlayerViewControllerAnimated:self.player];
     }

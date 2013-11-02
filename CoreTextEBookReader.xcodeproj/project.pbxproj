@@ -68,6 +68,8 @@
 		6895EFDA181DF20D009B8527 /* SampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EFD9181DF20D009B8527 /* SampleAppTests.m */; };
 		68AF284618255FCE00EA632B /* CTEMediaCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284518255FCE00EA632B /* CTEMediaCache.m */; };
 		68AF28471825634200EA632B /* CTEMediaCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284518255FCE00EA632B /* CTEMediaCache.m */; };
+		68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284918257D8C00EA632B /* CTEUtils.m */; };
+		68AF284B18257DC700EA632B /* CTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284918257D8C00EA632B /* CTEUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +165,8 @@
 		6895EFD9181DF20D009B8527 /* SampleAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppTests.m; sourceTree = "<group>"; };
 		68AF284418255FCE00EA632B /* CTEMediaCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEMediaCache.h; sourceTree = "<group>"; };
 		68AF284518255FCE00EA632B /* CTEMediaCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEMediaCache.m; sourceTree = "<group>"; };
+		68AF284818257D8C00EA632B /* CTEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEUtils.h; sourceTree = "<group>"; };
+		68AF284918257D8C00EA632B /* CTEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,12 +263,12 @@
 				68678E8B181F62EE00D8B812 /* CTEChapter.h */,
 				6895EFB0181DD2B5009B8527 /* CTEConstants.h */,
 				6895EFB1181DD2B5009B8527 /* CTEConstants.m */,
+				68AF284418255FCE00EA632B /* CTEMediaCache.h */,
+				68AF284518255FCE00EA632B /* CTEMediaCache.m */,
 				6895EF8B181DCE62009B8527 /* CTEContentViewController.h */,
 				6895EF8C181DCE62009B8527 /* CTEContentViewController.m */,
 				6895EF8D181DCE62009B8527 /* CTEColumnView.h */,
 				6895EF8E181DCE62009B8527 /* CTEColumnView.m */,
-				68AF284418255FCE00EA632B /* CTEMediaCache.h */,
-				68AF284518255FCE00EA632B /* CTEMediaCache.m */,
 				6895EF8F181DCE62009B8527 /* CTEView.h */,
 				6895EF90181DCE62009B8527 /* CTEView.m */,
 				6895EF91181DCE62009B8527 /* CTEMarkupParser.h */,
@@ -281,6 +285,8 @@
 				6895EF9C181DCE62009B8527 /* ImageiPhoneView.xib */,
 				6895EF9D181DCE62009B8527 /* CTEImageViewController.h */,
 				6895EF9E181DCE62009B8527 /* CTEImageViewController.m */,
+				68AF284818257D8C00EA632B /* CTEUtils.h */,
+				68AF284918257D8C00EA632B /* CTEUtils.m */,
 				68678E72181E2C0600D8B812 /* Images */,
 				680AE8191818C778006ABAE4 /* Supporting Files */,
 			);
@@ -537,6 +543,7 @@
 			files = (
 				6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */,
 				6895EFA3181DCE62009B8527 /* CTEMenuViewController.m in Sources */,
+				68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */,
 				6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */,
 				68AF284618255FCE00EA632B /* CTEMediaCache.m in Sources */,
 				6895EFA1181DCE62009B8527 /* CTEView.m in Sources */,
@@ -567,10 +574,11 @@
 				6847F019181E2469003F38B5 /* CTEMenuViewController.m in Sources */,
 				6847F01A181E2469003F38B5 /* CTEChapterViewController.m in Sources */,
 				6847F01B181E2469003F38B5 /* CTEImageViewController.m in Sources */,
-				6895EFC2181DF20D009B8527 /* main.m in Sources */,
 				6895EFC6181DF20D009B8527 /* CTEAppDelegate.m in Sources */,
 				68AF28471825634200EA632B /* CTEMediaCache.m in Sources */,
 				68678E94181F665000D8B812 /* CTESampleChapter.m in Sources */,
+				68AF284B18257DC700EA632B /* CTEUtils.m in Sources */,
+				6895EFC2181DF20D009B8527 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

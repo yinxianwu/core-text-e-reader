@@ -143,8 +143,8 @@ static CGFloat widthCallback( void* ref ){
                                               range:NSMakeRange(0, [tag length])
                                          usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
                                              NSString *href = [tag substringWithRange:match.range];
-                                             int locationInt = [aString length];// + [href length];
-                                             NSNumber *location = [NSNumber numberWithInt: locationInt];
+                                             long locationInt = [aString length];// + [href length];
+                                             NSNumber *location = [NSNumber numberWithLong:locationInt];
                                              self.color = [UIColor blueColor]; //link color
                                              //add the link to the store
                                              [self.links addObject:
@@ -161,7 +161,7 @@ static CGFloat widthCallback( void* ref ){
                 //link text is all content from opening tag to closing tag
                 //link length needs to be included in link object for touch hit test
                 NSString* tagBody = (NSString*)[parts objectAtIndex:0];
-                NSNumber *tagBodyLength = [NSNumber numberWithInt:tagBody.length];
+                NSNumber *tagBodyLength = [NSNumber numberWithLong:tagBody.length];
                 NSMutableDictionary *linkData = (NSMutableDictionary *)[self.links objectAtIndex:self.links.count - 1];
                 [linkData setObject:tagBodyLength forKey:@"length"];
                 self.color = [UIColor blackColor]; //reset to normal color
@@ -251,7 +251,7 @@ static CGFloat widthCallback( void* ref ){
           fileName, @"fileName",
           clipFileName, @"clipFileName",
           playButtonImage, @"playButtonImage",
-          [NSNumber numberWithInt:position], @"location",
+          [NSNumber numberWithLong:position], @"location",
           nil]
          ];
     }
@@ -261,7 +261,7 @@ static CGFloat widthCallback( void* ref ){
           width, @"width",
           height, @"height",
           fileName, @"fileName",
-          [NSNumber numberWithInt:position], @"location",
+          [NSNumber numberWithLong:position], @"location",
           nil]
          ];
     }
