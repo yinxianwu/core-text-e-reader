@@ -70,6 +70,8 @@
 		68AF28471825634200EA632B /* CTEMediaCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284518255FCE00EA632B /* CTEMediaCache.m */; };
 		68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284918257D8C00EA632B /* CTEUtils.m */; };
 		68AF284B18257DC700EA632B /* CTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284918257D8C00EA632B /* CTEUtils.m */; };
+		68AF284E1825A98E00EA632B /* CTEDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEDelegate.m */; };
+		68AF284F1825B3EC00EA632B /* CTEDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +169,8 @@
 		68AF284518255FCE00EA632B /* CTEMediaCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEMediaCache.m; sourceTree = "<group>"; };
 		68AF284818257D8C00EA632B /* CTEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEUtils.h; sourceTree = "<group>"; };
 		68AF284918257D8C00EA632B /* CTEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEUtils.m; sourceTree = "<group>"; };
+		68AF284C1825A98E00EA632B /* CTEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEDelegate.h; sourceTree = "<group>"; };
+		68AF284D1825A98E00EA632B /* CTEDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +264,8 @@
 			isa = PBXGroup;
 			children = (
 				680AE81B1818C778006ABAE4 /* CoreTextEBookReader.h */,
+				68AF284C1825A98E00EA632B /* CTEDelegate.h */,
+				68AF284D1825A98E00EA632B /* CTEDelegate.m */,
 				68678E8B181F62EE00D8B812 /* CTEChapter.h */,
 				6895EFB0181DD2B5009B8527 /* CTEConstants.h */,
 				6895EFB1181DD2B5009B8527 /* CTEConstants.m */,
@@ -281,10 +287,10 @@
 				6895EF9A181DCE62009B8527 /* CTEChapterViewController.m */,
 				6895EF97181DCE62009B8527 /* ChapteriPadView.xib */,
 				6895EF98181DCE62009B8527 /* ChapteriPhoneView.xib */,
-				6895EF9B181DCE62009B8527 /* ImageiPadView.xib */,
-				6895EF9C181DCE62009B8527 /* ImageiPhoneView.xib */,
 				6895EF9D181DCE62009B8527 /* CTEImageViewController.h */,
 				6895EF9E181DCE62009B8527 /* CTEImageViewController.m */,
+				6895EF9B181DCE62009B8527 /* ImageiPadView.xib */,
+				6895EF9C181DCE62009B8527 /* ImageiPhoneView.xib */,
 				68AF284818257D8C00EA632B /* CTEUtils.h */,
 				68AF284918257D8C00EA632B /* CTEUtils.m */,
 				68678E72181E2C0600D8B812 /* Images */,
@@ -544,6 +550,7 @@
 				6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */,
 				6895EFA3181DCE62009B8527 /* CTEMenuViewController.m in Sources */,
 				68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */,
+				68AF284E1825A98E00EA632B /* CTEDelegate.m in Sources */,
 				6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */,
 				68AF284618255FCE00EA632B /* CTEMediaCache.m in Sources */,
 				6895EFA1181DCE62009B8527 /* CTEView.m in Sources */,
@@ -569,6 +576,7 @@
 				6847F014181E2469003F38B5 /* CTEConstants.m in Sources */,
 				6847F015181E2469003F38B5 /* CTEContentViewController.m in Sources */,
 				6847F016181E2469003F38B5 /* CTEColumnView.m in Sources */,
+				68AF284F1825B3EC00EA632B /* CTEDelegate.m in Sources */,
 				6847F017181E2469003F38B5 /* CTEView.m in Sources */,
 				6847F018181E2469003F38B5 /* CTEMarkupParser.m in Sources */,
 				6847F019181E2469003F38B5 /* CTEMenuViewController.m in Sources */,
