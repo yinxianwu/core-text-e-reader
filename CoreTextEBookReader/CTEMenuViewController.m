@@ -1,6 +1,6 @@
 //
 //  MenuViewController.m
-//  WTRMobile
+//  CoreTextEBookReader
 //
 //  Created by David Jedeikin on 4/14/13.
 //  Copyright (c) 2013 Holocene Press. All rights reserved.
@@ -50,7 +50,7 @@
     [self.screenShotImageView removeGestureRecognizer:self.panGesture];
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
     //always select first row if nothing selected

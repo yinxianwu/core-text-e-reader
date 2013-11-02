@@ -1,6 +1,6 @@
 //
 //  WTRChapterViewController.h
-//  WTRMobile
+//  CoreTextEBookReader
 //
 //  Created by dJedeikin on 11/20/12.
 //  Copyright (c) 2012 Holocene Press. All rights reserved.
@@ -26,6 +26,6 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil chapter:(id<CTEChapter>)chapter;
 - (IBAction)pageControlValueChanged:(id)sender;
-- (void)handleChapterSelected:(NSNotification *)notification;
+//- (void)handleChapterSelected:(NSNotification *)notification;
 
 @end

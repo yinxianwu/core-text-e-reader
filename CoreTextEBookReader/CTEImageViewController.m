@@ -1,6 +1,6 @@
 //
 //  WTRImageViewController.m
-//  WTRMobile
+//  CoreTextEBookReader
 //
 //  Created by djedeikin on 5/30/13.
 //  Copyright (c) 2013 Holocene Press. All rights reserved.

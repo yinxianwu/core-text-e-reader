@@ -17,4 +17,6 @@
 @property (strong, nonatomic) CTEMenuViewController *menuViewController;
 @property (strong, nonatomic) NSMutableDictionary *imageCache;
 
+- (void)showSideMenu:(NSNotification *)notification;
+- (void)hideSideMenu:(NSNotification *)notification;
 @end

@@ -66,6 +66,8 @@
 		6895EFD0181DF20D009B8527 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6895EFAE181DCEC7009B8527 /* UIKit.framework */; };
 		6895EFD8181DF20D009B8527 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6895EFD6181DF20D009B8527 /* InfoPlist.strings */; };
 		6895EFDA181DF20D009B8527 /* SampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EFD9181DF20D009B8527 /* SampleAppTests.m */; };
+		68AF284618255FCE00EA632B /* CTEMediaCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284518255FCE00EA632B /* CTEMediaCache.m */; };
+		68AF28471825634200EA632B /* CTEMediaCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284518255FCE00EA632B /* CTEMediaCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +161,8 @@
 		6895EFD5181DF20D009B8527 /* SampleAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SampleAppTests-Info.plist"; sourceTree = "<group>"; };
 		6895EFD7181DF20D009B8527 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6895EFD9181DF20D009B8527 /* SampleAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppTests.m; sourceTree = "<group>"; };
+		68AF284418255FCE00EA632B /* CTEMediaCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEMediaCache.h; sourceTree = "<group>"; };
+		68AF284518255FCE00EA632B /* CTEMediaCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEMediaCache.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +263,8 @@
 				6895EF8C181DCE62009B8527 /* CTEContentViewController.m */,
 				6895EF8D181DCE62009B8527 /* CTEColumnView.h */,
 				6895EF8E181DCE62009B8527 /* CTEColumnView.m */,
+				68AF284418255FCE00EA632B /* CTEMediaCache.h */,
+				68AF284518255FCE00EA632B /* CTEMediaCache.m */,
 				6895EF8F181DCE62009B8527 /* CTEView.h */,
 				6895EF90181DCE62009B8527 /* CTEView.m */,
 				6895EF91181DCE62009B8527 /* CTEMarkupParser.h */,
@@ -267,10 +273,10 @@
 				6895EF94181DCE62009B8527 /* CTEMenuViewController.m */,
 				6895EF95181DCE62009B8527 /* MenuiPadView.xib */,
 				6895EF96181DCE62009B8527 /* MenuiPhoneView.xib */,
-				6895EF97181DCE62009B8527 /* ChapteriPadView.xib */,
-				6895EF98181DCE62009B8527 /* ChapteriPhoneView.xib */,
 				6895EF99181DCE62009B8527 /* CTEChapterViewController.h */,
 				6895EF9A181DCE62009B8527 /* CTEChapterViewController.m */,
+				6895EF97181DCE62009B8527 /* ChapteriPadView.xib */,
+				6895EF98181DCE62009B8527 /* ChapteriPhoneView.xib */,
 				6895EF9B181DCE62009B8527 /* ImageiPadView.xib */,
 				6895EF9C181DCE62009B8527 /* ImageiPhoneView.xib */,
 				6895EF9D181DCE62009B8527 /* CTEImageViewController.h */,
@@ -532,6 +538,7 @@
 				6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */,
 				6895EFA3181DCE62009B8527 /* CTEMenuViewController.m in Sources */,
 				6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */,
+				68AF284618255FCE00EA632B /* CTEMediaCache.m in Sources */,
 				6895EFA1181DCE62009B8527 /* CTEView.m in Sources */,
 				6895EFA4181DCE62009B8527 /* CTEChapterViewController.m in Sources */,
 				6895EFA2181DCE62009B8527 /* CTEMarkupParser.m in Sources */,
@@ -562,6 +569,7 @@
 				6847F01B181E2469003F38B5 /* CTEImageViewController.m in Sources */,
 				6895EFC2181DF20D009B8527 /* main.m in Sources */,
 				6895EFC6181DF20D009B8527 /* CTEAppDelegate.m in Sources */,
+				68AF28471825634200EA632B /* CTEMediaCache.m in Sources */,
 				68678E94181F665000D8B812 /* CTESampleChapter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

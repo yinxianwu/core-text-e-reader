@@ -1,6 +1,6 @@
 //
 //  CTColumnView.m
-//  WTRMobile
+//  CoreTextEBookReader
 //
 //  Created by David Jedeikin on 4/14/13.
 //  Copyright (c) 2013 Holocene Press. All rights reserved.
@@ -105,7 +105,7 @@ float const yAdjustmentFactor = 1.3;
             CGRect matchRect = [[imageMetadata objectForKey:@"playButtonLocation"] CGRectValue];
             if(location.x > matchRect.origin.x && location.x < matchRect.origin.x + matchRect.size.width &&
                location.y > matchRect.origin.y && location.y < matchRect.origin.y + matchRect.size.height) {
-//                NSLog(@"play button touched for movie %@", clipPath);
+                NSLog(@"play button touched for movie %@", clipPath);
                 movieClipPath = clipPath;
                 break;
             }
@@ -136,10 +136,10 @@ float const yAdjustmentFactor = 1.3;
             else {
                 CTEImageViewController *imageView;
                 if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-                    imageView = [[CTEImageViewController alloc]initWithNibName:@"WTRImageiPhoneView" bundle:nil imagePath:imagePath];
+                    imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPhoneView" bundle:nil imagePath:imagePath];
                 }
                 else {
-                    imageView = [[CTEImageViewController alloc]initWithNibName:@"WTRImageiPadView" bundle:nil imagePath:imagePath];
+                    imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPadView" bundle:nil imagePath:imagePath];
                 }
                 [modalTarget presentViewController:imageView animated:YES completion:nil];
             }

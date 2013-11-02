@@ -1,6 +1,6 @@
 //
 //  MarkupParser.h
-//  WTRMobile
+//  CoreTextEBookReader
 //
 //  Created by David Jedeikin on 4/14/13.
 //  Copyright (c) 2013 Holocene Press. All rights reserved.

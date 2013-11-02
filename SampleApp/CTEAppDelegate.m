@@ -49,8 +49,12 @@
     self.menuViewController.chapterData = chapters;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showSideMenu)
+                                             selector:@selector(showSideMenu:)
                                                  name:ShowSideMenu
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(hideSideMenu:)
+                                                 name:HideSideMenu
                                                object:nil];
 
     //init image cache
@@ -66,7 +70,7 @@
 //TODO these need to be moved to the framework
 
 //Side menu actions
-- (void)showSideMenu {
+- (void)showSideMenu:(NSNotification *)notification {
     //before swaping the views, we'll take a "screenshot" of the current view
     //by rendering its CALayer into the an ImageContext then saving that off to a UIImage
     CGSize viewSize = self.contentViewController.view.bounds.size;
@@ -84,11 +88,12 @@
 }
 
 //Side menu actions
-- (void)hideSideMenu:(CTESampleChapter *)selectedChapter {
+- (void)hideSideMenu:(NSNotification *)notification {
     //all animation takes place elsewhere. When this gets called just swap the contentViewController
     //if a new chapter is chosen, display that one
+    id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
     CTEChapterViewController *chapterViewController = (CTEChapterViewController *)self.contentViewController;
-    chapterViewController.currentChapter = selectedChapter;
+    chapterViewController.currentChapter = chapter;
     self.window.rootViewController = self.contentViewController;
 }
 

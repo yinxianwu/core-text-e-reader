@@ -1,6 +1,6 @@
 //
 //  WTRChapterViewController.m
-//  WTRMobile
+//  CoreTextEBookReader
 //
 //  Created by dJedeikin on 11/20/12.
 //  Copyright (c) 2012 Holocene Press. All rights reserved.
@@ -43,10 +43,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleChapterSelected:)
-                                                 name:HideSideMenu
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(handleChapterSelected:)
+//                                                 name:HideSideMenu
+//                                               object:nil];
     
     //height adjustment for first time view is shown
     //this is an issue when displaying on 3.5-inch displays
@@ -103,10 +103,10 @@
 }
 
 //Set specified chapter as current
-- (void)handleChapterSelected:(NSNotification *)notification {
-    id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
-    [self setCurrentChapter:chapter];
-}
+//- (void)handleChapterSelected:(NSNotification *)notification {
+//    id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
+//    [self setCurrentChapter:chapter];
+//}
 
 //if an image view, caches the current index to prevent reloads
 - (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^)(void))completion NS_AVAILABLE_IOS(5_0) {
@@ -175,7 +175,7 @@
 }
 
 //detect touches on page labels
--(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
+- (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     [super touchesBegan:touches withEvent:event];
     UITouch *touch = [touches anyObject];
     UIView * view = touch.view;
