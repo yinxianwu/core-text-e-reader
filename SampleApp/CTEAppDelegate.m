@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 com.davidjed. All rights reserved.
 //
 
+#import "CTEChapter.h"
 #import "CTEConstants.h"
 #import "CTESampleChapter.h"
 #import "CTEAppDelegate.h"
@@ -19,6 +20,9 @@
 //Set appropriate top-level view ctrlrs
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    NSArray *chapters = [self getChapterData];
+    id<CTEChapter> firstChapter = [chapters firstObject];
     
     // create the content view controller that contains detail content
     CTEContentViewController *contentViewCtrlr = nil;
@@ -28,17 +32,21 @@
     CTEMenuViewController *menuViewCtrlr = nil;
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        contentViewCtrlr = [[CTEChapterViewController alloc] initWithNibName:@"ChapteriPadView" bundle:nil];
+        contentViewCtrlr = [[CTEChapterViewController alloc] initWithNibName:@"ChapteriPadView"
+                                                                      bundle:nil
+                                                                     chapter:firstChapter];
         menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPadView" bundle:nil];
     }
     else {
-        contentViewCtrlr = [[CTEChapterViewController alloc] initWithNibName:@"ChapteriPhoneView" bundle:nil];
+        contentViewCtrlr = [[CTEChapterViewController alloc] initWithNibName:@"ChapteriPhoneView"
+                                                                      bundle:nil
+                                                                     chapter:firstChapter];
         menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPhoneView" bundle:nil];
     }
     
     self.contentViewController = contentViewCtrlr;
     self.menuViewController = menuViewCtrlr;
-    self.menuViewController.chapterData = [self getChapterData];
+    self.menuViewController.chapterData = chapters;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showSideMenu)
@@ -77,11 +85,10 @@
 
 //Side menu actions
 - (void)hideSideMenu:(CTESampleChapter *)selectedChapter {
-    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //all animation takes place elsewhere. When this gets called just swap the contentViewController
     //if a new chapter is chosen, display that one
-//    CTEChapterViewController *chapterViewController = (CTEChapterViewController *)self.contentViewController;
-//    chapterViewController.currentChapter = selectedChapter;
+    CTEChapterViewController *chapterViewController = (CTEChapterViewController *)self.contentViewController;
+    chapterViewController.currentChapter = selectedChapter;
     self.window.rootViewController = self.contentViewController;
 }
 
@@ -106,6 +113,7 @@
     chapter.title = @"Flanders to Funsterdam";
     chapter.subtitle = @"Bruges & Amsterdam";
     chapter.body = chapterBody;
+    [array addObject:chapter];
     NSLog(@"Created chapter: %@", chapter.title);
     
     path = [[NSBundle mainBundle] pathForResource:@"Chapter6" ofType:@"txt"];
@@ -115,6 +123,7 @@
     chapter.title = @"La Belle et le Bad Boy";
     chapter.subtitle = @"Paris & Nice";
     chapter.body = chapterBody;
+    [array addObject:chapter];
     NSLog(@"Created chapter: %@", chapter.title);
     
     return array;

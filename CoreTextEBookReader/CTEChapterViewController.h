@@ -24,6 +24,8 @@
 @property (nonatomic, strong) IBOutlet UILabel *pagesRemainingLabel;
 @property (nonatomic, strong) CTEMarkupParser *parser;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil chapter:(id<CTEChapter>)chapter;
 - (IBAction)pageControlValueChanged:(id)sender;
+- (void)handleChapterSelected:(NSNotification *)notification;
 
 @end

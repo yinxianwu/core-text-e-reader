@@ -7,6 +7,8 @@
 
 #import "CTEChapterViewController.h"
 #import "CTEImageViewController.h"
+#import "CTEChapter.h"
+#import "CTEConstants.h"
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -29,8 +31,9 @@
 @synthesize navBar;
 
 //Constructor
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil chapter:(id<CTEChapter>)chapter {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    _currentChapter = chapter;
     self.parser = [[CTEMarkupParser alloc] init];
 
     return self;
@@ -39,6 +42,11 @@
 //inits the UI elements
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleChapterSelected:)
+                                                 name:HideSideMenu
+                                               object:nil];
     
     //height adjustment for first time view is shown
     //this is an issue when displaying on 3.5-inch displays
@@ -58,33 +66,23 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    //first-time init
-        //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    if(self.currentChapter == nil) {
-//        WTRDataAccess *loader = [WTRDataAccess sharedInstance];
-//        _currentChapter = [loader getChapter:[NSNumber numberWithInt:1]];
-//    }
-
     //don't reload if it's the same chapter
-    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    if(self.previousChapter == self.currentChapter) {
-//        return;
-//    }
+    if(self.previousChapter == self.currentChapter) {
+        return;
+    }
 
     //nav bar title
-    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    UINavigationItem *navItem = [[navBar items] objectAtIndex:0];
-//    [navItem setTitle:_currentChapter.title];
+    UINavigationItem *navItem = [[navBar items] objectAtIndex:0];
+    [navItem setTitle:_currentChapter.title];
 
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     [ctView clearFrames];
     [parser resetParser];
 
     //parse to derive attributed string
-    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    NSAttributedString *attString = [parser attrStringFromMarkup:self.currentChapter.body screenSize:screenRect];
-//    self.ctView.modalTarget = self; //TODO this should be redone as delegate pattern
-//    [self.ctView setAttString:attString withImages:parser.images andLinks:parser.links];
+    NSAttributedString *attString = [parser attrStringFromMarkup:self.currentChapter.body screenSize:screenRect];
+    self.ctView.modalTarget = self; //TODO this should be redone as delegate pattern
+    [self.ctView setAttString:attString withImages:parser.images andLinks:parser.links];
     [self.ctView buildFrames];
     
     //different impls for paging
@@ -102,6 +100,12 @@
     NSString *pagesRemaining = [NSString stringWithFormat:@"%d", [ctView totalPages]];
     [currentPageLabel setText:@"1"];
     [pagesRemainingLabel setText:pagesRemaining];
+}
+
+//Set specified chapter as current
+- (void)handleChapterSelected:(NSNotification *)notification {
+    id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
+    [self setCurrentChapter:chapter];
 }
 
 //if an image view, caches the current index to prevent reloads
@@ -207,7 +211,7 @@
 }
 
 //sets current chapter and caches previous
-- (void) setCurrentChapter:(id<CTEChapter>) chapter {
+- (void)setCurrentChapter:(id<CTEChapter>) chapter {
     _previousChapter = _currentChapter;
     _currentChapter = chapter;
 }

@@ -16,7 +16,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
+            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="173">
@@ -33,7 +33,7 @@
                     </items>
                 </navigationBar>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="181" customClass="CTEView">
-                    <rect key="frame" x="0.0" y="58" width="768" height="909"/>
+                    <rect key="frame" x="0.0" y="58" width="768" height="929"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <connections>
@@ -41,7 +41,7 @@
                     </connections>
                 </view>
                 <pageControl contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="194">
-                    <rect key="frame" x="365" y="967" width="39" height="37"/>
+                    <rect key="frame" x="365" y="987" width="39" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,7 +50,7 @@
                     </connections>
                 </pageControl>
                 <label opaque="NO" clipsSubviews="YES" contentMode="left" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="204">
-                    <rect key="frame" x="315" y="975" width="42" height="21"/>
+                    <rect key="frame" x="315" y="995" width="42" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="42" id="208"/>
@@ -60,7 +60,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" contentMode="left" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="209">
-                    <rect key="frame" x="412" y="975" width="42" height="21"/>
+                    <rect key="frame" x="412" y="995" width="42" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="42" id="212"/>
