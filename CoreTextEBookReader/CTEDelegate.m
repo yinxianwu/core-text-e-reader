@@ -9,7 +9,6 @@
 #import "CTEDelegate.h"
 #import "CTEChapter.h"
 #import "CTEConstants.h"
-#import "CTESampleChapter.h"
 #import "CTEChapterViewController.h"
 
 @implementation CTEDelegate
