@@ -24,7 +24,6 @@
 @synthesize player;
 @synthesize spinnerViews;
 
-float const yAdjustmentFactor = 1.3;
 
 //inits image array
 -(id)initWithFrame:(CGRect)frame {
@@ -44,7 +43,7 @@ float const yAdjustmentFactor = 1.3;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
 	CGPoint location = [touch locationInView:self];
-	location.y += (18.0 / yAdjustmentFactor); //TODO font size now is set in parser
+	location.y += (18.0 / 1.3); //TODO font size now is set in parser
 
 	CFArrayRef lines = CTFrameGetLines((__bridge CTFrameRef)(ctFrame));
 	
