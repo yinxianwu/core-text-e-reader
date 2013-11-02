@@ -7,6 +7,7 @@
 //
 
 #import "CTEImageViewController.h"
+#import "CTEMediaCache.h"
 
 #define ZOOM_VIEW_TAG 100
 #define ZOOM_STEP 1.5
@@ -34,20 +35,19 @@
     imageScrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     
     //images here are already in the cache
-    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    UIImage *img = [app_delegate.imageCache valueForKey:imagePath];
+    UIImage *img = [[CTEMediaCache sharedMediaCache] getImage:imagePath];
 
     //error handling
-//    if (!img) {
-//        img = [UIImage imageNamed:@"ImageError.png"];
-//    }
-//    imageView.image = img;
-//    [imageView sizeToFit];
-//    CGSize imgSize = img.size;
-//    [imageScrollView setContentSize:CGSizeMake(imgSize.width, imgSize.height)];
-//    [imageScrollView setMinimumZoomScale: 0.5];
-//    [imageScrollView setMaximumZoomScale:3.0];
-//    [imageScrollView setScrollEnabled:YES];
+    if (!img) {
+        img = [UIImage imageNamed:@"ImageError.png"];
+    }
+    imageView.image = img;
+    [imageView sizeToFit];
+    CGSize imgSize = img.size;
+    [imageScrollView setContentSize:CGSizeMake(imgSize.width, imgSize.height)];
+    [imageScrollView setMinimumZoomScale: 0.5];
+    [imageScrollView setMaximumZoomScale:3.0];
+    [imageScrollView setScrollEnabled:YES];
     
     [super viewDidLoad];
 

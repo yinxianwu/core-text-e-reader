@@ -8,6 +8,7 @@
 
 #import <CoreText/CoreText.h>
 #import "CTEView.h"
+#import "CTEMediaCache.h"
 
 @interface CTEView() {
     int imagesLoaded;
@@ -103,8 +104,7 @@
                 //TODO this ain't pretty but it works...
                 if([fileNamePrefix isEqualToString:@"http://"]) {
                     //remote images are unique per chapter, so if it's in the cache can reuse it
-                    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//                    img = [app_delegate.imageCache valueForKey:imgFileName];
+                    img = [[CTEMediaCache sharedMediaCache] getImage:imgFileName];
                     if(!img) {
                         NSLog(@"Image %@ doesn't exist; loading it in...", imgFileName);
                         dispatch_queue_t queue = dispatch_queue_create([imgFileName UTF8String], NULL);
@@ -121,8 +121,7 @@
                             //update image load count on main thread
                             dispatch_async(main, ^{
                                 NSLog(@"Image %@ loaded in; updating column", imgFileName);
-                                //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//                                [app_delegate.imageCache setValue:imgLoaded forKey:imgFileName];
+                                [[CTEMediaCache sharedMediaCache] addImage:imgLoaded withKey:imgFileName];
                                 [self addImage:imgLoaded forColumn:content frameRef:frameRef imageInfo:imageInfo];
                                 [content setNeedsDisplay];
                             });
@@ -184,8 +183,7 @@
     [self.columnsRendered removeAllObjects];
     [self.imageMetadatas removeAllObjects];
     [self.links removeAllObjects];
-    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    [app_delegate.imageCache removeAllObjects];
+    [[CTEMediaCache sharedMediaCache] clearCache];
 }
 
 //force a column refresh
