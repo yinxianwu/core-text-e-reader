@@ -15,9 +15,5 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CTEDelegate *delegate;
-//@property (strong, nonatomic) CTEContentViewController *contentViewController;
-//@property (strong, nonatomic) CTEMenuViewController *menuViewController;
 
-//- (void)showSideMenu:(NSNotification *)notification;
-//- (void)hideSideMenu:(NSNotification *)notification;
 @end
