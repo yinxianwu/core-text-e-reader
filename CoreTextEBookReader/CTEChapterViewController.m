@@ -42,14 +42,17 @@
 //inits the UI elements
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //height adjustment for first time view is shown
-    //this is an issue when displaying on 3.5-inch displays
+
+    BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
+
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat navBarHeight = 0.0f;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        navBarHeight = 54;
+        navBarHeight = 64;
+        
+        //height adjustment for first time view is shown
+        //this is an issue when displaying on 3.5-inch displays
         CGRect viewRect = [self.view bounds];
         if(viewRect.size.height > screenRect.size.height) {
             CGRect ctViewRect = [ctView bounds];
@@ -61,13 +64,31 @@
         navBarHeight = 64;
     }
     
-    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, navBarHeight)];
     CGFloat red = 225.0f/255.0f;
     CGFloat green = 210.0f/255.0f;
     CGFloat blue = 169.0f/255.0f;
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:red green:green blue:blue alpha:1.0f]];
-    [navBar setTintColor:[UIColor blackColor]];
+    UIColor *navBarDefaultColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0f];
+    UIColor *navBarColor = nil;
+    if(isIOS7) {
+        [[UINavigationBar appearance] setBarTintColor:navBarDefaultColor];
+        navBarColor = [UIColor blackColor];
+    }
+    else {
+        navBarColor = navBarDefaultColor;
+        navBarHeight -= 20.0f;
+    }
+    
+    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               [UIColor blackColor],UITextAttributeTextColor,
+//                                               [UIColor blackColor], UITextAttributeTextShadowColor,
+//                                               [NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset,
+                                               nil];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, navBarHeight)];
+    if(!isIOS7) [navBar setBarStyle:UIBarStyleBlack];
     [navBar setDelegate:self];
+    [navBar setTintColor:navBarColor];
     [self.view addSubview:navBar];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                                   initWithImage:[UIImage imageNamed:@"ThreeLines.png"]
