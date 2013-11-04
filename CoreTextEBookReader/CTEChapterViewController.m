@@ -43,23 +43,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(handleChapterSelected:)
-//                                                 name:HideSideMenu
-//                                               object:nil];
-    
     //height adjustment for first time view is shown
     //this is an issue when displaying on 3.5-inch displays
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat navBarHeight = 0.0f;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        navBarHeight = 54;
         CGRect viewRect = [self.view bounds];
-        
         if(viewRect.size.height > screenRect.size.height) {
             CGRect ctViewRect = [ctView bounds];
             CGRect ctViewNewRect = CGRectMake(ctViewRect.origin.x, ctViewRect.origin.y, ctViewRect.size.width, screenRect.size.height - 88);
             [ctView setFrame:ctViewNewRect];
         }
     }
+    else {
+        navBarHeight = 64;
+    }
+    
+    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, navBarHeight)];
+    CGFloat red = 225.0f/255.0f;
+    CGFloat green = 210.0f/255.0f;
+    CGFloat blue = 169.0f/255.0f;
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:red green:green blue:blue alpha:1.0f]];
+    [navBar setTintColor:[UIColor blackColor]];
+    [navBar setDelegate:self];
+    [self.view addSubview:navBar];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
+                                  initWithImage:[UIImage imageNamed:@"ThreeLines.png"]
+                                  style:UIBarButtonItemStyleBordered
+                                  target:self
+                                  action:@selector(slideMenuButtonTouched:)];
+    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"WTR Mobile"];
+    item.leftBarButtonItem = addButton;
+    [navBar pushNavigationItem:item animated:false];
+}
+
+//side menu action
+-(void)slideMenuButtonTouched:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:ShowSideMenu object:self];
 }
 
 //Load data into view
@@ -101,12 +123,6 @@
     [currentPageLabel setText:@"1"];
     [pagesRemainingLabel setText:pagesRemaining];
 }
-
-//Set specified chapter as current
-//- (void)handleChapterSelected:(NSNotification *)notification {
-//    id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
-//    [self setCurrentChapter:chapter];
-//}
 
 //if an image view, caches the current index to prevent reloads
 - (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^)(void))completion NS_AVAILABLE_IOS(5_0) {

@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="26">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
+                    <rect key="frame" x="0.0" y="25" width="768" height="1004"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>
@@ -36,8 +36,8 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="26" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="27"/>
-                <constraint firstItem="26" firstAttribute="top" secondItem="1" secondAttribute="top" id="28"/>
-                <constraint firstItem="26" firstAttribute="bottom" secondItem="1" secondAttribute="bottom" id="31"/>
+                <constraint firstItem="26" firstAttribute="top" secondItem="1" secondAttribute="top" constant="25" id="28"/>
+                <constraint firstItem="26" firstAttribute="bottom" secondItem="1" secondAttribute="bottom" constant="25" id="31"/>
                 <constraint firstItem="26" firstAttribute="trailing" secondItem="1" secondAttribute="trailing" id="36"/>
                 <constraint firstItem="37" firstAttribute="top" secondItem="1" secondAttribute="top" id="43"/>
                 <constraint firstItem="37" firstAttribute="bottom" secondItem="1" secondAttribute="bottom" id="45"/>
