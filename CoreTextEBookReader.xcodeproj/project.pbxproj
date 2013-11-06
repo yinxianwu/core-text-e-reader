@@ -20,7 +20,6 @@
 		6847F017181E2469003F38B5 /* CTEView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF90181DCE62009B8527 /* CTEView.m */; };
 		6847F018181E2469003F38B5 /* CTEMarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF92181DCE62009B8527 /* CTEMarkupParser.m */; };
 		6847F019181E2469003F38B5 /* CTEMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF94181DCE62009B8527 /* CTEMenuViewController.m */; };
-		6847F01A181E2469003F38B5 /* CTEChapterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF9A181DCE62009B8527 /* CTEChapterViewController.m */; };
 		6847F01B181E2469003F38B5 /* CTEImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF9E181DCE62009B8527 /* CTEImageViewController.m */; };
 		68678E7D181E2D2600D8B812 /* CloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 68678E74181E2C0600D8B812 /* CloseButton.png */; };
 		68678E7F181E2D2600D8B812 /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 68678E76181E2C0600D8B812 /* ImageError.png */; };
@@ -29,8 +28,8 @@
 		68678E83181E2D2600D8B812 /* ThreeLines.png in Resources */ = {isa = PBXBuildFile; fileRef = 68678E7A181E2C0600D8B812 /* ThreeLines.png */; };
 		68678E85181E2D4500D8B812 /* MenuiPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895EF95181DCE62009B8527 /* MenuiPadView.xib */; };
 		68678E86181E2D4500D8B812 /* MenuiPhoneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895EF96181DCE62009B8527 /* MenuiPhoneView.xib */; };
-		68678E87181E2D4500D8B812 /* ChapteriPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895EF97181DCE62009B8527 /* ChapteriPadView.xib */; };
-		68678E88181E2D4500D8B812 /* ChapteriPhoneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895EF98181DCE62009B8527 /* ChapteriPhoneView.xib */; };
+		68678E87181E2D4500D8B812 /* ContentiPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895EF97181DCE62009B8527 /* ContentiPadView.xib */; };
+		68678E88181E2D4500D8B812 /* ContentiPhoneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895EF98181DCE62009B8527 /* ContentiPhoneView.xib */; };
 		68678E89181E2D4500D8B812 /* ImageiPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895EF9B181DCE62009B8527 /* ImageiPadView.xib */; };
 		68678E8A181E2D4500D8B812 /* ImageiPhoneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6895EF9C181DCE62009B8527 /* ImageiPhoneView.xib */; };
 		68678E8C181F653700D8B812 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6895EFAC181DCEB4009B8527 /* QuartzCore.framework */; };
@@ -46,7 +45,6 @@
 		6895EFA1181DCE62009B8527 /* CTEView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF90181DCE62009B8527 /* CTEView.m */; };
 		6895EFA2181DCE62009B8527 /* CTEMarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF92181DCE62009B8527 /* CTEMarkupParser.m */; };
 		6895EFA3181DCE62009B8527 /* CTEMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF94181DCE62009B8527 /* CTEMenuViewController.m */; };
-		6895EFA4181DCE62009B8527 /* CTEChapterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF9A181DCE62009B8527 /* CTEChapterViewController.m */; };
 		6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF9E181DCE62009B8527 /* CTEImageViewController.m */; };
 		6895EFA7181DCE9A009B8527 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6895EFA6181DCE9A009B8527 /* CoreText.framework */; };
 		6895EFA9181DCEA3009B8527 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6895EFA8181DCEA3009B8527 /* CoreGraphics.framework */; };
@@ -138,10 +136,8 @@
 		6895EF94181DCE62009B8527 /* CTEMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEMenuViewController.m; sourceTree = "<group>"; };
 		6895EF95181DCE62009B8527 /* MenuiPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuiPadView.xib; sourceTree = "<group>"; };
 		6895EF96181DCE62009B8527 /* MenuiPhoneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuiPhoneView.xib; sourceTree = "<group>"; };
-		6895EF97181DCE62009B8527 /* ChapteriPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChapteriPadView.xib; sourceTree = "<group>"; };
-		6895EF98181DCE62009B8527 /* ChapteriPhoneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChapteriPhoneView.xib; sourceTree = "<group>"; };
-		6895EF99181DCE62009B8527 /* CTEChapterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEChapterViewController.h; sourceTree = "<group>"; };
-		6895EF9A181DCE62009B8527 /* CTEChapterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEChapterViewController.m; sourceTree = "<group>"; };
+		6895EF97181DCE62009B8527 /* ContentiPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentiPadView.xib; sourceTree = "<group>"; };
+		6895EF98181DCE62009B8527 /* ContentiPhoneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentiPhoneView.xib; sourceTree = "<group>"; };
 		6895EF9B181DCE62009B8527 /* ImageiPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageiPadView.xib; sourceTree = "<group>"; };
 		6895EF9C181DCE62009B8527 /* ImageiPhoneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageiPhoneView.xib; sourceTree = "<group>"; };
 		6895EF9D181DCE62009B8527 /* CTEImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEImageViewController.h; sourceTree = "<group>"; };
@@ -271,8 +267,6 @@
 				6895EFB1181DD2B5009B8527 /* CTEConstants.m */,
 				68AF284418255FCE00EA632B /* CTEMediaCache.h */,
 				68AF284518255FCE00EA632B /* CTEMediaCache.m */,
-				6895EF8B181DCE62009B8527 /* CTEContentViewController.h */,
-				6895EF8C181DCE62009B8527 /* CTEContentViewController.m */,
 				6895EF8D181DCE62009B8527 /* CTEColumnView.h */,
 				6895EF8E181DCE62009B8527 /* CTEColumnView.m */,
 				6895EF8F181DCE62009B8527 /* CTEView.h */,
@@ -283,10 +277,10 @@
 				6895EF94181DCE62009B8527 /* CTEMenuViewController.m */,
 				6895EF95181DCE62009B8527 /* MenuiPadView.xib */,
 				6895EF96181DCE62009B8527 /* MenuiPhoneView.xib */,
-				6895EF99181DCE62009B8527 /* CTEChapterViewController.h */,
-				6895EF9A181DCE62009B8527 /* CTEChapterViewController.m */,
-				6895EF97181DCE62009B8527 /* ChapteriPadView.xib */,
-				6895EF98181DCE62009B8527 /* ChapteriPhoneView.xib */,
+				6895EF8B181DCE62009B8527 /* CTEContentViewController.h */,
+				6895EF8C181DCE62009B8527 /* CTEContentViewController.m */,
+				6895EF97181DCE62009B8527 /* ContentiPadView.xib */,
+				6895EF98181DCE62009B8527 /* ContentiPhoneView.xib */,
 				6895EF9D181DCE62009B8527 /* CTEImageViewController.h */,
 				6895EF9E181DCE62009B8527 /* CTEImageViewController.m */,
 				6895EF9B181DCE62009B8527 /* ImageiPadView.xib */,
@@ -516,8 +510,8 @@
 				68678E85181E2D4500D8B812 /* MenuiPadView.xib in Resources */,
 				68678E86181E2D4500D8B812 /* MenuiPhoneView.xib in Resources */,
 				68678E9A181F734400D8B812 /* Chapter5.txt in Resources */,
-				68678E87181E2D4500D8B812 /* ChapteriPadView.xib in Resources */,
-				68678E88181E2D4500D8B812 /* ChapteriPhoneView.xib in Resources */,
+				68678E87181E2D4500D8B812 /* ContentiPadView.xib in Resources */,
+				68678E88181E2D4500D8B812 /* ContentiPhoneView.xib in Resources */,
 				68678E89181E2D4500D8B812 /* ImageiPadView.xib in Resources */,
 				68678E99181F734400D8B812 /* Chapter4.txt in Resources */,
 				68678E9B181F734400D8B812 /* Chapter6.txt in Resources */,
@@ -554,7 +548,6 @@
 				6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */,
 				68AF284618255FCE00EA632B /* CTEMediaCache.m in Sources */,
 				6895EFA1181DCE62009B8527 /* CTEView.m in Sources */,
-				6895EFA4181DCE62009B8527 /* CTEChapterViewController.m in Sources */,
 				6895EFA2181DCE62009B8527 /* CTEMarkupParser.m in Sources */,
 				6895EFA0181DCE62009B8527 /* CTEColumnView.m in Sources */,
 				6895EFB2181DD2B5009B8527 /* CTEConstants.m in Sources */,
@@ -580,7 +573,6 @@
 				6847F017181E2469003F38B5 /* CTEView.m in Sources */,
 				6847F018181E2469003F38B5 /* CTEMarkupParser.m in Sources */,
 				6847F019181E2469003F38B5 /* CTEMenuViewController.m in Sources */,
-				6847F01A181E2469003F38B5 /* CTEChapterViewController.m in Sources */,
 				6847F01B181E2469003F38B5 /* CTEImageViewController.m in Sources */,
 				6895EFC6181DF20D009B8527 /* CTEAppDelegate.m in Sources */,
 				68AF28471825634200EA632B /* CTEMediaCache.m in Sources */,

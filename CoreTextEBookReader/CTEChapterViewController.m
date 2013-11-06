@@ -14,6 +14,7 @@
 
 @interface CTEChapterViewController ()
 @property (nonatomic, strong) NSArray *spinnerViews;
+@property (nonatomic) float decelOffsetX;
 @end
 
 @implementation CTEChapterViewController
@@ -26,6 +27,7 @@
 @synthesize stepper;
 @synthesize parser;
 @synthesize spinnerViews;
+@synthesize decelOffsetX;
 @synthesize currentPageLabel;
 @synthesize pagesRemainingLabel;
 @synthesize navBar;
@@ -35,6 +37,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     _currentChapter = chapter;
     self.parser = [[CTEMarkupParser alloc] init];
+    self.decelOffsetX = 0.0f;
 
     return self;
 }
@@ -158,7 +161,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
     // Update the page when more than 50% of the previous/next page is visible
     CGFloat pageWidth = self.ctView.frame.size.width;
-    int page = floor((self.ctView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    int page = floor((self.decelOffsetX - pageWidth / 2) / pageWidth) + 1;
 
     //different impls for paging
     if(self.pageControl) {
@@ -201,8 +204,18 @@
     [self.ctView scrollRectToVisible:frame animated:YES];
 }
 
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    self.decelOffsetX = self.ctView.contentOffset.x;
+}
+
 //performs column redraw
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    int totalPages = [ctView totalPages];
+    int currentPage = self.pageControl.currentPage;
+    float currentOffsetX = self.ctView.contentOffset.x;
+    if(decelOffsetX < currentOffsetX && (currentPage + 1 == totalPages)) {
+        NSLog(@"END CHAPTER");
+    }
     [ctView redrawFrames];
 }
 

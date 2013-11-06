@@ -9,7 +9,7 @@
 #import "CTEDelegate.h"
 #import "CTEChapter.h"
 #import "CTEConstants.h"
-#import "CTEChapterViewController.h"
+#import "CTEContentViewController.h"
 
 @implementation CTEDelegate
 
@@ -31,13 +31,13 @@
         CTEMenuViewController *menuViewCtrlr = nil;
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            contentViewCtrlr = [[CTEChapterViewController alloc] initWithNibName:@"ChapteriPadView"
+            contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPadView"
                                                                           bundle:nil
                                                                          chapter:firstChapter];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPadView" bundle:nil];
         }
         else {
-            contentViewCtrlr = [[CTEChapterViewController alloc] initWithNibName:@"ChapteriPhoneView"
+            contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPhoneView"
                                                                           bundle:nil
                                                                          chapter:firstChapter];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPhoneView" bundle:nil];
@@ -86,7 +86,7 @@
     //all animation takes place elsewhere. When this gets called just swap the contentViewController
     //if a new chapter is chosen, display that one
     id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
-    CTEChapterViewController *chapterViewController = (CTEChapterViewController *)self.contentViewController;
+    CTEContentViewController *chapterViewController = (CTEContentViewController *)self.contentViewController;
     chapterViewController.currentChapter = chapter;
     self.window.rootViewController = self.contentViewController;
 }
