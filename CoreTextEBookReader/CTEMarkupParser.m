@@ -62,7 +62,7 @@ static CGFloat widthCallback( void* ref ){
                                        range:NSMakeRange(0, [markup length])];
     for (NSTextCheckingResult* b in chunks) {
         NSArray* parts = [[markup substringWithRange:b.range]
-                          componentsSeparatedByString:@"<"]; //1
+                          componentsSeparatedByString:@"<"];
         
         CTFontRef fontRef = CTFontCreateWithName((__bridge CFStringRef)self.font,
                                                  self.fontSize,

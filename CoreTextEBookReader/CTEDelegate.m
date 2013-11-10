@@ -36,8 +36,11 @@
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         NSString *allChapsBody = @"";
         for(id<CTEChapter>chapter in chapters) {
-            NSString *chapterWithHeading = [NSString stringWithFormat:@"%@\n%@\n\n%@\n\n", [chapter title], [chapter subtitle], [chapter body]];
-            allChapsBody = [allChapsBody stringByAppendingString:chapterWithHeading];
+//            NSString *chapterWithHeading = [NSString stringWithFormat:@"<font color=\"black\" strokeColor=\"gray\" face=\"Arial Bold\">%@\n%@\n\n%@\n\n",
+//                                            [chapter title],
+//                                            [chapter subtitle],
+//                                            [chapter body]];
+            allChapsBody = [allChapsBody stringByAppendingString:[chapter body]];
         }
         NSAttributedString *contentAttStr = [delegate.parser attrStringFromMarkup:allChapsBody
                                                                        screenSize:screenRect];

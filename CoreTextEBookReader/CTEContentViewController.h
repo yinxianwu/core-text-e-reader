@@ -18,7 +18,7 @@
 //@property (nonatomic, strong) id <CTEChapter> previousChapter;
 
 @property (nonatomic, strong) UINavigationBar *navBar;
-@property (nonatomic, strong) IBOutlet CTEView *ctView;
+@property (nonatomic, strong) IBOutlet CTEView *cteView;
 @property (nonatomic, strong) NSAttributedString *content;
 @property (nonatomic, strong) NSArray *images;
 @property (nonatomic, strong) NSArray *links;

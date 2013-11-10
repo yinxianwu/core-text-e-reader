@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CTEContentViewController">
             <connections>
-                <outlet property="ctView" destination="181" id="186"/>
+                <outlet property="cteView" destination="181" id="Vyt-VE-Pua"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="181" customClass="CTEView">
-                    <rect key="frame" x="0.0" y="58" width="768" height="929"/>
+                    <rect key="frame" x="0.0" y="58" width="768" height="966"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <connections>

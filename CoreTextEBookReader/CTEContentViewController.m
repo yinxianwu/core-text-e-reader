@@ -24,7 +24,7 @@
 //@synthesize currentChapter = _currentChapter;
 //@synthesize previousChapter = _previousChapter;
 
-@synthesize ctView;
+@synthesize cteView;
 //@synthesize pageControl;
 //@synthesize stepper;
 //@synthesize parser;
@@ -58,8 +58,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.ctView setAttString:self.content withImages:self.images andLinks:self.links];
-    [self.ctView buildFrames];
+    [self.cteView setAttString:self.content withImages:self.images andLinks:self.links];
+    [self.cteView buildFrames];
 
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -72,9 +72,9 @@
         //this is an issue when displaying on 3.5-inch displays
         CGRect viewRect = [self.view bounds];
         if(viewRect.size.height > screenRect.size.height) {
-            CGRect ctViewRect = [ctView bounds];
+            CGRect ctViewRect = [cteView bounds];
             CGRect ctViewNewRect = CGRectMake(ctViewRect.origin.x, ctViewRect.origin.y, ctViewRect.size.width, screenRect.size.height - 88);
-            [ctView setFrame:ctViewNewRect];
+            [cteView setFrame:ctViewNewRect];
         }
     }
     else {
@@ -219,7 +219,7 @@
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    self.decelOffsetX = self.ctView.contentOffset.x;
+    self.decelOffsetX = self.cteView.contentOffset.x;
 }
 
 //performs column redraw
