@@ -9,6 +9,7 @@
 #import <CoreText/CoreText.h>
 #import "CTEView.h"
 #import "CTEMediaCache.h"
+#import "CTEColumnView.h"
 
 @interface CTEView() {
     int imagesLoaded;
@@ -18,13 +19,21 @@
 
 @implementation CTEView
 
+NSString *const HTTP_PREFIX = @"http://";
+
 @synthesize modalTarget;
 @synthesize attString;
 @synthesize columns;
-@synthesize columnsRendered;
 @synthesize imageMetadatas;
 @synthesize links;
 @synthesize totalPages;
+
+//sets text & image properties
+- (void)setAttString:(NSAttributedString *)allAttString withImages:(NSArray *)imgs andLinks:(NSArray *)lnks {
+    self.attString = allAttString;
+    self.imageMetadatas = [NSMutableArray arrayWithArray:imgs];
+    self.links = [NSMutableArray arrayWithArray:lnks];
+}
 
 //builds all columns of text & images
 - (void)buildFrames {
@@ -49,109 +58,106 @@
     [self setContentOffset:CGPointZero animated:NO]; //reset view to top
     self.pagingEnabled = YES;
     self.columns = [NSMutableArray array];
-    self.columnsRendered = [NSMutableArray array];
     
     CGMutablePathRef path = CGPathCreateMutable(); 
     CGRect textFrame = CGRectInset(self.bounds, frameXOffset, frameYOffset);
     CGPathAddRect(path, NULL, textFrame);
     
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
-    int textPos = 0;
     int columnIndex = 0;
-    
-    while (textPos < [attString length]) { 
-        NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
+        CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
+        int textPos = 0;
         
-        CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / pageColumnCount), 20 );
-        CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/pageColumnCount - columnWidthRightMargin, textFrame.size.height - 40);
-        
-        CGMutablePathRef path = CGPathCreateMutable();
-        CGPathAddRect(path, NULL, colRect);
-        
-        //use the column path
-        CTFrameRef frameRef = CTFramesetterCreateFrame(framesetter, CFRangeMake(textPos, 0), path, NULL);
-        CFRange frameRange = CTFrameGetVisibleStringRange(frameRef); 
-        
-        //create an empty column view
-        CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
-        content.backgroundColor = [UIColor clearColor];
-        content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height);
-        content.attString = self.attString; //for link and image touches
-        content.links = self.links;
-        content.modalTarget = self.modalTarget;
-        [self.columns addObject:content];
-        [self.columnsRendered addObject:[NSNumber numberWithBool:NO]]; //mark as unrendered
-        
-		//set the column view contents and add it as subview
-        [content setCTFrame:(__bridge id)frameRef];  
-        [self addSubview: content];
-        
-        //see if any images exist in the column and load them in as well
-        dispatch_queue_t main = dispatch_get_main_queue();
-        for(int imgIndex = 0; imgIndex < [self.imageMetadatas count]; imgIndex++) {
-            NSDictionary *imageInfo = [self.imageMetadatas objectAtIndex:imgIndex];
-            int imgLocation = [[imageInfo objectForKey:@"location"] intValue];
+        while (textPos < [attString length]) {
+            NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
             
-            //local versus online images
-            NSString *imgFileName = [imageInfo objectForKey:@"fileName"];
-            NSString *fileNamePrefix = [imgFileName substringToIndex:7];
+            CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / pageColumnCount), 20 );
+            CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/pageColumnCount - columnWidthRightMargin, textFrame.size.height - 40);
             
-            if(imgLocation >= textPos && imgLocation < textPos + frameRange.length) {
-                NSLog(@"imgFileName %@ exists in column between text post %d and %ld", imgFileName, textPos, (textPos + frameRange.length));
-                UIImage *img = nil;
+            CGMutablePathRef path = CGPathCreateMutable();
+            CGPathAddRect(path, NULL, colRect);
+            
+            //use the column path
+            CTFrameRef frameRef = CTFramesetterCreateFrame(framesetter, CFRangeMake(textPos, 0), path, NULL);
+            CFRange frameRange = CTFrameGetVisibleStringRange(frameRef);
+            
+            //create an empty column view
+            CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
+            content.backgroundColor = [UIColor clearColor];
+            content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height);
+            content.attString = attString; //for link and image touches
+            content.links = self.links;
+            content.modalTarget = self.modalTarget;
+            [self.columns addObject:content];
+            
+            //set the column view contents and add it as subview
+            [content setCTFrame:(__bridge id)frameRef];
+            [self addSubview: content];
+            
+            //see if any images exist in the column and load them in as well
+//            dispatch_queue_t main = dispatch_get_main_queue();
+            for(int imgIndex = 0; imgIndex < [self.imageMetadatas count]; imgIndex++) {
+                NSDictionary *imageInfo = [self.imageMetadatas objectAtIndex:imgIndex];
+                int imgLocation = [[imageInfo objectForKey:@"location"] intValue];
                 
-                //remote image; load in async
-                //TODO this ain't pretty but it works...
-                if([fileNamePrefix isEqualToString:@"http://"]) {
-                    //remote images are unique per chapter, so if it's in the cache can reuse it
-                    img = [[CTEMediaCache sharedMediaCache] getImage:imgFileName];
-                    if(!img) {
-                        NSLog(@"Image %@ doesn't exist; loading it in...", imgFileName);
-                        dispatch_queue_t queue = dispatch_queue_create([imgFileName UTF8String], NULL);
-                        dispatch_async(queue, ^{
-                            NSURL *url = [NSURL URLWithString:imgFileName];
-                            NSData *data = [NSData dataWithContentsOfURL:url];
-                            UIImage *imgLoaded = [UIImage imageWithData:data];
-                            
-                            //error handling
-                            if (!imgLoaded) {
-                                imgLoaded = [UIImage imageNamed:@"ImageError.png"];
-                            }
-                            
-                            //update image load count on main thread
-                            dispatch_async(main, ^{
-                                NSLog(@"Image %@ loaded in; updating column", imgFileName);
-                                [[CTEMediaCache sharedMediaCache] addImage:imgLoaded withKey:imgFileName];
-                                [self addImage:imgLoaded forColumn:content frameRef:frameRef imageInfo:imageInfo];
-                                [content setNeedsDisplay];
-                            });
-                        });
+                //local versus online images
+                NSString *imgFileName = [imageInfo objectForKey:@"fileName"];
+                NSString *fileNamePrefix = [imgFileName substringToIndex:[HTTP_PREFIX length]];
+
+                if(imgLocation >= textPos && imgLocation < textPos + frameRange.length) {
+                    NSLog(@"imgFileName %@ exists in column between text post %d and %ld", imgFileName, textPos, (textPos + frameRange.length));
+                    UIImage *img = nil;
+                    
+                    //remote image; load in async
+                    if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
+//                        //remote images are unique per chapter, so if it's in the cache can reuse it
+//                        img = [[CTEMediaCache sharedMediaCache] getImage:imgFileName];
+//                        if(!img) {
+//                            NSLog(@"Image %@ doesn't exist; loading it in...", imgFileName);
+//                            dispatch_queue_t queue = dispatch_queue_create([imgFileName UTF8String], NULL);
+//                            dispatch_async(queue, ^{
+//                                NSURL *url = [NSURL URLWithString:imgFileName];
+//                                NSData *data = [NSData dataWithContentsOfURL:url];
+//                                UIImage *imgLoaded = [UIImage imageWithData:data];
+//                                
+//                                //error handling
+//                                if (!imgLoaded) {
+//                                    imgLoaded = [UIImage imageNamed:@"ImageError.png"];
+//                                }
+//                                
+//                                //update image load count on main thread
+//                                dispatch_async(main, ^{
+//                                    NSLog(@"Image %@ loaded in; updating column", imgFileName);
+//                                    [[CTEMediaCache sharedMediaCache] addImage:imgLoaded withKey:imgFileName];
+//                                    [self addImage:imgLoaded forColumn:content frameRef:frameRef imageInfo:imageInfo];
+//                                    [content setNeedsDisplay];
+//                                });
+//                            });
+//                        }
+//                        else {
+//                            NSLog(@"Image %@ cached; updating column", imgFileName);
+//                            [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
+//                            [content setNeedsDisplay];
+//                        }
                     }
                     else {
-                        NSLog(@"Image %@ cached; updating column", imgFileName);
+                        img = [UIImage imageNamed:imgFileName];
+                        NSLog(@"LOCAL image %@ loaded in; updating column", imgFileName);
                         [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
-                        [content setNeedsDisplay];
                     }
                 }
-                else {
-                    img = [UIImage imageNamed:imgFileName];
-                    NSLog(@"LOCAL image %@ loaded in; updating column", imgFileName);
-                    [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
-                    [content setNeedsDisplay];
-                }
             }
+            
+            //prepare for next frame
+            content.textStart = textPos;
+            content.textEnd = textPos + frameRange.length;
+            textPos+= frameRange.length;
+            
+            CFRelease(frameRef);
+            CFRelease(path);
+            
+            columnIndex++;
         }
-        
-        //prepare for next frame
-        content.textStart = textPos;
-        content.textEnd = textPos + frameRange.length;
-        textPos+= frameRange.length;
-        
-        CFRelease(frameRef);
-        CFRelease(path);
-        
-        columnIndex++;
-    }
+    
     
     //set the total width of the scroll view
     self.totalPages = (columnIndex+1) / pageColumnCount;
@@ -180,7 +186,6 @@
         [subview removeFromSuperview];
     }
     [self.columns removeAllObjects];
-    [self.columnsRendered removeAllObjects];
     [self.imageMetadatas removeAllObjects];
     [self.links removeAllObjects];
     [[CTEMediaCache sharedMediaCache] clearCache];
@@ -189,26 +194,19 @@
 //force a column refresh
 //only redraw columns that haven't been drawn yet and are one before or after the current column's page
 - (void)redrawFrames {
-    NSLog(@"CTView: START redrawFrames");
-    int index = 0;
-    for (CTEColumnView *columnView in self.columns) {
-        BOOL wasPageRendered = [[self.columnsRendered objectAtIndex:index] boolValue];
-        BOOL shouldRender = [columnView shouldDrawRect:[columnView bounds]];
-        if(shouldRender && !wasPageRendered) {
-            NSLog(@"column at index %d needs display", index);
-            [columnView setNeedsDisplay];
-            [self.columnsRendered replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:YES]];
-        }
-        index++;
-    }
-    NSLog(@"CTView: END redrawFrames");
-}
-
-//sets text & image properties, and kicks off image load
-- (void)setAttString:(NSAttributedString *)string withImages:(NSArray*)imgs andLinks:(NSArray*)lnks {
-    self.attString = string;
-    self.imageMetadatas = [NSMutableArray arrayWithArray:imgs];
-    self.links = [NSMutableArray arrayWithArray:lnks];
+//    NSLog(@"CTView: START redrawFrames");
+//    int index = 0;
+//    for (CTEColumnView *columnView in self.columns) {
+//        BOOL wasPageRendered = [[self.columnsRendered objectAtIndex:index] boolValue];
+//        BOOL shouldRender = [columnView shouldDrawRect:[columnView bounds]];
+//        if(shouldRender && !wasPageRendered) {
+//            NSLog(@"column at index %d needs display", index);
+//            [columnView setNeedsDisplay];
+//            [self.columnsRendered replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:YES]];
+//        }
+//        index++;
+//    }
+//    NSLog(@"CTView: END redrawFrames");
 }
 
 //inserts image and associated info into correct CTColumnView

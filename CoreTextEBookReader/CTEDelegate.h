@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "CTEContentViewController.h"
 #import "CTEMenuViewController.h"
+#import "CTEMarkupParser.h"
 
 @interface CTEDelegate : NSObject
 
 @property (strong, nonatomic) CTEContentViewController *contentViewController;
 @property (strong, nonatomic) CTEMenuViewController *menuViewController;
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) CTEMarkupParser *parser;
 
 + (CTEDelegate *)delegateWithWindow:(UIWindow *)window andChapters:(NSArray *)chapters;
 

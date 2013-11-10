@@ -8,6 +8,7 @@
 
 #import "CTEColumnView.h"
 #import "CTEUtils.h"
+#import "CTEView.h"
 
 @interface CTEColumnView()
 @property NSArray *spinnerViews;
@@ -172,29 +173,30 @@
 
 //Returns whether current column view should redraw
 - (BOOL)shouldDrawRect:(CGRect)rect {
-    BOOL shouldDraw = YES;
-    CTEView *scrollView = (CTEView *)[self superview];
-    CGRect scrollBounds = [scrollView bounds];
-    CGRect selfFrame = [self frame];
-    CGRect visibleScrollRect = CGRectMake(scrollBounds.origin.x, scrollBounds.origin.y,
-                                          scrollBounds.size.width, scrollBounds.size.height);
-    BOOL intersects = CGRectIntersectsRect(visibleScrollRect, selfFrame);
-    
-    //determine if it's the page before or page after the visible content
-    CGFloat visibleOriginX = visibleScrollRect.origin.x;
-    CGFloat pageWidth = scrollBounds.size.width;
-    CGFloat originX = selfFrame.origin.x;
-    CGFloat pageBeforeOriginX = visibleOriginX - pageWidth;
-    CGFloat pageAfterOriginX = visibleOriginX + pageWidth;
-    BOOL isPageBefore = originX >= pageBeforeOriginX && originX < visibleOriginX;
-    BOOL isPageAfter = originX >= pageAfterOriginX && originX < (pageAfterOriginX + pageWidth);
-    
-    //don't draw if it's not visible or page before or after visible
-    if(!intersects && !(isPageBefore || isPageAfter)) {
-        shouldDraw = NO;
-    }
-    
-    return shouldDraw;
+//    BOOL shouldDraw = YES;
+//    CTEView *scrollView = (CTEView *)[self superview];
+//    CGRect scrollBounds = [scrollView bounds];
+//    CGRect selfFrame = [self frame];
+//    CGRect visibleScrollRect = CGRectMake(scrollBounds.origin.x, scrollBounds.origin.y,
+//                                          scrollBounds.size.width, scrollBounds.size.height);
+//    BOOL intersects = CGRectIntersectsRect(visibleScrollRect, selfFrame);
+//    
+//    //determine if it's the page before or page after the visible content
+//    CGFloat visibleOriginX = visibleScrollRect.origin.x;
+//    CGFloat pageWidth = scrollBounds.size.width;
+//    CGFloat originX = selfFrame.origin.x;
+//    CGFloat pageBeforeOriginX = visibleOriginX - pageWidth;
+//    CGFloat pageAfterOriginX = visibleOriginX + pageWidth;
+//    BOOL isPageBefore = originX >= pageBeforeOriginX && originX < visibleOriginX;
+//    BOOL isPageAfter = originX >= pageAfterOriginX && originX < (pageAfterOriginX + pageWidth);
+//    
+//    //don't draw if it's not visible or page before or after visible
+//    if(!intersects && !(isPageBefore || isPageAfter)) {
+//        shouldDraw = NO;
+//    }
+//    
+//    return shouldDraw;
+    return YES;
 }
 
 //drawing method

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
@@ -8,9 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CTEContentViewController">
             <connections>
                 <outlet property="ctView" destination="181" id="186"/>
-                <outlet property="currentPageLabel" destination="204" id="213"/>
-                <outlet property="pageControl" destination="194" id="198"/>
-                <outlet property="pagesRemainingLabel" destination="209" id="214"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -19,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="181" customClass="CTEView">
+                <view contentMode="scaleToFill" id="181" customClass="CTEView">
                     <rect key="frame" x="0.0" y="58" width="768" height="929"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -27,49 +24,8 @@
                         <outlet property="delegate" destination="-1" id="199"/>
                     </connections>
                 </view>
-                <pageControl contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="194">
-                    <rect key="frame" x="365" y="987" width="39" height="37"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <color key="currentPageIndicatorTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <action selector="pageControlValueChanged:" destination="-1" eventType="valueChanged" id="203"/>
-                    </connections>
-                </pageControl>
-                <label opaque="NO" clipsSubviews="YES" contentMode="left" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="204">
-                    <rect key="frame" x="315" y="995" width="42" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="42" id="208"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" contentMode="left" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="209">
-                    <rect key="frame" x="412" y="995" width="42" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="42" id="212"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="181" firstAttribute="top" secondItem="1" secondAttribute="top" constant="58" id="189"/>
-                <constraint firstItem="181" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="192"/>
-                <constraint firstItem="181" firstAttribute="trailing" secondItem="1" secondAttribute="trailing" id="193"/>
-                <constraint firstItem="194" firstAttribute="centerX" secondItem="181" secondAttribute="centerX" id="195"/>
-                <constraint firstItem="194" firstAttribute="bottom" secondItem="1" secondAttribute="bottom" id="196"/>
-                <constraint firstItem="204" firstAttribute="centerY" secondItem="194" secondAttribute="centerY" id="205"/>
-                <constraint firstItem="204" firstAttribute="top" secondItem="181" secondAttribute="bottom" constant="8" symbolic="YES" id="206"/>
-                <constraint firstItem="194" firstAttribute="leading" secondItem="204" secondAttribute="trailing" constant="8" symbolic="YES" id="207"/>
-                <constraint firstItem="209" firstAttribute="baseline" secondItem="204" secondAttribute="baseline" id="210"/>
-                <constraint firstItem="209" firstAttribute="leading" secondItem="194" secondAttribute="trailing" constant="8" symbolic="YES" id="211"/>
-            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
         </view>
     </objects>

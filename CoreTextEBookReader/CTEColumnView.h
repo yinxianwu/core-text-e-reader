@@ -10,7 +10,8 @@
 #import <CoreText/CoreText.h>
 #import "MediaPlayer/MediaPlayer.h"
 #import "CTEImageViewController.h"
-#import "CTEView.h"
+
+@class CTEView;
 
 @interface CTEColumnView : UIView {
     id ctFrame;

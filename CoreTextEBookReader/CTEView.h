@@ -1,5 +1,5 @@
 //
-//  CTView.h
+//  CTEView
 //  CoreTextEBookReader
 //
 //  Created by David Jedeikin on 4/14/13.
@@ -7,17 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CTEColumnView.h"
+
+@class CTEColumnView;
 
 @interface CTEView : UIScrollView {
     float frameXOffset;
     float frameYOffset;
 }
 
+extern NSString *const HTTP_PREFIX;
+
 @property (weak, nonatomic) UIViewController *modalTarget;
 @property (strong, nonatomic) NSAttributedString *attString;
 @property (strong, nonatomic) NSMutableArray *columns;
-@property (strong, nonatomic) NSMutableArray *columnsRendered;
 @property (strong, nonatomic) NSMutableArray *imageMetadatas;
 @property (strong, nonatomic) NSMutableArray *links;
 @property (nonatomic) int totalPages;

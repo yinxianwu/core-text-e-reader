@@ -21,24 +21,34 @@
 
 @implementation CTEContentViewController
 
-@synthesize currentChapter = _currentChapter;
-@synthesize previousChapter = _previousChapter;
+//@synthesize currentChapter = _currentChapter;
+//@synthesize previousChapter = _previousChapter;
 
 @synthesize ctView;
-@synthesize pageControl;
-@synthesize stepper;
-@synthesize parser;
+//@synthesize pageControl;
+//@synthesize stepper;
+//@synthesize parser;
 @synthesize spinnerViews;
 @synthesize decelOffsetX;
-@synthesize currentPageLabel;
-@synthesize pagesRemainingLabel;
+//@synthesize currentPageLabel;
+//@synthesize pagesRemainingLabel;
 @synthesize navBar;
+@synthesize content;
+@synthesize images;
+@synthesize links;
 
 //Constructor
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil chapter:(id<CTEChapter>)chapter {
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+              content:(NSAttributedString *)allContent
+               images:(NSArray *)allImages
+                links:(NSArray *)allLinks {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    _currentChapter = chapter;
-    self.parser = [[CTEMarkupParser alloc] init];
+    self.content = allContent;
+    self.images = allImages;
+    self.links = allLinks;
+//    _currentChapter = chapter;
+//    self.parser = [[CTEMarkupParser alloc] init];
     self.decelOffsetX = 0.0f;
     
     return self;
@@ -48,8 +58,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.ctView setAttString:self.content withImages:self.images andLinks:self.links];
+    [self.ctView buildFrames];
+
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
-    
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat navBarHeight = 0.0f;
@@ -114,40 +126,40 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    //don't reload if it's the same chapter
-    if(self.previousChapter == self.currentChapter) {
-        return;
-    }
+//    //don't reload if it's the same chapter
+//    if(self.previousChapter == self.currentChapter) {
+//        return;
+//    }
     
     //nav bar title
     UINavigationItem *navItem = [[navBar items] objectAtIndex:0];
-    [navItem setTitle:_currentChapter.title];
+//    [navItem setTitle:_currentChapter.title];
     
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    [ctView clearFrames];
-    [parser resetParser];
+//    CGRect screenRect = [[UIScreen mainScreen] bounds];
+//    [ctView clearFrames];
+//    [parser resetParser];
     
     //parse to derive attributed string
-    NSAttributedString *attString = [parser attrStringFromMarkup:self.currentChapter.body screenSize:screenRect];
-    self.ctView.modalTarget = self; //TODO this should be redone as delegate pattern
-    [self.ctView setAttString:attString withImages:parser.images andLinks:parser.links];
-    [self.ctView buildFrames];
+//    NSAttributedString *attString = [parser attrStringFromMarkup:self.currentChapter.body screenSize:screenRect];
+//    self.ctView.modalTarget = self; //TODO this should be redone as delegate pattern
+//    [self.ctView setAttString:attString withImages:parser.images andLinks:parser.links];
+//    [self.ctView buildFrames];
     
-    //different impls for paging
-    if(self.pageControl) {
-        self.pageControl.numberOfPages = [ctView totalPages];
-        self.pageControl.currentPage = 0;
-    }
-    else if(self.stepper) {
-        self.stepper.maximumValue = [ctView totalPages];
-        self.stepper.minimumValue = 0.0;
-        self.stepper.value = 0.0;
-    }
-    
-    //init page labels
-    NSString *pagesRemaining = [NSString stringWithFormat:@"%d", [ctView totalPages]];
-    [currentPageLabel setText:@"1"];
-    [pagesRemainingLabel setText:pagesRemaining];
+//    //different impls for paging
+//    if(self.pageControl) {
+//        self.pageControl.numberOfPages = [ctView totalPages];
+//        self.pageControl.currentPage = 0;
+//    }
+//    else if(self.stepper) {
+//        self.stepper.maximumValue = [ctView totalPages];
+//        self.stepper.minimumValue = 0.0;
+//        self.stepper.value = 0.0;
+//    }
+//    
+//    //init page labels
+//    NSString *pagesRemaining = [NSString stringWithFormat:@"%d", [ctView totalPages]];
+//    [currentPageLabel setText:@"1"];
+//    [pagesRemainingLabel setText:pagesRemaining];
 }
 
 //if an image view, caches the current index to prevent reloads
@@ -161,49 +173,49 @@
 
 //Respond to scroll events from the CTView
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
-    // Update the page when more than 50% of the previous/next page is visible
-    CGFloat pageWidth = self.ctView.frame.size.width;
-    int page = floor((self.decelOffsetX - pageWidth / 2) / pageWidth) + 1;
-    
-    //different impls for paging
-    if(self.pageControl) {
-        self.pageControl.currentPage = page;
-    }
-    else if(self.stepper) {
-        self.stepper.value = page;
-    }
-    
-    //update page labels
-    double currentPage = 0.0;
-    if(self.pageControl) {
-        currentPage = self.pageControl.currentPage;
-    }
-    else if(self.stepper) {
-        currentPage = self.stepper.value;
-    }
-    int currentPageInt = currentPage + 1;
-    int pagesRemainingInt = [ctView totalPages] - currentPage;
-    NSString *pagesRemainingStr = [NSString stringWithFormat:@"%d", pagesRemainingInt];
-    NSString *currentPageStr = [NSString stringWithFormat:@"%d", currentPageInt];
-    [currentPageLabel setText:currentPageStr];
-    [pagesRemainingLabel setText:pagesRemainingStr];
+//    // Update the page when more than 50% of the previous/next page is visible
+//    CGFloat pageWidth = self.ctView.frame.size.width;
+//    int page = floor((self.decelOffsetX - pageWidth / 2) / pageWidth) + 1;
+//    
+//    //different impls for paging
+//    if(self.pageControl) {
+//        self.pageControl.currentPage = page;
+//    }
+//    else if(self.stepper) {
+//        self.stepper.value = page;
+//    }
+//    
+//    //update page labels
+//    double currentPage = 0.0;
+//    if(self.pageControl) {
+//        currentPage = self.pageControl.currentPage;
+//    }
+//    else if(self.stepper) {
+//        currentPage = self.stepper.value;
+//    }
+//    int currentPageInt = currentPage + 1;
+//    int pagesRemainingInt = [ctView totalPages] - currentPage;
+//    NSString *pagesRemainingStr = [NSString stringWithFormat:@"%d", pagesRemainingInt];
+//    NSString *currentPageStr = [NSString stringWithFormat:@"%d", currentPageInt];
+//    [currentPageLabel setText:currentPageStr];
+//    [pagesRemainingLabel setText:pagesRemainingStr];
 }
 
 //Respond to page control changes
 - (IBAction)pageControlValueChanged:(id)sender {
-    CGRect frame;
-    // update the scroll view to the appropriate page
-    double currentPage = 0.0;
-    if(sender == self.pageControl) {
-        currentPage = self.pageControl.currentPage;
-    }
-    else if(sender == self.stepper) {
-        currentPage = self.stepper.value;
-    }
-    frame.origin.x = self.ctView.frame.size.width * currentPage;
-    frame.origin.y = 0;
-    frame.size = self.ctView.frame.size;
-    [self.ctView scrollRectToVisible:frame animated:YES];
+//    CGRect frame;
+//    // update the scroll view to the appropriate page
+//    double currentPage = 0.0;
+//    if(sender == self.pageControl) {
+//        currentPage = self.pageControl.currentPage;
+//    }
+//    else if(sender == self.stepper) {
+//        currentPage = self.stepper.value;
+//    }
+//    frame.origin.x = self.ctView.frame.size.width * currentPage;
+//    frame.origin.y = 0;
+//    frame.size = self.ctView.frame.size;
+//    [self.ctView scrollRectToVisible:frame animated:YES];
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
@@ -212,61 +224,61 @@
 
 //performs column redraw
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    int totalPages = [ctView totalPages];
-    int currentPage = self.pageControl.currentPage;
-    float currentOffsetX = self.ctView.contentOffset.x;
-    if(decelOffsetX < currentOffsetX && (currentPage + 1 == totalPages)) {
-        NSLog(@"END CHAPTER");
-    }
-    [ctView redrawFrames];
+//    int totalPages = [ctView totalPages];
+//    int currentPage = self.pageControl.currentPage;
+//    float currentOffsetX = self.ctView.contentOffset.x;
+//    if(decelOffsetX < currentOffsetX && (currentPage + 1 == totalPages)) {
+//        NSLog(@"END CHAPTER");
+//    }
+//    [ctView redrawFrames];
 }
 
 //performs column redraw
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    [ctView redrawFrames];
+//    [ctView redrawFrames];
 }
 
 //detect touches on page labels
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
-    [super touchesBegan:touches withEvent:event];
-    UITouch *touch = [touches anyObject];
-    UIView * view = touch.view;
-    int pageDirection = 0;
-    
-    if(view == self.currentPageLabel) {
-        pageDirection--;
-    }
-    else if(view == self.pagesRemainingLabel) {
-        pageDirection++;
-    }
-    //don't do anything if a page control wasn't touched
-    else {
-        return;
-    }
-    
-    CGRect frame;
-    // update the page controls to the appropriate page
-    double currentPage = 0.0;
-    if(self.pageControl) {
-        self.pageControl.currentPage = self.pageControl.currentPage + pageDirection;
-        currentPage = self.pageControl.currentPage;
-    }
-    else if(self.stepper) {
-        self.pageControl.currentPage = self.stepper.value + pageDirection;
-        currentPage = self.stepper.value;
-    }
-    frame.origin.x = self.ctView.frame.size.width * currentPage;
-    frame.origin.y = 0;
-    frame.size = self.ctView.frame.size;
-    [self.ctView scrollRectToVisible:frame animated:YES];
+//    [super touchesBegan:touches withEvent:event];
+//    UITouch *touch = [touches anyObject];
+//    UIView * view = touch.view;
+//    int pageDirection = 0;
+//    
+//    if(view == self.currentPageLabel) {
+//        pageDirection--;
+//    }
+//    else if(view == self.pagesRemainingLabel) {
+//        pageDirection++;
+//    }
+//    //don't do anything if a page control wasn't touched
+//    else {
+//        return;
+//    }
+//    
+//    CGRect frame;
+//    // update the page controls to the appropriate page
+//    double currentPage = 0.0;
+//    if(self.pageControl) {
+//        self.pageControl.currentPage = self.pageControl.currentPage + pageDirection;
+//        currentPage = self.pageControl.currentPage;
+//    }
+//    else if(self.stepper) {
+//        self.pageControl.currentPage = self.stepper.value + pageDirection;
+//        currentPage = self.stepper.value;
+//    }
+//    frame.origin.x = self.ctView.frame.size.width * currentPage;
+//    frame.origin.y = 0;
+//    frame.size = self.ctView.frame.size;
+//    [self.ctView scrollRectToVisible:frame animated:YES];
     
 }
 
 //sets current chapter and caches previous
-- (void)setCurrentChapter:(id<CTEChapter>) chapter {
-    _previousChapter = _currentChapter;
-    _currentChapter = chapter;
-}
+//- (void)setCurrentChapter:(id<CTEChapter>) chapter {
+//    _previousChapter = _currentChapter;
+//    _currentChapter = chapter;
+//}
 
 //TODO other orientations
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

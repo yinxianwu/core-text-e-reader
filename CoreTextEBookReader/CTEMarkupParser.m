@@ -53,7 +53,7 @@ static CGFloat widthCallback( void* ref ){
 -(NSAttributedString*)attrStringFromMarkup:(NSString *)markup screenSize:(CGRect)size {
     NSLog(@"MarkupParser: START attrStringFromMarkup");
 
-    NSMutableAttributedString* aString = [[NSMutableAttributedString alloc] initWithString:@""];
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:@""];
     NSRegularExpression* regex = [[NSRegularExpression alloc]
                                   initWithPattern:@"(.*?)(<[^>]+>|\\Z)"
                                   options:NSRegularExpressionCaseInsensitive|NSRegularExpressionDotMatchesLineSeparators
@@ -84,7 +84,7 @@ static CGFloat widthCallback( void* ref ){
                                (__bridge id)justifiedParagraphStyle, (NSString*)kCTParagraphStyleAttributeName,
                                nil];
         
-        [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[parts objectAtIndex:0] attributes:attrs]];
+        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:[parts objectAtIndex:0] attributes:attrs]];
         
         CFRelease(fontRef);
         
@@ -143,7 +143,7 @@ static CGFloat widthCallback( void* ref ){
                                               range:NSMakeRange(0, [tag length])
                                          usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
                                              NSString *href = [tag substringWithRange:match.range];
-                                             long locationInt = [aString length];// + [href length];
+                                             long locationInt = [attString length];// + [href length];
                                              NSNumber *location = [NSNumber numberWithLong:locationInt];
                                              self.color = [UIColor blueColor]; //link color
                                              //add the link to the store
@@ -171,23 +171,23 @@ static CGFloat widthCallback( void* ref ){
             //use the lesser of screen width & height or specified width & height
             if ([tag hasPrefix:@"img"]) {
                 //add a space to the text so that it can call the delegate
-                NSDictionary *imageAttr = [self imageAttrDictionary:tag atPosition:[aString length] screenSize:size];
-                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:imageAttr]];
+                NSDictionary *imageAttr = [self imageAttrDictionary:tag atPosition:[attString length] screenSize:size];
+                [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:imageAttr]];
             }
             
             //movie parsing
             //similar to image, with extra sugar
             if ([tag hasPrefix:@"mov"]) {
                 //add a space to the text so that it can call the delegate
-                NSDictionary *movieAttr = [self imageAttrDictionary:tag atPosition:[aString length] screenSize:size];
-                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:movieAttr]];
+                NSDictionary *movieAttr = [self imageAttrDictionary:tag atPosition:[attString length] screenSize:size];
+                [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:movieAttr]];
             }
         }
     }
     
     NSLog(@"MarkupParser: END attrStringFromMarkup");
     
-    return (NSAttributedString*)aString;
+    return (NSAttributedString*)attString;
 }
 
 //image & movie parse

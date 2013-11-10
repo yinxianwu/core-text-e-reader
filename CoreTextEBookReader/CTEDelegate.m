@@ -16,6 +16,7 @@
 @synthesize contentViewController;
 @synthesize menuViewController;
 @synthesize window;
+@synthesize parser;
 
 + (CTEDelegate *)delegateWithWindow:(UIWindow *)appWindow andChapters:(NSArray *)chapters {
     CTEDelegate *delegate = [[CTEDelegate alloc] init];
@@ -30,16 +31,33 @@
         // windows root view controller whenever required
         CTEMenuViewController *menuViewCtrlr = nil;
         
+        //create att str for all chapters
+        delegate.parser = [[CTEMarkupParser alloc] init];
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        NSString *allChapsBody = @"";
+        for(id<CTEChapter>chapter in chapters) {
+            NSString *chapterWithHeading = [NSString stringWithFormat:@"%@\n%@\n\n%@\n\n", [chapter title], [chapter subtitle], [chapter body]];
+            allChapsBody = [allChapsBody stringByAppendingString:chapterWithHeading];
+        }
+        NSAttributedString *contentAttStr = [delegate.parser attrStringFromMarkup:allChapsBody
+                                                                       screenSize:screenRect];
+        NSArray *allImages = delegate.parser.images;
+        NSArray *allLinks = delegate.parser.links;
+        
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPadView"
                                                                           bundle:nil
-                                                                         chapter:firstChapter];
+                                                                         content:contentAttStr
+                                                                          images:allImages
+                                                                           links:allLinks];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPadView" bundle:nil];
         }
         else {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPhoneView"
                                                                           bundle:nil
-                                                                         chapter:firstChapter];
+                                                                         content:contentAttStr
+                                                                          images:allImages
+                                                                           links:allLinks];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPhoneView" bundle:nil];
         }
         
@@ -48,11 +66,11 @@
         delegate.menuViewController.chapterData = chapters;
         
         [[NSNotificationCenter defaultCenter] addObserver:delegate
-                                                 selector:@selector(showSideMenu:)
+                                                 selector:@selector(sideMenuWillBeShown:)
                                                      name:ShowSideMenu
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:delegate
-                                                 selector:@selector(hideSideMenu:)
+                                                 selector:@selector(sideMenuWasHidden:)
                                                      name:HideSideMenu
                                                    object:nil];
         
@@ -64,7 +82,7 @@
 }
 
 //Side menu actions
-- (void)showSideMenu:(NSNotification *)notification {
+- (void)sideMenuWillBeShown:(NSNotification *)notification {
     //before swaping the views, we'll take a "screenshot" of the current view
     //by rendering its CALayer into the an ImageContext then saving that off to a UIImage
     CGSize viewSize = self.contentViewController.view.bounds.size;
@@ -82,12 +100,12 @@
 }
 
 //Side menu actions
-- (void)hideSideMenu:(NSNotification *)notification {
+- (void)sideMenuWasHidden:(NSNotification *)notification {
     //all animation takes place elsewhere. When this gets called just swap the contentViewController
     //if a new chapter is chosen, display that one
     id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
     CTEContentViewController *chapterViewController = (CTEContentViewController *)self.contentViewController;
-    chapterViewController.currentChapter = chapter;
+//    chapterViewController.currentChapter = chapter;
     self.window.rootViewController = self.contentViewController;
 }
 
