@@ -18,8 +18,9 @@
 //@property (nonatomic, strong) id <CTEChapter> previousChapter;
 
 @property (nonatomic, strong) UINavigationBar *navBar;
-@property (nonatomic, strong) IBOutlet CTEView *cteView;
-@property (nonatomic, strong) NSAttributedString *content;
+//@property (nonatomic, strong) IBOutlet CTEView *cteView;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) NSDictionary *content;
 @property (nonatomic, strong) NSArray *images;
 @property (nonatomic, strong) NSArray *links;
 //@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
@@ -29,7 +30,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-              content:(NSAttributedString *)allContent
+              content:(NSDictionary *)attStrs
                images:(NSArray *)allImages
                 links:(NSArray *)allLinks;
 - (IBAction)pageControlValueChanged:(id)sender;

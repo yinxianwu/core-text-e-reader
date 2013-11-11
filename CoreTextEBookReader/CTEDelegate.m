@@ -34,23 +34,19 @@
         //create att str for all chapters
         delegate.parser = [[CTEMarkupParser alloc] init];
         CGRect screenRect = [[UIScreen mainScreen] bounds];
-        NSString *allChapsBody = @"";
+        NSMutableDictionary *allAttStrs = [NSMutableDictionary dictionaryWithCapacity:chapters.count];
         for(id<CTEChapter>chapter in chapters) {
-//            NSString *chapterWithHeading = [NSString stringWithFormat:@"<font color=\"black\" strokeColor=\"gray\" face=\"Arial Bold\">%@\n%@\n\n%@\n\n",
-//                                            [chapter title],
-//                                            [chapter subtitle],
-//                                            [chapter body]];
-            allChapsBody = [allChapsBody stringByAppendingString:[chapter body]];
+            NSAttributedString *contentAttStr = [delegate.parser attrStringFromMarkup:[chapter body]
+                                                                           screenSize:screenRect];
+            [allAttStrs setObject:contentAttStr forKey:[chapter id]];
         }
-        NSAttributedString *contentAttStr = [delegate.parser attrStringFromMarkup:allChapsBody
-                                                                       screenSize:screenRect];
         NSArray *allImages = delegate.parser.images;
         NSArray *allLinks = delegate.parser.links;
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPadView"
                                                                           bundle:nil
-                                                                         content:contentAttStr
+                                                                         content:allAttStrs
                                                                           images:allImages
                                                                            links:allLinks];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPadView" bundle:nil];
@@ -58,7 +54,7 @@
         else {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPhoneView"
                                                                           bundle:nil
-                                                                         content:contentAttStr
+                                                                         content:allAttStrs
                                                                           images:allImages
                                                                            links:allLinks];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPhoneView" bundle:nil];

@@ -24,7 +24,8 @@
 //@synthesize currentChapter = _currentChapter;
 //@synthesize previousChapter = _previousChapter;
 
-@synthesize cteView;
+//@synthesize cteView;
+@synthesize scrollView;
 //@synthesize pageControl;
 //@synthesize stepper;
 //@synthesize parser;
@@ -40,7 +41,7 @@
 //Constructor
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-              content:(NSAttributedString *)allContent
+              content:(NSDictionary *)allContent
                images:(NSArray *)allImages
                 links:(NSArray *)allLinks {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -58,8 +59,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.cteView setAttString:self.content withImages:self.images andLinks:self.links];
-    [self.cteView buildFrames];
+    //sort dictionary IDs TODO
+    for(id key in self.content) {
+        NSAttributedString *chapterAttStr = (NSAttributedString *)[self.content objectForKey:key];
+        CTEView *chapterView = [[CTEView alloc] init];
+        
+        [chapterView setAttString:chapterAttStr withImages:self.images andLinks:self.links];
+        [chapterView buildFrames];
+        [self.scrollView addSubview:chapterView];
+    }
 
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -70,12 +78,12 @@
         
         //height adjustment for first time view is shown
         //this is an issue when displaying on 3.5-inch displays
-        CGRect viewRect = [self.view bounds];
-        if(viewRect.size.height > screenRect.size.height) {
-            CGRect ctViewRect = [cteView bounds];
-            CGRect ctViewNewRect = CGRectMake(ctViewRect.origin.x, ctViewRect.origin.y, ctViewRect.size.width, screenRect.size.height - 88);
-            [cteView setFrame:ctViewNewRect];
-        }
+//        CGRect viewRect = [self.view bounds];
+//        if(viewRect.size.height > screenRect.size.height) {
+//            CGRect ctViewRect = [cteView bounds];
+//            CGRect ctViewNewRect = CGRectMake(ctViewRect.origin.x, ctViewRect.origin.y, ctViewRect.size.width, screenRect.size.height - 88);
+//            [cteView setFrame:ctViewNewRect];
+//        }
     }
     else {
         navBarHeight = 64;
@@ -219,7 +227,7 @@
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    self.decelOffsetX = self.cteView.contentOffset.x;
+//    self.decelOffsetX = self.cteView.contentOffset.x;
 }
 
 //performs column redraw

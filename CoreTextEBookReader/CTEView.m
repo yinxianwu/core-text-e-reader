@@ -59,15 +59,16 @@ NSString *const HTTP_PREFIX = @"http://";
     self.pagingEnabled = YES;
     self.columns = [NSMutableArray array];
     
-    CGMutablePathRef path = CGPathCreateMutable(); 
-    CGRect textFrame = CGRectInset(self.bounds, frameXOffset, frameYOffset);
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGRect textFrame = CGRectInset(screenBounds, frameXOffset, frameYOffset);
     CGPathAddRect(path, NULL, textFrame);
     
     int columnIndex = 0;
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
     int textPos = 0;
     
-    while (textPos < [attString length]) {
+    while (textPos < [self.attString length]) {
         NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
         
         CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / pageColumnCount), 20 );
@@ -81,7 +82,8 @@ NSString *const HTTP_PREFIX = @"http://";
         CFRange frameRange = CTFrameGetVisibleStringRange(frameRef);
         
         //create an empty column view
-        CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
+        CGSize columnSize = screenBounds.size;//self.contentSize;
+        CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, columnSize.width, columnSize.height)];
         content.backgroundColor = [UIColor clearColor];
         content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height);
         content.attString = attString; //for link and image touches
