@@ -21,7 +21,6 @@
 
 @implementation CTEContentViewController
 
-//@synthesize currentChapter = _currentChapter;
 //@synthesize previousChapter = _previousChapter;
 
 @synthesize cteView;
@@ -33,18 +32,23 @@
 //@synthesize currentPageLabel;
 //@synthesize pagesRemainingLabel;
 @synthesize navBar;
-@synthesize content;
+
+@synthesize currentChapter = _currentChapter;
+@synthesize chapters;
+@synthesize attStrings;
 @synthesize images;
 @synthesize links;
 
 //Constructor
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-              content:(NSAttributedString *)allContent
-               images:(NSArray *)allImages
-                links:(NSArray *)allLinks {
+             chapters:(NSArray *)allChapters
+           attStrings:(NSDictionary *)allAttStrings
+               images:(NSDictionary *)allImages
+                links:(NSDictionary *)allLinks {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    self.content = allContent;
+    self.chapters = allChapters;
+    self.attStrings = allAttStrings;
     self.images = allImages;
     self.links = allLinks;
 //    _currentChapter = chapter;
@@ -58,7 +62,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.cteView setAttString:self.content withImages:self.images andLinks:self.links];
+    _currentChapter = (id<CTEChapter>)[self.chapters firstObject];
+    NSAttributedString *attStringForChapter = (NSAttributedString *)[self.attStrings objectForKey:[_currentChapter id]];
+    NSArray *imagesForChapter = (NSArray *)[self.images objectForKey:[_currentChapter id]];
+    NSArray *linksForChapter = (NSArray *)[self.links objectForKey:[_currentChapter id]];
+    
+    [self.cteView setAttString:attStringForChapter
+                    withImages:imagesForChapter
+                      andLinks:linksForChapter];
     [self.cteView buildFrames];
 
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);

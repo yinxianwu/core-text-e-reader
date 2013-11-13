@@ -14,14 +14,16 @@
 
 @property (nonatomic) NSInteger contentIndex;
 
-//@property (nonatomic, strong) id <CTEChapter> currentChapter;
+@property (nonatomic, strong) id <CTEChapter> currentChapter;
 //@property (nonatomic, strong) id <CTEChapter> previousChapter;
 
 @property (nonatomic, strong) UINavigationBar *navBar;
 @property (nonatomic, strong) IBOutlet CTEView *cteView;
-@property (nonatomic, strong) NSAttributedString *content;
-@property (nonatomic, strong) NSArray *images;
-@property (nonatomic, strong) NSArray *links;
+
+@property (nonatomic, strong) NSArray *chapters;
+@property (nonatomic, strong) NSDictionary *attStrings;
+@property (nonatomic, strong) NSDictionary *images;
+@property (nonatomic, strong) NSDictionary *links;
 //@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 //@property (nonatomic, strong) IBOutlet UIStepper *stepper;
 //@property (nonatomic, strong) IBOutlet UILabel *currentPageLabel;
@@ -29,9 +31,10 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-              content:(NSAttributedString *)allContent
-               images:(NSArray *)allImages
-                links:(NSArray *)allLinks;
+             chapters:(NSArray *)allChapters
+           attStrings:(NSDictionary *)allAttStrings
+               images:(NSDictionary *)allImages
+                links:(NSDictionary *)allLinks;
 - (IBAction)pageControlValueChanged:(id)sender;
 - (void)slideMenuButtonTouched:(id)sender;
 

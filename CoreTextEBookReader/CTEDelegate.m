@@ -22,7 +22,6 @@
     CTEDelegate *delegate = [[CTEDelegate alloc] init];
     if(delegate) {
         delegate.window = appWindow;
-        id<CTEChapter> firstChapter = [chapters firstObject];
         
         // create the content view controller that contains detail content
         CTEContentViewController *contentViewCtrlr = nil;
@@ -31,36 +30,37 @@
         // windows root view controller whenever required
         CTEMenuViewController *menuViewCtrlr = nil;
         
-        //create att str for all chapters
+        //create att strs for all chapters
         delegate.parser = [[CTEMarkupParser alloc] init];
         CGRect screenRect = [[UIScreen mainScreen] bounds];
-        NSString *allChapsBody = @"";
+        NSMutableDictionary *attStrings = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+        NSMutableDictionary *images = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+        NSMutableDictionary *links = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
         for(id<CTEChapter>chapter in chapters) {
-//            NSString *chapterWithHeading = [NSString stringWithFormat:@"<font color=\"black\" strokeColor=\"gray\" face=\"Arial Bold\">%@\n%@\n\n%@\n\n",
-//                                            [chapter title],
-//                                            [chapter subtitle],
-//                                            [chapter body]];
-            allChapsBody = [allChapsBody stringByAppendingString:[chapter body]];
+            NSAttributedString *contentAttStr = [delegate.parser attrStringFromMarkup:[chapter body]
+                                                                           screenSize:screenRect];
+            [attStrings setObject:contentAttStr forKey:[chapter id]];
+            [images setObject:delegate.parser.images forKey:[chapter id]];
+            [links setObject:delegate.parser.links forKey:[chapter id]];
+            [delegate.parser resetParser];
         }
-        NSAttributedString *contentAttStr = [delegate.parser attrStringFromMarkup:allChapsBody
-                                                                       screenSize:screenRect];
-        NSArray *allImages = delegate.parser.images;
-        NSArray *allLinks = delegate.parser.links;
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPadView"
                                                                           bundle:nil
-                                                                         content:contentAttStr
-                                                                          images:allImages
-                                                                           links:allLinks];
+                                                                        chapters:chapters
+                                                                      attStrings:attStrings
+                                                                          images:images
+                                                                           links:links];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPadView" bundle:nil];
         }
         else {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPhoneView"
                                                                           bundle:nil
-                                                                         content:contentAttStr
-                                                                          images:allImages
-                                                                           links:allLinks];
+                                                                        chapters:chapters
+                                                                      attStrings:attStrings
+                                                                          images:images
+                                                                           links:links];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPhoneView" bundle:nil];
         }
         
