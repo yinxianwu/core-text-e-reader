@@ -259,7 +259,8 @@
             [newImageMetadata setValue:[NSValue valueWithCGRect:playButtonLocation] forKey:@"playButtonLocation"];
             NSMutableArray *newImageData = [NSMutableArray arrayWithArray:imageData];
             [newImageData replaceObjectAtIndex:2 withObject:newImageMetadata];
-            [self.images replaceObjectAtIndex:imageIndex withObject:newImageData];
+            //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//            [self.images replaceObjectAtIndex:imageIndex withObject:newImageData];
         }
              
         imageIndex++;

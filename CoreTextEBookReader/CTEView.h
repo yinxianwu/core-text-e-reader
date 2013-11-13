@@ -18,13 +18,17 @@
 extern NSString *const HTTP_PREFIX;
 
 @property (weak, nonatomic) UIViewController *modalTarget;
-@property (strong, nonatomic) NSAttributedString *attString;
 @property (strong, nonatomic) NSMutableArray *columns;
-@property (strong, nonatomic) NSMutableArray *imageMetadatas;
-@property (strong, nonatomic) NSMutableArray *links;
+@property (strong, nonatomic) NSArray *orderedKeys;
+@property (strong, nonatomic) NSDictionary *attStrings;
+@property (strong, nonatomic) NSDictionary *imageMetadatas;
+@property (strong, nonatomic) NSDictionary *links;
 @property (nonatomic) int totalPages;
 
-- (void)setAttString:(NSAttributedString *)attString withImages:(NSArray *)imgs andLinks:(NSArray *)lnks;
+- (void)setAttStrings:(NSDictionary *)allAttStrings
+               images:(NSDictionary *)allImages
+                links:(NSDictionary *)allLinks
+                order:(NSArray *)allKeys;
 - (void)buildFrames;
 - (void)clearFrames;
 - (void)redrawFrames;

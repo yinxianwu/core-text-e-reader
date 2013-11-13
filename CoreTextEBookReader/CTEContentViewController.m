@@ -63,13 +63,17 @@
     [super viewDidLoad];
     
     _currentChapter = (id<CTEChapter>)[self.chapters firstObject];
-    NSAttributedString *attStringForChapter = (NSAttributedString *)[self.attStrings objectForKey:[_currentChapter id]];
-    NSArray *imagesForChapter = (NSArray *)[self.images objectForKey:[_currentChapter id]];
-    NSArray *linksForChapter = (NSArray *)[self.links objectForKey:[_currentChapter id]];
-    
-    [self.cteView setAttString:attStringForChapter
-                    withImages:imagesForChapter
-                      andLinks:linksForChapter];
+//    NSAttributedString *attStringForChapter = (NSAttributedString *)[self.attStrings objectForKey:[_currentChapter id]];
+//    NSArray *imagesForChapter = (NSArray *)[self.images objectForKey:[_currentChapter id]];
+//    NSArray *linksForChapter = (NSArray *)[self.links objectForKey:[_currentChapter id]];
+    NSMutableArray *orderedSet = [NSMutableArray arrayWithCapacity:[self.chapters count]];
+    for(id<CTEChapter> chapter in self.chapters) {
+        [orderedSet addObject:[chapter id]];
+    }
+    [self.cteView setAttStrings:self.attStrings
+                         images:self.images
+                          links:self.links
+                          order:orderedSet];
     [self.cteView buildFrames];
 
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
