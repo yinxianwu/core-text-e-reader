@@ -71,6 +71,8 @@
 		68AF284E1825A98E00EA632B /* CTEDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEDelegate.m */; };
 		68AF284F1825B3EC00EA632B /* CTEDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEDelegate.m */; };
 		68D34997182E823400345F12 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D34996182E823400345F12 /* NSMutableArray+QueueAdditions.m */; };
+		68FBF140183493BE0057223E /* Placeholder240x320.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68FBF13E183493BE0057223E /* Placeholder240x320.jpg */; };
+		68FBF141183493BE0057223E /* Placeholder320x240.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68FBF13F183493BE0057223E /* Placeholder320x240.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -171,6 +173,8 @@
 		68D34995182E823400345F12 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
 		68D34996182E823400345F12 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTEViewDelegate.h; sourceTree = "<group>"; };
+		68FBF13E183493BE0057223E /* Placeholder240x320.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Placeholder240x320.jpg; sourceTree = "<group>"; };
+		68FBF13F183493BE0057223E /* Placeholder320x240.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Placeholder320x240.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +333,8 @@
 		68678E72181E2C0600D8B812 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				68FBF13E183493BE0057223E /* Placeholder240x320.jpg */,
+				68FBF13F183493BE0057223E /* Placeholder320x240.jpg */,
 				68678E74181E2C0600D8B812 /* CloseButton.png */,
 				68678E76181E2C0600D8B812 /* ImageError.png */,
 				68678E78181E2C0600D8B812 /* PlayButton.png */,
@@ -533,10 +539,12 @@
 				68678E8A181E2D4500D8B812 /* ImageiPhoneView.xib in Resources */,
 				68678E7D181E2D2600D8B812 /* CloseButton.png in Resources */,
 				68678E7F181E2D2600D8B812 /* ImageError.png in Resources */,
+				68FBF141183493BE0057223E /* Placeholder320x240.jpg in Resources */,
 				68678E81181E2D2600D8B812 /* PlayButton.png in Resources */,
 				68678E82181E2D2600D8B812 /* SectionDivider169Black.png in Resources */,
 				68678E83181E2D2600D8B812 /* ThreeLines.png in Resources */,
 				6895EFC0181DF20D009B8527 /* InfoPlist.strings in Resources */,
+				68FBF140183493BE0057223E /* Placeholder240x320.jpg in Resources */,
 				6895EFC8181DF20D009B8527 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

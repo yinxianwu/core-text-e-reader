@@ -137,6 +137,20 @@ NSString *const HTTP_PREFIX = @"http://";
                     //remote image; load in async
                     //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
+                        //placeholder image for now
+                        NSNumber *imageWidth = [imageInfo objectForKey:@"width"];
+                        NSNumber *imageHeight = [imageInfo objectForKey:@"height"];
+                        
+                        if([imageWidth floatValue] == 240.0f && [imageHeight floatValue] == 320.0f) {
+                            img = [UIImage imageNamed:@"Placeholder240x320.jpg"];
+                        }
+                        else if([imageWidth floatValue] == 320.0 && [imageHeight floatValue] == 240.0f) {
+                            img = [UIImage imageNamed:@"Placeholder320x240.jpg"];
+                            
+                        }
+                        [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
+                        
+                        
 //                        //remote images are unique per chapter, so if it's in the cache can reuse it
 //                        img = [[CTEMediaCache sharedMediaCache] getImage:imgFileName];
 //                        if(!img) {
