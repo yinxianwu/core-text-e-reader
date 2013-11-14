@@ -18,7 +18,7 @@
 
 @synthesize textStart;
 @synthesize textEnd;
-@synthesize images;
+@synthesize imagesWithMetadata;
 @synthesize links;
 @synthesize attString;
 @synthesize modalTarget;
@@ -29,7 +29,7 @@
 //inits image array
 -(id)initWithFrame:(CGRect)frame {
     if ([super initWithFrame:frame]!=nil) {
-        self.images = [NSMutableArray array];
+        self.imagesWithMetadata = [NSMutableArray array];
         self.links = [NSMutableArray array];
     }
     return self;
@@ -42,6 +42,11 @@
 
 //Begin touch; determine location and if it's a link or image
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    //kick out if ctFrame is null -- means it's an empty column
+    if(!ctFrame) {
+        return;
+    }
+    
 	UITouch *touch = [touches anyObject];
 	CGPoint location = [touch locationInView:self];
 	location.y += (18.0 / 1.3); //TODO font size now is set in parser
@@ -89,7 +94,7 @@
     //check to see if an image or movie play button has been touched
     NSString *movieClipPath = nil;
     NSDictionary *imageTouched = nil;
-    for (NSArray *imageData in self.images) {
+    for (NSArray *imageData in self.imagesWithMetadata) {
         NSDictionary *imageMetadata = [imageData objectAtIndex:2];
         int imgLocation = [[imageMetadata objectForKey:@"location"] intValue];
         
@@ -220,7 +225,7 @@
     
     //draw images
     int imageIndex = 0;
-    for (NSArray *imageData in self.images) {
+    for (NSArray *imageData in self.imagesWithMetadata) {
         UIImage* img = [imageData objectAtIndex:0];
         NSDictionary *imageMetadata = [imageData objectAtIndex:2];
         CGRect imgBounds = CGRectFromString([imageData objectAtIndex:1]);
@@ -259,8 +264,7 @@
             [newImageMetadata setValue:[NSValue valueWithCGRect:playButtonLocation] forKey:@"playButtonLocation"];
             NSMutableArray *newImageData = [NSMutableArray arrayWithArray:imageData];
             [newImageData replaceObjectAtIndex:2 withObject:newImageMetadata];
-            //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//            [self.images replaceObjectAtIndex:imageIndex withObject:newImageData];
+            [self.imagesWithMetadata replaceObjectAtIndex:imageIndex withObject:newImageData];
         }
              
         imageIndex++;

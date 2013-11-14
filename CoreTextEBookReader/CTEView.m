@@ -67,8 +67,8 @@ NSString *const HTTP_PREFIX = @"http://";
     CGRect textFrame = CGRectInset(self.bounds, frameXOffset, frameYOffset);
     CGPathAddRect(path, NULL, textFrame);
     
+    //build for all chapters in order
     int columnIndex = 0;
-    
     for(NSNumber *key in self.orderedKeys) {
         NSAttributedString *attString = (NSAttributedString *)[self.attStrings objectForKey:key];
         NSArray *chapImages = (NSArray *)[self.imageMetadatas objectForKey:key];
@@ -76,6 +76,24 @@ NSString *const HTTP_PREFIX = @"http://";
     
         CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
         int textPos = 0;
+        
+        //check if column count isn't even; if not, means it's in mid-page and should create an empty column
+        //this ensure chapters always begin on a new page
+        float pageCount = ((float)columnIndex) / 2;
+        float floorPageCount = floor(pageCount);
+        if(pageCount != floorPageCount) {
+            CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / pageColumnCount), 20 );
+            CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/pageColumnCount - columnWidthRightMargin, textFrame.size.height - 40);
+            CGMutablePathRef path = CGPathCreateMutable();
+            CGPathAddRect(path, NULL, colRect);
+            CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
+            content.backgroundColor = [UIColor clearColor];
+            content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height);
+            [self.columns addObject:content];
+            [self addSubview: content];
+            columnIndex++;
+        }
+        
         while (textPos < [attString length]) {
             NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
             
@@ -117,6 +135,7 @@ NSString *const HTTP_PREFIX = @"http://";
                     UIImage *img = nil;
                     
                     //remote image; load in async
+                    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
 //                        //remote images are unique per chapter, so if it's in the cache can reuse it
 //                        img = [[CTEMediaCache sharedMediaCache] getImage:imgFileName];
@@ -254,8 +273,7 @@ NSString *const HTTP_PREFIX = @"http://";
                                                 colRect.origin.y - frameYOffset - self.frame.origin.y);
                 //Add image to the column view; metadata at index 2
                 NSArray *imageData = [NSArray arrayWithObjects:img, NSStringFromCGRect(imgBounds), imageInfo, nil];
-                //TODO!!!!!!!
-//                [col.images addObject:imageData];
+                [col.imagesWithMetadata addObject:imageData];
             }
         }
         lineIndex++;

@@ -20,7 +20,7 @@
 @property (weak, nonatomic) UIViewController *modalTarget; //TODO should really make controller this view's delegate
 @property (nonatomic) int textStart;
 @property (nonatomic) int textEnd;
-@property (strong, nonatomic) NSArray *images;
+@property (strong, nonatomic) NSMutableArray *imagesWithMetadata;
 @property (strong, nonatomic) NSArray *links;
 @property (strong, nonatomic) NSAttributedString *attString;
 @property (strong, nonatomic) MPMoviePlayerViewController *player;
