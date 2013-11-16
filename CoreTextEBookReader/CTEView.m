@@ -10,6 +10,8 @@
 #import "CTEView.h"
 #import "CTEMediaCache.h"
 #import "CTEColumnView.h"
+#import "SDWebImageManager.h"
+#import "UIImage+MultiFormat.h"
 
 @interface CTEView() {
     int imagesLoaded;
@@ -138,17 +140,36 @@ NSString *const HTTP_PREFIX = @"http://";
                     //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
                         //placeholder image for now
-                        NSNumber *imageWidth = [imageInfo objectForKey:@"width"];
-                        NSNumber *imageHeight = [imageInfo objectForKey:@"height"];
+//                        NSNumber *imageWidth = [imageInfo objectForKey:@"width"];
+//                        NSNumber *imageHeight = [imageInfo objectForKey:@"height"];
+//                        
+//                        if([imageWidth floatValue] == 240.0f && [imageHeight floatValue] == 320.0f) {
+//                            img = [UIImage imageNamed:@"Placeholder240x320.jpg"];
+//                        }
+//                        else if([imageWidth floatValue] == 320.0 && [imageHeight floatValue] == 240.0f) {
+//                            img = [UIImage imageNamed:@"Placeholder320x240.jpg"];
+//                            
+//                        }
                         
-                        if([imageWidth floatValue] == 240.0f && [imageHeight floatValue] == 320.0f) {
-                            img = [UIImage imageNamed:@"Placeholder240x320.jpg"];
-                        }
-                        else if([imageWidth floatValue] == 320.0 && [imageHeight floatValue] == 240.0f) {
-                            img = [UIImage imageNamed:@"Placeholder320x240.jpg"];
-                            
-                        }
-                        [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
+                        NSURL *url = [NSURL URLWithString:imgFileName];
+                        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                        [manager downloadWithURL:url
+                                         options:0
+                                        progress:^(NSUInteger receivedSize, long long expectedSize) {
+                             //progression tracking code
+                         }
+                                       completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                             if (image) {
+                                 [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
+                             }
+                         }];
+                        
+//                        UIImageView *imageView = [[UIImageView alloc] init];
+//                        [imageView setImageWithURL:[NSURL URLWithString:imgFileName]
+//                                  placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                        
+                        
+                        
                         
                         
 //                        //remote images are unique per chapter, so if it's in the cache can reuse it

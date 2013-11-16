@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40ED91360CFE43E9913DA9EE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB58ADDF6CCF43738438F43B /* libPods.a */; };
+		6806BF1418380099004733E6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6806BF1318380099004733E6 /* libPods.a */; };
+		6806BF1A183807D8004733E6 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6806BF18183807D8004733E6 /* CoreImage.framework */; };
+		6806BF1B183807D8004733E6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6806BF19183807D8004733E6 /* ImageIO.framework */; };
 		680AE8171818C778006ABAE4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680AE8161818C778006ABAE4 /* Foundation.framework */; };
 		680AE81C1818C778006ABAE4 /* CoreTextEBookReader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 680AE81B1818C778006ABAE4 /* CoreTextEBookReader.h */; };
 		680AE8251818C778006ABAE4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680AE8241818C778006ABAE4 /* XCTest.framework */; };
@@ -107,6 +111,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6806BF1318380099004733E6 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Release-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		6806BF18183807D8004733E6 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		6806BF19183807D8004733E6 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		680AE8131818C778006ABAE4 /* libCoreTextEBookReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCoreTextEBookReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		680AE8161818C778006ABAE4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		680AE81A1818C778006ABAE4 /* CoreTextEBookReader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreTextEBookReader-Prefix.pch"; sourceTree = "<group>"; };
@@ -175,6 +182,8 @@
 		68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTEViewDelegate.h; sourceTree = "<group>"; };
 		68FBF13E183493BE0057223E /* Placeholder240x320.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Placeholder240x320.jpg; sourceTree = "<group>"; };
 		68FBF13F183493BE0057223E /* Placeholder320x240.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Placeholder320x240.jpg; sourceTree = "<group>"; };
+		ADD5A6FCAD9849F293BC250F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		BB58ADDF6CCF43738438F43B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +197,7 @@
 				6895EFA9181DCEA3009B8527 /* CoreGraphics.framework in Frameworks */,
 				6895EFA7181DCE9A009B8527 /* CoreText.framework in Frameworks */,
 				680AE8171818C778006ABAE4 /* Foundation.framework in Frameworks */,
+				40ED91360CFE43E9913DA9EE /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +215,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6806BF1418380099004733E6 /* libPods.a in Frameworks */,
+				6806BF1A183807D8004733E6 /* CoreImage.framework in Frameworks */,
+				6806BF1B183807D8004733E6 /* ImageIO.framework in Frameworks */,
 				68678E8E181F655000D8B812 /* MediaPlayer.framework in Frameworks */,
 				68678E8D181F654500D8B812 /* CoreText.framework in Frameworks */,
 				68678E8C181F653700D8B812 /* QuartzCore.framework in Frameworks */,
@@ -236,6 +249,7 @@
 				6895EFD3181DF20D009B8527 /* SampleAppTests */,
 				680AE8151818C778006ABAE4 /* Frameworks */,
 				680AE8141818C778006ABAE4 /* Products */,
+				ADD5A6FCAD9849F293BC250F /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -253,6 +267,9 @@
 		680AE8151818C778006ABAE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6806BF18183807D8004733E6 /* CoreImage.framework */,
+				6806BF19183807D8004733E6 /* ImageIO.framework */,
+				6806BF1318380099004733E6 /* libPods.a */,
 				6895EFAE181DCEC7009B8527 /* UIKit.framework */,
 				6895EFAC181DCEB4009B8527 /* QuartzCore.framework */,
 				6895EFAA181DCEAB009B8527 /* MediaPlayer.framework */,
@@ -260,6 +277,7 @@
 				6895EFA6181DCE9A009B8527 /* CoreText.framework */,
 				680AE8161818C778006ABAE4 /* Foundation.framework */,
 				680AE8241818C778006ABAE4 /* XCTest.framework */,
+				BB58ADDF6CCF43738438F43B /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -412,9 +430,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 680AE8361818C778006ABAE4 /* Build configuration list for PBXNativeTarget "CoreTextEBookReader" */;
 			buildPhases = (
+				8AC4E070DCCB4C2B8004DF05 /* Check Pods Manifest.lock */,
 				680AE80F1818C778006ABAE4 /* Sources */,
 				680AE8101818C778006ABAE4 /* Frameworks */,
 				680AE8111818C778006ABAE4 /* CopyFiles */,
+				7338EC659F9D4F3492195C9E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -558,6 +578,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7338EC659F9D4F3492195C9E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AC4E070DCCB4C2B8004DF05 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		680AE80F1818C778006ABAE4 /* Sources */ = {
@@ -729,6 +782,7 @@
 		};
 		680AE8371818C778006ABAE4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADD5A6FCAD9849F293BC250F /* Pods.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/CoreTextEBookReader.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -741,6 +795,7 @@
 		};
 		680AE8381818C778006ABAE4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADD5A6FCAD9849F293BC250F /* Pods.xcconfig */;
 			buildSettings = {
 				DSTROOT = /tmp/CoreTextEBookReader.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -806,8 +861,17 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(PODS_ROOT)/Headers/SDWebImage",
+					"$(PODS_ROOT)/Headers",
+				);
 				INFOPLIST_FILE = "SampleApp/SampleApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/davidjed/git/core-text-e-reader/Pods/build/Release-iphoneos",
+				);
+				PODS_ROOT = "$(SRCROOT)/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -823,8 +887,17 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleApp/SampleApp-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(PODS_ROOT)/Headers/SDWebImage",
+					"$(PODS_ROOT)/Headers",
+				);
 				INFOPLIST_FILE = "SampleApp/SampleApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/davidjed/git/core-text-e-reader/Pods/build/Release-iphoneos",
+				);
+				PODS_ROOT = "$(SRCROOT)/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

@@ -1,0 +1,16 @@
+PODS:
+  - SDWebImage (3.5):
+    - SDWebImage/Core
+  - SDWebImage/Core (3.5)
+
+DEPENDENCIES:
+  - SDWebImage (from `https://raw.github.com/CocoaPods/Specs/master/SDWebImage/3.5/SDWebImage.podspec`)
+
+EXTERNAL SOURCES:
+  SDWebImage:
+    :podspec: https://raw.github.com/CocoaPods/Specs/master/SDWebImage/3.5/SDWebImage.podspec
+
+SPEC CHECKSUMS:
+  SDWebImage: effcbb8b8f2b9b083a7f38ecdcad44e22b03c268
+
+COCOAPODS: 0.28.0
