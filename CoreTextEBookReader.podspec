@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source       = { :git => "https://github.com/davidjed/core-text-e-reader.git", :tag => '0.2' }
   s.source_files = 'Classes', 'CoreTextEBookReader/**/*.{h,m}'
-  s.resources = ["Images/*.png", "CoreTextEBookReader/*.xib"]
+  s.resources = ["CoreTextEBookReader/Images/*", "CoreTextEBookReader/*.xib"]
  end
