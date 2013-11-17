@@ -84,8 +84,17 @@
     return delegate;
 }
 
-//Side menu actions
+//Selects appropriate chaper then does side menu reveal
 - (void)sideMenuWillBeShown:(NSNotification *)notification {
+    //determine the current chapter and update menu view accordingly
+    if([[notification object] isKindOfClass:[CTEContentViewController class]]) {
+        CTEContentViewController *contentView = (CTEContentViewController *)[notification object];
+        id<CTEChapter> chapter = contentView.currentChapter;
+        int selectedRow = [self.contentViewController.chapters indexOfObject:chapter];
+        NSIndexPath *path = [NSIndexPath indexPathForRow:selectedRow inSection:0];
+        [self.menuViewController.chapterTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionTop];
+    }
+    
     //before swaping the views, we'll take a "screenshot" of the current view
     //by rendering its CALayer into the an ImageContext then saving that off to a UIImage
     CGSize viewSize = self.contentViewController.view.bounds.size;

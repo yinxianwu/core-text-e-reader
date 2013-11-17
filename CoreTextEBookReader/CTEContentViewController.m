@@ -32,7 +32,7 @@
 //@synthesize pagesRemainingLabel;
 @synthesize navBar;
 
-@synthesize currentChapter = _currentChapter;
+@synthesize currentChapter;
 @synthesize chapters;
 @synthesize attStrings;
 @synthesize images;
@@ -50,7 +50,6 @@
     self.attStrings = allAttStrings;
     self.images = allImages;
     self.links = allLinks;
-//    _currentChapter = chapter;
     self.decelOffsetX = 0.0f;
     
     return self;
@@ -60,7 +59,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _currentChapter = (id<CTEChapter>)[self.chapters firstObject];
+//    _currentChapter = (id<CTEChapter>)[self.chapters firstObject];
     NSMutableArray *orderedSet = [NSMutableArray arrayWithCapacity:[self.chapters count]];
     for(id<CTEChapter> chapter in self.chapters) {
         [orderedSet addObject:[chapter id]];
@@ -196,18 +195,11 @@
 
 //performs column redraw
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-//    int totalPages = [ctView totalPages];
-//    int currentPage = self.pageControl.currentPage;
-//    float currentOffsetX = self.ctView.contentOffset.x;
-//    if(decelOffsetX < currentOffsetX && (currentPage + 1 == totalPages)) {
-//        NSLog(@"END CHAPTER");
-//    }
-//    [ctView redrawFrames];
+    [cteView currentChapterNeedsUpdate];
 }
 
 //performs column redraw
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-//    [ctView redrawFrames];
 }
 
 //detect touches on page labels
@@ -246,11 +238,19 @@
     
 }
 
-//sets current chapter and caches previous
-//- (void)setCurrentChapter:(id<CTEChapter>) chapter {
-//    _previousChapter = _currentChapter;
-//    _currentChapter = chapter;
-//}
+//returns current CTEView chapter based on where the CTEView is at
+- (id<CTEChapter>)currentChapter {
+    NSNumber *chapterID = [self.cteView currentChapterID];
+    id<CTEChapter> retVal = nil;
+    for(id<CTEChapter> chapter in self.chapters) {
+        NSNumber *matchID = [chapter id];
+        if([matchID intValue] == [chapterID intValue]) {
+            retVal = chapter;
+            break;
+        }
+    }
+    return retVal;
+}
 
 //TODO other orientations
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

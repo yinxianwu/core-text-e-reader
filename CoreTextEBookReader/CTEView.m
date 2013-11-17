@@ -26,6 +26,9 @@ NSString *const HTTP_PREFIX = @"http://";
 @synthesize imageMetadatas;
 @synthesize links;
 @synthesize totalPages;
+@synthesize pageColumnCount;
+@synthesize orderedChapterPages;
+@synthesize currentChapterID;
 
 //sets text & image properties
 - (void)setAttStrings:(NSDictionary *)allAttStrings
@@ -36,6 +39,7 @@ NSString *const HTTP_PREFIX = @"http://";
     self.imageMetadatas = allImages;
     self.links = allLinks;
     self.orderedKeys = allKeys;
+    self.orderedChapterPages = [NSMutableArray arrayWithCapacity:self.orderedKeys.count];
 }
 
 //builds all columns of text & images
@@ -43,19 +47,19 @@ NSString *const HTTP_PREFIX = @"http://";
     NSLog(@"CTView: START buildFrames");
     
     //determine device type and size of text frame
+    //TODO user may be able to set these someday...
     float columnWidthRightMargin;
-    int pageColumnCount;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         frameXOffset = 20;
         frameYOffset = 20;
         columnWidthRightMargin = frameYOffset;
-        pageColumnCount = 2;
+        self.pageColumnCount = 2;
     }
     else {
         frameXOffset = 0;
         frameYOffset = 0;
         columnWidthRightMargin = 20;
-        pageColumnCount = 1;
+        self.pageColumnCount = 1;
     }
     
     [self setContentOffset:CGPointZero animated:NO]; //reset view to top
@@ -72,14 +76,15 @@ NSString *const HTTP_PREFIX = @"http://";
         NSAttributedString *attString = (NSAttributedString *)[self.attStrings objectForKey:key];
         NSArray *chapImages = (NSArray *)[self.imageMetadatas objectForKey:key];
         NSArray *chapLinks = (NSArray *)[self.links objectForKey:key];
+        float pageCount = ((float)columnIndex) / self.pageColumnCount;
+        float floorPageCount = floorf(pageCount);
+        float ceilPageCount = ceilf(pageCount);
     
         CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
         int textPos = 0;
         
         //check if column count isn't even; if not, means it's in mid-page and should create an empty column
         //this ensure chapters always begin on a new page
-        float pageCount = ((float)columnIndex) / 2;
-        float floorPageCount = floor(pageCount);
         if(pageCount != floorPageCount) {
             CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / pageColumnCount), 20 );
             CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/pageColumnCount - columnWidthRightMargin, textFrame.size.height - 40);
@@ -92,6 +97,8 @@ NSString *const HTTP_PREFIX = @"http://";
             [self addSubview: content];
             columnIndex++;
         }
+        //chapter always starts at the next page
+        [self.orderedChapterPages addObject:[NSNumber numberWithFloat:ceilPageCount]];
         
         while (textPos < [attString length]) {
             NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
@@ -178,6 +185,9 @@ NSString *const HTTP_PREFIX = @"http://";
     //set the total width of the scroll view
     self.totalPages = (columnIndex+1) / pageColumnCount;
     self.contentSize = CGSizeMake(self.totalPages * self.bounds.size.width, textFrame.size.height);
+    
+    //set current chapter to beginning
+    self.currentChapterID = (NSNumber *)[self.orderedKeys objectAtIndex:0];
     
     NSLog(@"CTView: END buildFrames");
 }
@@ -285,5 +295,24 @@ NSString *const HTTP_PREFIX = @"http://";
     CGFloat pageWidth = self.frame.size.width;
     return floor((self.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
 }
+
+//Call to update current chapter (UI has changed)
+- (void)currentChapterNeedsUpdate {
+    int page = [self getCurrentPage];
+    for(int i = 0; i < self.orderedChapterPages.count - 1; i++) {
+        NSNumber *pageNb = (NSNumber *)[self.orderedChapterPages objectAtIndex:i];
+        NSNumber *nextPageNB = (NSNumber *)[self.orderedChapterPages objectAtIndex:i+1];
+        if(page >= [pageNb intValue] && page < [nextPageNB intValue]) {
+            //grab current chapter ID from corresponding array
+            self.currentChapterID = (NSNumber *)[self.orderedKeys objectAtIndex:i];
+            NSLog(@"SET currentChapterID: %@", self.currentChapterID);
+            break;
+        }
+    }
+}
+
+//- (id<CTEChapter>)currentChapter {
+//    return _currentChapter;
+//}
 
 @end

@@ -19,12 +19,16 @@
 extern NSString *const HTTP_PREFIX;
 
 @property (weak, nonatomic) UIViewController *modalTarget;
+
 @property (strong, nonatomic) NSMutableArray *columns;
 @property (strong, nonatomic) NSArray *orderedKeys;
 @property (strong, nonatomic) NSDictionary *attStrings;
 @property (strong, nonatomic) NSDictionary *imageMetadatas;
 @property (strong, nonatomic) NSDictionary *links;
+@property (strong, nonatomic) NSMutableArray *orderedChapterPages;
+@property (nonatomic, strong) NSNumber *currentChapterID;
 @property (nonatomic) int totalPages;
+@property (nonatomic) int pageColumnCount;
 
 - (void)setAttStrings:(NSDictionary *)allAttStrings
                images:(NSDictionary *)allImages
@@ -33,6 +37,7 @@ extern NSString *const HTTP_PREFIX;
 - (void)buildFrames;
 - (int)getCurrentPage;
 - (int)indexOfColumn:(id)column;
+- (void)currentChapterNeedsUpdate;
 - (void)addImage:(UIImage *)img forColumn:(CTEColumnView *)col frameRef:(CTFrameRef)frameRef imageInfo:(NSDictionary *)imageInfo;
 - (void)replaceImage:(UIImage *)img forColumn:(CTEColumnView *)col imageInfo:(NSDictionary *)imageInfo;
 @end

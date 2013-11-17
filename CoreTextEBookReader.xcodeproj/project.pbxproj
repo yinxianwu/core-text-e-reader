@@ -40,6 +40,9 @@
 		68678E99181F734400D8B812 /* Chapter4.txt in Resources */ = {isa = PBXBuildFile; fileRef = 68678E96181F734400D8B812 /* Chapter4.txt */; };
 		68678E9A181F734400D8B812 /* Chapter5.txt in Resources */ = {isa = PBXBuildFile; fileRef = 68678E97181F734400D8B812 /* Chapter5.txt */; };
 		68678E9B181F734400D8B812 /* Chapter6.txt in Resources */ = {isa = PBXBuildFile; fileRef = 68678E98181F734400D8B812 /* Chapter6.txt */; };
+		686BE8E9183863ED00072E27 /* Chapter1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 686BE8E6183863ED00072E27 /* Chapter1.txt */; };
+		686BE8EA183863ED00072E27 /* Chapter2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 686BE8E7183863ED00072E27 /* Chapter2.txt */; };
+		686BE8EB183863ED00072E27 /* Chapter3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 686BE8E8183863ED00072E27 /* Chapter3.txt */; };
 		6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8C181DCE62009B8527 /* CTEContentViewController.m */; };
 		6895EFA0181DCE62009B8527 /* CTEColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8E181DCE62009B8527 /* CTEColumnView.m */; };
 		6895EFA1181DCE62009B8527 /* CTEView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF90181DCE62009B8527 /* CTEView.m */; };
@@ -127,6 +130,9 @@
 		68678E96181F734400D8B812 /* Chapter4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter4.txt; sourceTree = "<group>"; };
 		68678E97181F734400D8B812 /* Chapter5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter5.txt; sourceTree = "<group>"; };
 		68678E98181F734400D8B812 /* Chapter6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter6.txt; sourceTree = "<group>"; };
+		686BE8E6183863ED00072E27 /* Chapter1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter1.txt; sourceTree = "<group>"; };
+		686BE8E7183863ED00072E27 /* Chapter2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter2.txt; sourceTree = "<group>"; };
+		686BE8E8183863ED00072E27 /* Chapter3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter3.txt; sourceTree = "<group>"; };
 		6895EF8B181DCE62009B8527 /* CTEContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEContentViewController.h; sourceTree = "<group>"; };
 		6895EF8C181DCE62009B8527 /* CTEContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEContentViewController.m; sourceTree = "<group>"; };
 		6895EF8D181DCE62009B8527 /* CTEColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEColumnView.h; sourceTree = "<group>"; };
@@ -347,6 +353,9 @@
 		68678E95181F734400D8B812 /* Chapters */ = {
 			isa = PBXGroup;
 			children = (
+				686BE8E6183863ED00072E27 /* Chapter1.txt */,
+				686BE8E7183863ED00072E27 /* Chapter2.txt */,
+				686BE8E8183863ED00072E27 /* Chapter3.txt */,
 				68678E96181F734400D8B812 /* Chapter4.txt */,
 				68678E97181F734400D8B812 /* Chapter5.txt */,
 				68678E98181F734400D8B812 /* Chapter6.txt */,
@@ -530,17 +539,20 @@
 			files = (
 				68678E85181E2D4500D8B812 /* MenuiPadView.xib in Resources */,
 				68678E86181E2D4500D8B812 /* MenuiPhoneView.xib in Resources */,
+				686BE8EB183863ED00072E27 /* Chapter3.txt in Resources */,
 				68678E9A181F734400D8B812 /* Chapter5.txt in Resources */,
 				68678E87181E2D4500D8B812 /* ContentiPadView.xib in Resources */,
 				68678E88181E2D4500D8B812 /* ContentiPhoneView.xib in Resources */,
 				68678E89181E2D4500D8B812 /* ImageiPadView.xib in Resources */,
 				68678E99181F734400D8B812 /* Chapter4.txt in Resources */,
+				686BE8EA183863ED00072E27 /* Chapter2.txt in Resources */,
 				68678E9B181F734400D8B812 /* Chapter6.txt in Resources */,
 				68678E8A181E2D4500D8B812 /* ImageiPhoneView.xib in Resources */,
 				68678E7D181E2D2600D8B812 /* CloseButton.png in Resources */,
 				68678E7F181E2D2600D8B812 /* ImageError.png in Resources */,
 				68FBF141183493BE0057223E /* Placeholder320x240.jpg in Resources */,
 				68678E81181E2D2600D8B812 /* PlayButton.png in Resources */,
+				686BE8E9183863ED00072E27 /* Chapter1.txt in Resources */,
 				68678E82181E2D2600D8B812 /* SectionDivider169Black.png in Resources */,
 				68678E83181E2D2600D8B812 /* ThreeLines.png in Resources */,
 				6895EFC0181DF20D009B8527 /* InfoPlist.strings in Resources */,

@@ -15,7 +15,6 @@
 @property (nonatomic) NSInteger contentIndex;
 
 @property (nonatomic, strong) id <CTEChapter> currentChapter;
-//@property (nonatomic, strong) id <CTEChapter> previousChapter;
 
 @property (nonatomic, strong) UINavigationBar *navBar;
 @property (nonatomic, strong) IBOutlet CTEView *cteView;

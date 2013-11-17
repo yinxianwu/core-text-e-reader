@@ -108,7 +108,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:CellIdentifier];
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-        cell.selectedBackgroundView.backgroundColor = [UIColor darkGrayColor];
+        
+        //75 47 29 -- WTR cover brown
+        //TODO needs to be adjustable
+        UIColor *cellSelectedColor = [UIColor colorWithRed:(75.0f / 255.0f) green:(47.0 / 255.0f) blue:(29.0f / 255.0f) alpha:1.0f];
+        cell.selectedBackgroundView.backgroundColor = cellSelectedColor;
+        cell.textLabel.highlightedTextColor = [UIColor whiteColor];
+        cell.detailTextLabel.highlightedTextColor = [UIColor whiteColor];
     }
 
     id <CTEChapter> chapter = [self.chapterData objectAtIndex:indexPath.row];
