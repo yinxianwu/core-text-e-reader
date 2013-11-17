@@ -57,7 +57,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    _currentChapter = (id<CTEChapter>)[self.chapters firstObject];
     NSMutableArray *orderedSet = [NSMutableArray arrayWithCapacity:[self.chapters count]];
     for(id<CTEChapter> chapter in self.chapters) {
         [orderedSet addObject:[chapter id]];
@@ -73,10 +72,8 @@
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
-    CGFloat navBarHeight = 0.0f;
+    CGFloat navBarHeight = 64.0f;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        navBarHeight = 64;
-        
         //height adjustment for first time view is shown
         //this is an issue when displaying on 3.5-inch displays
         CGRect viewRect = [self.view bounds];
@@ -85,9 +82,6 @@
             CGRect ctViewNewRect = CGRectMake(ctViewRect.origin.x, ctViewRect.origin.y, ctViewRect.size.width, screenRect.size.height - 88);
             [cteView setFrame:ctViewNewRect];
         }
-    }
-    else {
-        navBarHeight = 64;
     }
     
     CGFloat red = 225.0f/255.0f;
@@ -246,7 +240,7 @@
     id<CTEChapter> retVal = nil;
     for(id<CTEChapter> chapter in self.chapters) {
         NSNumber *matchID = [chapter id];
-        if([matchID intValue] == [chapterID intValue]) {
+        if([matchID isEqualToNumber:chapterID]) {
             retVal = chapter;
             break;
         }
@@ -263,6 +257,7 @@
     CGFloat pageWidth = self.cteView.frame.size.width;
     NSNumber *page = [self.cteView pageNumberForChapterID:[chapter id]];
     [self.cteView setContentOffset:CGPointMake(pageWidth * [page intValue], 0.0f) animated:NO];
+    [self.cteView setCurrentChapterID:[chapter id]];
 }
 
 //TODO other orientations
