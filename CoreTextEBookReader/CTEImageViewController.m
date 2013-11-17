@@ -14,15 +14,15 @@
 
 @implementation CTEImageViewController
 
-@synthesize imagePath;
+@synthesize image;
 @synthesize imageScrollView;
 @synthesize imageView;
 
 //constructor with image path
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil imagePath:(NSString *)image {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil image:(UIImage *)img {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
-        self.imagePath = image;
+        self.image = img;
     }
     return self;
 }
@@ -33,17 +33,14 @@
     [imageScrollView setCanCancelContentTouches:NO];
     imageScrollView.clipsToBounds = YES; // default is NO, we want to restrict drawing within our scrollview
     imageScrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
-    
-    //images here are already in the cache
-    UIImage *img = [[CTEMediaCache sharedMediaCache] getImage:imagePath];
 
     //error handling
-    if (!img) {
-        img = [UIImage imageNamed:@"ImageError.png"];
+    if (!self.image) {
+        self.image = [UIImage imageNamed:@"ImageError.png"];
     }
-    imageView.image = img;
+    imageView.image = self.image;
     [imageView sizeToFit];
-    CGSize imgSize = img.size;
+    CGSize imgSize = self.image.size;
     [imageScrollView setContentSize:CGSizeMake(imgSize.width, imgSize.height)];
     [imageScrollView setMinimumZoomScale: 0.5];
     [imageScrollView setMaximumZoomScale:3.0];

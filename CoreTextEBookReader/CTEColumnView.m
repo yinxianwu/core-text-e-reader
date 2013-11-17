@@ -93,7 +93,8 @@
     
     //check to see if an image or movie play button has been touched
     NSString *movieClipPath = nil;
-    NSDictionary *imageTouched = nil;
+    UIImage *imageTouched = nil;
+    NSDictionary *imageTouchedMetadata = nil;
     for (NSArray *imageData in self.imagesWithMetadata) {
         NSDictionary *imageMetadata = [imageData objectAtIndex:2];
         int imgLocation = [[imageMetadata objectForKey:@"location"] intValue];
@@ -102,7 +103,8 @@
         long indexMin = index - 3;
         long indexMax = index + 3;
         if(imgLocation >= indexMin && imgLocation <= indexMax) {
-            imageTouched = imageMetadata;
+            imageTouchedMetadata = imageMetadata;
+            imageTouched = (UIImage *)[imageData objectAtIndex:0]; //TODO object would be nicer...
             break;
         }
         //check to see if a play button has been touched
@@ -128,9 +130,9 @@
     }
     //open image or clip in new view
     //check if it's a movie-type preview image
-    else if(imageTouched != nil && modalTarget != nil) {
-        NSString *imagePath = (NSString *)[imageTouched objectForKey:@"fileName"];
-        NSString *clipPath = (NSString *)[imageTouched objectForKey:@"clipFileName"];
+    else if(imageTouched != nil && imageTouchedMetadata != nil && modalTarget != nil) {
+        NSString *imagePath = (NSString *)[imageTouchedMetadata objectForKey:@"fileName"];
+        NSString *clipPath = (NSString *)[imageTouchedMetadata objectForKey:@"clipFileName"];
         
         //kick out if it's a local image
         //TODO better way of doing this...
@@ -142,10 +144,10 @@
             else {
                 CTEImageViewController *imageView;
                 if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-                    imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPhoneView" bundle:nil imagePath:imagePath];
+                    imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPhoneView" bundle:nil image:imageTouched];
                 }
                 else {
-                    imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPadView" bundle:nil imagePath:imagePath];
+                    imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPadView" bundle:nil image:imageTouched];
                 }
                 [modalTarget presentViewController:imageView animated:YES completion:nil];
             }
@@ -176,40 +178,8 @@
     }
 }
 
-//Returns whether current column view should redraw
-- (BOOL)shouldDrawRect:(CGRect)rect {
-//    BOOL shouldDraw = YES;
-//    CTEView *scrollView = (CTEView *)[self superview];
-//    CGRect scrollBounds = [scrollView bounds];
-//    CGRect selfFrame = [self frame];
-//    CGRect visibleScrollRect = CGRectMake(scrollBounds.origin.x, scrollBounds.origin.y,
-//                                          scrollBounds.size.width, scrollBounds.size.height);
-//    BOOL intersects = CGRectIntersectsRect(visibleScrollRect, selfFrame);
-//    
-//    //determine if it's the page before or page after the visible content
-//    CGFloat visibleOriginX = visibleScrollRect.origin.x;
-//    CGFloat pageWidth = scrollBounds.size.width;
-//    CGFloat originX = selfFrame.origin.x;
-//    CGFloat pageBeforeOriginX = visibleOriginX - pageWidth;
-//    CGFloat pageAfterOriginX = visibleOriginX + pageWidth;
-//    BOOL isPageBefore = originX >= pageBeforeOriginX && originX < visibleOriginX;
-//    BOOL isPageAfter = originX >= pageAfterOriginX && originX < (pageAfterOriginX + pageWidth);
-//    
-//    //don't draw if it's not visible or page before or after visible
-//    if(!intersects && !(isPageBefore || isPageAfter)) {
-//        shouldDraw = NO;
-//    }
-//    
-//    return shouldDraw;
-    return YES;
-}
-
 //drawing method
-//only draws view if it's visible in the parent scrollview
 - (void)drawRect:(CGRect)rect {
-    if(![self shouldDrawRect:rect]) {
-        return;
-    }
     NSLog(@"CTColumnView: START drawRect");
     CGContextRef context = UIGraphicsGetCurrentContext();
     

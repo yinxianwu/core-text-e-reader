@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreText/CoreText.h>
 
 @class CTEColumnView;
 
@@ -30,9 +31,8 @@ extern NSString *const HTTP_PREFIX;
                 links:(NSDictionary *)allLinks
                 order:(NSArray *)allKeys;
 - (void)buildFrames;
-- (void)clearFrames;
-- (void)redrawFrames;
 - (int)getCurrentPage;
 - (int)indexOfColumn:(id)column;
-
+- (void)addImage:(UIImage *)img forColumn:(CTEColumnView *)col frameRef:(CTFrameRef)frameRef imageInfo:(NSDictionary *)imageInfo;
+- (void)replaceImage:(UIImage *)img forColumn:(CTEColumnView *)col imageInfo:(NSDictionary *)imageInfo;
 @end

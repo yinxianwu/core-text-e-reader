@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Holocene Press. All rights reserved.
 //
 
-#import <CoreText/CoreText.h>
 #import "CTEView.h"
 #import "CTEMediaCache.h"
 #import "CTEColumnView.h"
@@ -121,7 +120,6 @@ NSString *const HTTP_PREFIX = @"http://";
             [self addSubview: content];
                 
             //see if any images exist in the column and load them in as well
-//            dispatch_queue_t main = dispatch_get_main_queue();
             for(int imgIndex = 0; imgIndex < [chapImages count]; imgIndex++) {
                 NSDictionary *imageInfo = [chapImages objectAtIndex:imgIndex];
                 int imgLocation = [[imageInfo objectForKey:@"location"] intValue];
@@ -135,7 +133,6 @@ NSString *const HTTP_PREFIX = @"http://";
                     UIImage *img = nil;
                     
                     //remote image; load in async
-                    //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
                         //placeholder image for now
                         NSNumber *imageWidth = [imageInfo objectForKey:@"width"];
@@ -150,36 +147,12 @@ NSString *const HTTP_PREFIX = @"http://";
                         }
                         [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
                         
-                        
-//                        //remote images are unique per chapter, so if it's in the cache can reuse it
-//                        img = [[CTEMediaCache sharedMediaCache] getImage:imgFileName];
-//                        if(!img) {
-//                            NSLog(@"Image %@ doesn't exist; loading it in...", imgFileName);
-//                            dispatch_queue_t queue = dispatch_queue_create([imgFileName UTF8String], NULL);
-//                            dispatch_async(queue, ^{
-//                                NSURL *url = [NSURL URLWithString:imgFileName];
-//                                NSData *data = [NSData dataWithContentsOfURL:url];
-//                                UIImage *imgLoaded = [UIImage imageWithData:data];
-//                                
-//                                //error handling
-//                                if (!imgLoaded) {
-//                                    imgLoaded = [UIImage imageNamed:@"ImageError.png"];
-//                                }
-//                                
-//                                //update image load count on main thread
-//                                dispatch_async(main, ^{
-//                                    NSLog(@"Image %@ loaded in; updating column", imgFileName);
-//                                    [[CTEMediaCache sharedMediaCache] addImage:imgLoaded withKey:imgFileName];
-//                                    [self addImage:imgLoaded forColumn:content frameRef:frameRef imageInfo:imageInfo];
-//                                    [content setNeedsDisplay];
-//                                });
-//                            });
-//                        }
-//                        else {
-//                            NSLog(@"Image %@ cached; updating column", imgFileName);
-//                            [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
-//                            [content setNeedsDisplay];
-//                        }
+                        // download the image asynchronously
+                        [self downloadImageWithURL:[NSURL URLWithString:imgFileName] completionBlock:^(BOOL succeeded, UIImage *image) {
+                            if (succeeded) {
+                                [self replaceImage:image forColumn:content imageInfo:imageInfo];
+                            }
+                        }];
                     }
                     else {
                         img = [UIImage imageNamed:imgFileName];
@@ -209,6 +182,23 @@ NSString *const HTTP_PREFIX = @"http://";
     NSLog(@"CTView: END buildFrames");
 }
 
+//async image download
+- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if ( !error )
+                               {
+                                   UIImage *image = [[UIImage alloc] initWithData:data];
+                                   completionBlock(YES,image);
+                               } else{
+                                   completionBlock(NO,nil);
+                               }
+                           }];
+}
+
 //Returns index of specified column
 - (int)indexOfColumn:(id)column {
     int matchIndex = -1;
@@ -220,36 +210,6 @@ NSString *const HTTP_PREFIX = @"http://";
         }
     }
     return matchIndex;
-}
-
-//clears all columns of text & images
-//also clears app image cache for memory reasons
-- (void)clearFrames {
-//    for (UIView *subview in self.subviews) {
-//        [subview removeFromSuperview];
-//    }
-//    [self.columns removeAllObjects];
-//    [self.imageMetadatas removeAllObjects];
-//    [self.links removeAllObjects];
-//    [[CTEMediaCache sharedMediaCache] clearCache];
-}
-
-//force a column refresh
-//only redraw columns that haven't been drawn yet and are one before or after the current column's page
-- (void)redrawFrames {
-//    NSLog(@"CTView: START redrawFrames");
-//    int index = 0;
-//    for (CTEColumnView *columnView in self.columns) {
-//        BOOL wasPageRendered = [[self.columnsRendered objectAtIndex:index] boolValue];
-//        BOOL shouldRender = [columnView shouldDrawRect:[columnView bounds]];
-//        if(shouldRender && !wasPageRendered) {
-//            NSLog(@"column at index %d needs display", index);
-//            [columnView setNeedsDisplay];
-//            [self.columnsRendered replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:YES]];
-//        }
-//        index++;
-//    }
-//    NSLog(@"CTView: END redrawFrames");
 }
 
 //inserts image and associated info into correct CTColumnView
@@ -285,12 +245,29 @@ NSString *const HTTP_PREFIX = @"http://";
                 CGRect imgBounds = CGRectOffset(runBounds,
                                                 colRect.origin.x - frameXOffset - self.contentOffset.x,
                                                 colRect.origin.y - frameYOffset - self.frame.origin.y);
-                //Add image to the column view; metadata at index 2
-                NSArray *imageData = [NSArray arrayWithObjects:img, NSStringFromCGRect(imgBounds), imageInfo, nil];
+                //Add image to the column view; metadata at index 2; img at index 0; TODO REPLACE WITH SOMETHING OBJECT-Y!!!
+                NSMutableArray *imageData = [NSMutableArray arrayWithObjects:img, NSStringFromCGRect(imgBounds), imageInfo, nil];
                 [col.imagesWithMetadata addObject:imageData];
             }
         }
         lineIndex++;
+    }
+}
+
+//replaces image for specified matadata in specified column
+- (void)replaceImage:(UIImage *)img forColumn:(CTEColumnView *)col imageInfo:(NSDictionary *)imageInfo {
+    NSMutableArray *matchData = nil;
+    for(NSMutableArray *imageData in col.imagesWithMetadata) {
+        BOOL match = [imageInfo isEqualToDictionary:(NSDictionary *)[imageData objectAtIndex:2]];
+        if(match) {
+            matchData = imageData;
+            break;
+        }
+    }
+    
+    if(matchData) {
+        [matchData replaceObjectAtIndex:0 withObject:img];
+        [col setNeedsDisplay];
     }
 }
 

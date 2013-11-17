@@ -26,7 +26,6 @@
 @synthesize cteView;
 //@synthesize pageControl;
 //@synthesize stepper;
-//@synthesize parser;
 @synthesize spinnerViews;
 @synthesize decelOffsetX;
 //@synthesize currentPageLabel;
@@ -52,7 +51,6 @@
     self.images = allImages;
     self.links = allLinks;
 //    _currentChapter = chapter;
-//    self.parser = [[CTEMarkupParser alloc] init];
     self.decelOffsetX = 0.0f;
     
     return self;
@@ -63,13 +61,12 @@
     [super viewDidLoad];
     
     _currentChapter = (id<CTEChapter>)[self.chapters firstObject];
-//    NSAttributedString *attStringForChapter = (NSAttributedString *)[self.attStrings objectForKey:[_currentChapter id]];
-//    NSArray *imagesForChapter = (NSArray *)[self.images objectForKey:[_currentChapter id]];
-//    NSArray *linksForChapter = (NSArray *)[self.links objectForKey:[_currentChapter id]];
     NSMutableArray *orderedSet = [NSMutableArray arrayWithCapacity:[self.chapters count]];
     for(id<CTEChapter> chapter in self.chapters) {
         [orderedSet addObject:[chapter id]];
     }
+    //TODO redo as delegate pattern
+    self.cteView.modalTarget = self;
     [self.cteView setAttStrings:self.attStrings
                          images:self.images
                           links:self.links
@@ -135,46 +132,6 @@
 //side menu action
 -(void)slideMenuButtonTouched:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:ShowSideMenu object:self];
-}
-
-//Load data into view
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-//    //don't reload if it's the same chapter
-//    if(self.previousChapter == self.currentChapter) {
-//        return;
-//    }
-    
-    //nav bar title
-    UINavigationItem *navItem = [[navBar items] objectAtIndex:0];
-//    [navItem setTitle:_currentChapter.title];
-    
-//    CGRect screenRect = [[UIScreen mainScreen] bounds];
-//    [ctView clearFrames];
-//    [parser resetParser];
-    
-    //parse to derive attributed string
-//    NSAttributedString *attString = [parser attrStringFromMarkup:self.currentChapter.body screenSize:screenRect];
-//    self.ctView.modalTarget = self; //TODO this should be redone as delegate pattern
-//    [self.ctView setAttString:attString withImages:parser.images andLinks:parser.links];
-//    [self.ctView buildFrames];
-    
-//    //different impls for paging
-//    if(self.pageControl) {
-//        self.pageControl.numberOfPages = [ctView totalPages];
-//        self.pageControl.currentPage = 0;
-//    }
-//    else if(self.stepper) {
-//        self.stepper.maximumValue = [ctView totalPages];
-//        self.stepper.minimumValue = 0.0;
-//        self.stepper.value = 0.0;
-//    }
-//    
-//    //init page labels
-//    NSString *pagesRemaining = [NSString stringWithFormat:@"%d", [ctView totalPages]];
-//    [currentPageLabel setText:@"1"];
-//    [pagesRemainingLabel setText:pagesRemaining];
 }
 
 //if an image view, caches the current index to prevent reloads

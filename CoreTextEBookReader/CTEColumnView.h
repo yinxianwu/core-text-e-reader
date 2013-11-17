@@ -25,8 +25,8 @@
 @property (strong, nonatomic) NSAttributedString *attString;
 @property (strong, nonatomic) MPMoviePlayerViewController *player;
 
--(void)setCTFrame:(id)f;
+- (void)setCTFrame:(id)f;
+- (void)playMovie:(NSString *)clipPath;
 - (void)moviePlayerLoadStateChanged:(NSNotification *)notification;
-- (BOOL)shouldDrawRect:(CGRect)rect;
 
 @end
