@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Holocene Press. All rights reserved.
 //
 
+#import "CTEChapter.h"
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
 
@@ -38,6 +39,7 @@ extern NSString *const HTTP_PREFIX;
 - (int)getCurrentPage;
 - (int)indexOfColumn:(id)column;
 - (void)currentChapterNeedsUpdate;
+- (NSNumber *)pageNumberForChapterID:(NSNumber *)chapterID;
 - (void)addImage:(UIImage *)img forColumn:(CTEColumnView *)col frameRef:(CTFrameRef)frameRef imageInfo:(NSDictionary *)imageInfo;
 - (void)replaceImage:(UIImage *)img forColumn:(CTEColumnView *)col imageInfo:(NSDictionary *)imageInfo;
 @end

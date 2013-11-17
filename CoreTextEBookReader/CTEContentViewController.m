@@ -21,8 +21,6 @@
 
 @implementation CTEContentViewController
 
-//@synthesize previousChapter = _previousChapter;
-
 @synthesize cteView;
 //@synthesize pageControl;
 //@synthesize stepper;
@@ -141,7 +139,7 @@
     [super presentViewController:viewControllerToPresent animated:flag completion:completion];
 }
 
-
+//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Respond to scroll events from the CTView
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
 //    // Update the page when more than 50% of the previous/next page is visible
@@ -172,6 +170,7 @@
 //    [pagesRemainingLabel setText:pagesRemainingStr];
 }
 
+//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Respond to page control changes
 - (IBAction)pageControlValueChanged:(id)sender {
 //    CGRect frame;
@@ -189,6 +188,7 @@
 //    [self.ctView scrollRectToVisible:frame animated:YES];
 }
 
+//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
     self.decelOffsetX = self.cteView.contentOffset.x;
 }
@@ -198,10 +198,12 @@
     [cteView currentChapterNeedsUpdate];
 }
 
+//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //performs column redraw
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
 }
 
+//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //detect touches on page labels
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
 //    [super touchesBegan:touches withEvent:event];
@@ -250,6 +252,17 @@
         }
     }
     return retVal;
+}
+
+//scrolls to appropriate chapter
+- (void)setCurrentChapter:(id<CTEChapter>)chapter {
+    //do nothing if it's the same chapter
+    if(chapter == self.currentChapter) {
+        return;
+    }
+    CGFloat pageWidth = self.cteView.frame.size.width;
+    NSNumber *page = [self.cteView pageNumberForChapterID:[chapter id]];
+    [self.cteView setContentOffset:CGPointMake(pageWidth * [page intValue], 0.0f) animated:NO];
 }
 
 //TODO other orientations

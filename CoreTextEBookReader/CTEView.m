@@ -296,6 +296,20 @@ NSString *const HTTP_PREFIX = @"http://";
     return floor((self.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
 }
 
+//Page number for selected chapter ID
+- (NSNumber *)pageNumberForChapterID:(NSNumber *)chapterID {
+    NSNumber *retVal = nil;
+    for(int i = 0; i < [self.orderedKeys count]; i++) {
+        NSNumber *matchChapterID = (NSNumber *)[self.orderedKeys objectAtIndex:i];
+        if([matchChapterID isEqualToNumber:chapterID]) {
+            retVal = (NSNumber *)[orderedChapterPages objectAtIndex:i];
+            break;
+        }
+    }
+    
+    return retVal;
+}
+
 //Call to update current chapter (UI has changed)
 - (void)currentChapterNeedsUpdate {
     int page = [self getCurrentPage];
