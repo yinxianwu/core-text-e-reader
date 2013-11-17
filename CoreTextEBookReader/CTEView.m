@@ -141,19 +141,19 @@ NSString *const HTTP_PREFIX = @"http://";
                     //remote image; load in async
                     if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
                         //placeholder image for now
+                        //TODO images should be dynamically sized based on column width & height
                         NSNumber *imageWidth = [imageInfo objectForKey:@"width"];
                         NSNumber *imageHeight = [imageInfo objectForKey:@"height"];
                         
-                        if([imageWidth floatValue] == 240.0f && [imageHeight floatValue] == 320.0f) {
+                        if([imageWidth floatValue] == 240.0f || [imageHeight floatValue] == 320.0f) {
                             img = [UIImage imageNamed:@"Placeholder240x320.jpg"];
                         }
-                        else if([imageWidth floatValue] == 320.0 && [imageHeight floatValue] == 240.0f) {
+                        else {
                             img = [UIImage imageNamed:@"Placeholder320x240.jpg"];
-                            
                         }
                         [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
                         
-                        // download the image asynchronously
+                        //download the image asynchronously
                         [self downloadImageWithURL:[NSURL URLWithString:imgFileName] completionBlock:^(BOOL succeeded, UIImage *image) {
                             if (succeeded) {
                                 [self replaceImage:image forColumn:content imageInfo:imageInfo];
