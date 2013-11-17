@@ -189,11 +189,11 @@ NSString *const HTTP_PREFIX = @"http://";
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if ( !error )
-                               {
+                               if (!error) {
                                    UIImage *image = [[UIImage alloc] initWithData:data];
                                    completionBlock(YES,image);
-                               } else{
+                               }
+                               else {
                                    completionBlock(NO,nil);
                                }
                            }];
@@ -254,11 +254,20 @@ NSString *const HTTP_PREFIX = @"http://";
     }
 }
 
-//replaces image for specified matadata in specified column
-- (void)replaceImage:(UIImage *)img forColumn:(CTEColumnView *)col imageInfo:(NSDictionary *)imageInfo {
+//replaces image for specified metadata in specified column
+- (void)replaceImage:(UIImage *)img forColumn:(CTEColumnView *)col imageInfo:(NSDictionary *)imageMetadata {
     NSMutableArray *matchData = nil;
     for(NSMutableArray *imageData in col.imagesWithMetadata) {
-        BOOL match = [imageInfo isEqualToDictionary:(NSDictionary *)[imageData objectAtIndex:2]];
+        NSDictionary *matchMetadata = (NSDictionary *)[imageData objectAtIndex:2];
+        BOOL match = [imageMetadata isEqualToDictionary:matchMetadata];
+        
+        //check clip file name, as movies are handled a bit differently
+        if(!match) {
+            NSString *clipFileName = [(NSString *)imageMetadata valueForKey:@"clipFileName"];
+            NSString *matchClipFileName = [(NSString *)matchMetadata valueForKey:@"clipFileName"];
+            match = clipFileName != nil && matchClipFileName != nil && [matchClipFileName isEqualToString:clipFileName];
+        }
+        
         if(match) {
             matchData = imageData;
             break;
