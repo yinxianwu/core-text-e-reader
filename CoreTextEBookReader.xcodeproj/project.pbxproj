@@ -67,8 +67,6 @@
 		6895EFD0181DF20D009B8527 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6895EFAE181DCEC7009B8527 /* UIKit.framework */; };
 		6895EFD8181DF20D009B8527 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6895EFD6181DF20D009B8527 /* InfoPlist.strings */; };
 		6895EFDA181DF20D009B8527 /* SampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EFD9181DF20D009B8527 /* SampleAppTests.m */; };
-		68AF284618255FCE00EA632B /* CTEMediaCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284518255FCE00EA632B /* CTEMediaCache.m */; };
-		68AF28471825634200EA632B /* CTEMediaCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284518255FCE00EA632B /* CTEMediaCache.m */; };
 		68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284918257D8C00EA632B /* CTEUtils.m */; };
 		68AF284B18257DC700EA632B /* CTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284918257D8C00EA632B /* CTEUtils.m */; };
 		68AF284E1825A98E00EA632B /* CTEDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEDelegate.m */; };
@@ -170,8 +168,6 @@
 		6895EFD5181DF20D009B8527 /* SampleAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SampleAppTests-Info.plist"; sourceTree = "<group>"; };
 		6895EFD7181DF20D009B8527 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6895EFD9181DF20D009B8527 /* SampleAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppTests.m; sourceTree = "<group>"; };
-		68AF284418255FCE00EA632B /* CTEMediaCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEMediaCache.h; sourceTree = "<group>"; };
-		68AF284518255FCE00EA632B /* CTEMediaCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEMediaCache.m; sourceTree = "<group>"; };
 		68AF284818257D8C00EA632B /* CTEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEUtils.h; sourceTree = "<group>"; };
 		68AF284918257D8C00EA632B /* CTEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEUtils.m; sourceTree = "<group>"; };
 		68AF284C1825A98E00EA632B /* CTEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEDelegate.h; sourceTree = "<group>"; };
@@ -279,8 +275,6 @@
 				68678E8B181F62EE00D8B812 /* CTEChapter.h */,
 				6895EFB0181DD2B5009B8527 /* CTEConstants.h */,
 				6895EFB1181DD2B5009B8527 /* CTEConstants.m */,
-				68AF284418255FCE00EA632B /* CTEMediaCache.h */,
-				68AF284518255FCE00EA632B /* CTEMediaCache.m */,
 				6895EF8D181DCE62009B8527 /* CTEColumnView.h */,
 				6895EF8E181DCE62009B8527 /* CTEColumnView.m */,
 				68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */,
@@ -581,7 +575,6 @@
 				68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */,
 				68AF284E1825A98E00EA632B /* CTEDelegate.m in Sources */,
 				6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */,
-				68AF284618255FCE00EA632B /* CTEMediaCache.m in Sources */,
 				68D34997182E823400345F12 /* NSMutableArray+QueueAdditions.m in Sources */,
 				6895EFA1181DCE62009B8527 /* CTEView.m in Sources */,
 				6895EFA2181DCE62009B8527 /* CTEMarkupParser.m in Sources */,
@@ -611,7 +604,6 @@
 				6847F019181E2469003F38B5 /* CTEMenuViewController.m in Sources */,
 				6847F01B181E2469003F38B5 /* CTEImageViewController.m in Sources */,
 				6895EFC6181DF20D009B8527 /* CTEAppDelegate.m in Sources */,
-				68AF28471825634200EA632B /* CTEMediaCache.m in Sources */,
 				68678E94181F665000D8B812 /* CTESampleChapter.m in Sources */,
 				68AF284B18257DC700EA632B /* CTEUtils.m in Sources */,
 				6895EFC2181DF20D009B8527 /* main.m in Sources */,

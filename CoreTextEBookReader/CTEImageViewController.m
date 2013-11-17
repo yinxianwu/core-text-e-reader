@@ -7,7 +7,6 @@
 //
 
 #import "CTEImageViewController.h"
-#import "CTEMediaCache.h"
 
 #define ZOOM_VIEW_TAG 100
 #define ZOOM_STEP 1.5
