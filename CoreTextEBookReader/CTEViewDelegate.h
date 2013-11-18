@@ -12,5 +12,6 @@
 
 - (void)playMovie:(NSString *)clipPath;
 - (void)showImage:(UIImage *)image;
+- (void)toggleUtilityBars;
 
 @end

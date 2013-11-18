@@ -259,6 +259,7 @@
     }
 }
 
+//displays specified image in full-screen image view
 - (void)showImage:(UIImage *)image {
     CTEImageViewController *imageView;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
@@ -268,6 +269,17 @@
         imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPadView" bundle:nil image:image];
     }
     [self presentViewController:imageView animated:YES completion:nil];
+}
+
+//shows/hides nav & toolbars
+- (void)toggleUtilityBars {
+    BOOL hidden = self.navBar.isHidden;
+    [UIView transitionWithView:self.navBar
+                      duration:0.25f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:NULL
+                    completion:NULL];
+    self.navBar.hidden = !hidden;
 }
 
 //returns current CTEView chapter based on where the CTEView is at

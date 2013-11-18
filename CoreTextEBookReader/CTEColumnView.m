@@ -47,12 +47,9 @@
 	UITouch *touch = [touches anyObject];
 	CGPoint location = [touch locationInView:self];
 	location.y += (18.0 / 1.3); //TODO font size now is set in parser
-
 	CFArrayRef lines = CTFrameGetLines((__bridge CTFrameRef)(ctFrame));
-	
 	CGPoint origins[CFArrayGetCount(lines)];
 	CTFrameGetLineOrigins((__bridge CTFrameRef)(ctFrame), CFRangeMake(0, 0), origins);
-	
 	CTLineRef line = NULL;
 	CGPoint lineOrigin = CGPointZero;
 	for (int i= 0; i < CFArrayGetCount(lines); i++) {
@@ -117,12 +114,13 @@
         }
     }
     
-    //open URL in Safari
+    //if link, open URL in Safari
     if(href != nil) {
         NSURL *url = [NSURL URLWithString:href];
         [[UIApplication sharedApplication] openURL:url];
     }
-    else if(movieClipPath != nil) {
+    //if movie, pass off to delegate
+    else if(movieClipPath != nil&& self.viewDelegate != nil) {
         [viewDelegate playMovie:movieClipPath];
     }
     //open image or clip in new view
@@ -142,6 +140,11 @@
                 [viewDelegate showImage:imageTouched];
             }
         }
+    }
+    //toggle toolbars or flip pages, depending on location
+    else if(self.viewDelegate != nil) {
+        //TODO location for page turn
+        [viewDelegate toggleUtilityBars];
     }
 }
 
