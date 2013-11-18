@@ -15,18 +15,16 @@
 
 @interface CTEContentViewController : UIViewController<UIScrollViewDelegate, CTEViewDelegate>
 
-@property (nonatomic) NSInteger contentIndex;
-
 @property (nonatomic, strong) id <CTEChapter> currentChapter;
-
-@property (nonatomic, strong) UINavigationBar *navBar;
-@property (nonatomic, strong) IBOutlet CTEView *cteView;
-
 @property (nonatomic, strong) NSArray *chapters;
 @property (nonatomic, strong) NSDictionary *attStrings;
 @property (nonatomic, strong) NSDictionary *images;
 @property (nonatomic, strong) NSDictionary *links;
-@property (strong, nonatomic) MPMoviePlayerViewController *player;
+
+@property (nonatomic, strong) IBOutlet CTEView *cteView;
+@property (nonatomic, strong) UINavigationBar *navBar;
+@property (nonatomic, strong) UIToolbar *toolBar;
+@property (nonatomic, strong) MPMoviePlayerViewController *moviePlayerController;
 //@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 //@property (nonatomic, strong) IBOutlet UIStepper *stepper;
 //@property (nonatomic, strong) IBOutlet UILabel *currentPageLabel;

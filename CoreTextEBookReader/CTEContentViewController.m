@@ -23,14 +23,15 @@
 @implementation CTEContentViewController
 
 @synthesize cteView;
+@synthesize navBar;
+@synthesize toolBar;
+@synthesize spinnerViews;
+@synthesize decelOffsetX;
+@synthesize moviePlayerController;
 //@synthesize pageControl;
 //@synthesize stepper;
 //@synthesize currentPageLabel;
 //@synthesize pagesRemainingLabel;
-@synthesize spinnerViews;
-@synthesize decelOffsetX;
-@synthesize navBar;
-@synthesize player;
 
 @synthesize currentChapter;
 @synthesize chapters;
@@ -71,68 +72,84 @@
                           order:orderedSet];
     [self.cteView buildFrames];
 
+    //color for bars
+    //TODO make configurable
+    CGFloat red = 225.0f/255.0f;
+    CGFloat green = 210.0f/255.0f;
+    CGFloat blue = 169.0f/255.0f;
+    UIColor *barTintColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0f];
+    
+    //nav bar init
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
     CGFloat navBarHeight = 64.0f;
+    CGFloat toolBarHeight = 50.0f;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         //height adjustment for first time view is shown
         //this is an issue when displaying on 3.5-inch displays
         CGRect viewRect = [self.view bounds];
         if(viewRect.size.height > screenRect.size.height) {
             CGRect ctViewRect = [cteView bounds];
-            CGRect ctViewNewRect = CGRectMake(ctViewRect.origin.x, ctViewRect.origin.y, ctViewRect.size.width, screenRect.size.height - 88);
+            CGRect ctViewNewRect = CGRectMake(ctViewRect.origin.x,
+                                              ctViewRect.origin.y,
+                                              ctViewRect.size.width,
+                                              screenRect.size.height - 88);
             [cteView setFrame:ctViewNewRect];
         }
     }
-    
-    CGFloat red = 225.0f/255.0f;
-    CGFloat green = 210.0f/255.0f;
-    CGFloat blue = 169.0f/255.0f;
-    UIColor *navBarDefaultColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0f];
-    UIColor *navBarColor = nil;
+    UIColor *barColor = nil;
     if(isIOS7) {
-        [[UINavigationBar appearance] setBarTintColor:navBarDefaultColor];
-        navBarColor = [UIColor blackColor];
+        [[UINavigationBar appearance] setBarTintColor:barTintColor];
+        [[UIToolbar appearance] setBarTintColor:barTintColor];
+        barColor = [UIColor blackColor];
     }
     else {
-        navBarColor = navBarDefaultColor;
+        barColor = barTintColor;
         navBarHeight -= 20.0f;
+        toolBarHeight += 30.0f;
     }
-    
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               [UIColor blackColor],UITextAttributeTextColor,
+                                               [UIColor blackColor], NSForegroundColorAttributeName,
 //                                               [UIColor blackColor], UITextAttributeTextShadowColor,
 //                                               [NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset,
                                                nil];
-    
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
-    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, navBarHeight)];
+    self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, navBarHeight)];
     if(!isIOS7) [navBar setBarStyle:UIBarStyleBlack];
-    [navBar setDelegate:self];
-    [navBar setTintColor:navBarColor];
-    [self.view addSubview:navBar];
+    [self.navBar setDelegate:self];
+    [self.navBar setTintColor:barColor];
+    [self.view addSubview:self.navBar];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                                   initWithImage:[UIImage imageNamed:@"ThreeLines.png"]
                                   style:UIBarButtonItemStyleBordered
                                   target:self
                                   action:@selector(slideMenuButtonTouched:)];
-    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:@"WTR Mobile"];
+    NSString *navBarInitialTitle = NavigationBarTitle;
+    if([self.chapters count] > 0) {
+        id<CTEChapter> firstChapter = (id<CTEChapter>)[self.chapters firstObject];
+        navBarInitialTitle = [firstChapter title];
+    }
+    UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:navBarInitialTitle];
     item.leftBarButtonItem = addButton;
-    [navBar pushNavigationItem:item animated:false];
+    [self.navBar pushNavigationItem:item animated:false];
+    
+    //toolbar init
+    self.toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, screenHeight - toolBarHeight, screenWidth, toolBarHeight)];
+    UISlider *aSlider = [[UISlider alloc] init];
+    UIBarButtonItem *sliderAsToolbarItem = [[UIBarButtonItem alloc] initWithCustomView:aSlider];
+    [sliderAsToolbarItem setWidth:screenWidth - 100.0]; //TODO size based on other components
+    
+    // Add the items to the toolbar
+    [self.toolBar setItems:[NSArray arrayWithObjects:sliderAsToolbarItem, nil]];
+    [self.toolBar setTintColor:barColor];
+    [self.view addSubview:self.toolBar];
 }
 
 //side menu action
 -(void)slideMenuButtonTouched:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:ShowSideMenu object:self];
-}
-
-//if an image view, caches the current index to prevent reloads
-- (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^)(void))completion NS_AVAILABLE_IOS(5_0) {
-    if([viewControllerToPresent isKindOfClass:[CTEImageViewController class]]) {
-        [self setContentIndex:self.contentIndex];
-    }
-    [super presentViewController:viewControllerToPresent animated:flag completion:completion];
 }
 
 //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -239,23 +256,23 @@
 //plays specified movie
 - (void)playMovie:(NSString *)clipPath {
     self.spinnerViews = [CTEUtils startSpinnerOnView:self.view];
-    self.player = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:clipPath]];
+    self.moviePlayerController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:clipPath]];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(moviePlayerLoadStateChanged:)
                                                  name:MPMoviePlayerLoadStateDidChangeNotification
                                                object:nil];
-    [self.player.moviePlayer prepareToPlay];
+    [self.moviePlayerController.moviePlayer prepareToPlay];
 }
 
 //plays movie when loaded in
 - (void)moviePlayerLoadStateChanged:(NSNotification *)notification {
     NSLog(@"moviePlayerLoadStateChanged");
-    MPMovieLoadState loadState = self.player.moviePlayer.loadState;
+    MPMovieLoadState loadState = self.moviePlayerController.moviePlayer.loadState;
     if(loadState == MPMovieLoadStatePlayable) {
         NSLog(@"MPMovieLoadStatePlaythroughOK; loading player...");
         [CTEUtils stopSpinnerOnView:self.view withSpinner:self.spinnerViews];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
-        [self presentMoviePlayerViewControllerAnimated:self.player];
+        [self presentMoviePlayerViewControllerAnimated:self.moviePlayerController];
     }
 }
 
@@ -280,6 +297,12 @@
                     animations:NULL
                     completion:NULL];
     self.navBar.hidden = !hidden;
+    [UIView transitionWithView:self.toolBar
+                      duration:0.25f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:NULL
+                    completion:NULL];
+    self.toolBar.hidden = !hidden;
 }
 
 //returns current CTEView chapter based on where the CTEView is at
@@ -306,6 +329,10 @@
     NSNumber *page = [self.cteView pageNumberForChapterID:[chapter id]];
     [self.cteView setContentOffset:CGPointMake(pageWidth * [page intValue], 0.0f) animated:NO];
     [self.cteView setCurrentChapterID:[chapter id]];
+    
+    //update navbar title to chapter title
+    UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
+    item.title = [chapter title];
 }
 
 //TODO other orientations

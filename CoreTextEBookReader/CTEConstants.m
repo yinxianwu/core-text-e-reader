@@ -13,4 +13,6 @@
 NSString * const ShowSideMenu = @"ShowSideMenu";
 NSString * const HideSideMenu = @"HideSideMenu";
 
+NSString * const NavigationBarTitle = @"CoreTextEBookReader";
+
 @end
