@@ -38,7 +38,7 @@
 }
 
 //Begin touch; determine location and if it's a link or image
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     //kick out if ctFrame is null -- means it's an empty column
     if(!ctFrame) {
         return;
