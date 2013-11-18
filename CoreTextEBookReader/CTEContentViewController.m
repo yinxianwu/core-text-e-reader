@@ -28,6 +28,7 @@
 @synthesize spinnerViews;
 @synthesize decelOffsetX;
 @synthesize moviePlayerController;
+@synthesize pageSlider;
 //@synthesize pageControl;
 //@synthesize stepper;
 //@synthesize currentPageLabel;
@@ -135,10 +136,15 @@
     item.leftBarButtonItem = addButton;
     [self.navBar pushNavigationItem:item animated:false];
     
-    //toolbar init
+    //toolbar and its widgets init
     self.toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, screenHeight - toolBarHeight, screenWidth, toolBarHeight)];
-    UISlider *aSlider = [[UISlider alloc] init];
-    UIBarButtonItem *sliderAsToolbarItem = [[UIBarButtonItem alloc] initWithCustomView:aSlider];
+    self.pageSlider = [[UISlider alloc] init];
+    self.pageSlider.minimumValue = 0.0f;
+    self.pageSlider.maximumValue = [self.cteView totalPages];
+    [self.pageSlider addTarget:self
+                        action:@selector(pageSliderValueChanged:)
+              forControlEvents:UIControlEventValueChanged];
+    UIBarButtonItem *sliderAsToolbarItem = [[UIBarButtonItem alloc] initWithCustomView:self.pageSlider];
     [sliderAsToolbarItem setWidth:screenWidth - 100.0]; //TODO size based on other components
     //TODO other components
     
@@ -148,8 +154,22 @@
     [self.view addSubview:self.toolBar];
 }
 
+//syncs pages to slider value
+- (void)pageSliderValueChanged:(id)sender {
+    float sliderValue = self.pageSlider.value;
+    float sliderPageValue = floorf(sliderValue);
+    CGFloat pageWidth = self.cteView.frame.size.width;
+    NSNumber *page = [NSNumber numberWithFloat:sliderPageValue];
+    [self.cteView setContentOffset:CGPointMake(pageWidth * [page intValue], 0.0f) animated:YES];
+    [self.cteView currentChapterNeedsUpdate];
+    
+    //update navbar title to new chapter title
+    UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
+    item.title = [self.currentChapter title];
+}
+
 //side menu action
--(void)slideMenuButtonTouched:(id)sender {
+- (void)slideMenuButtonTouched:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:ShowSideMenu object:self];
 }
 
@@ -163,18 +183,25 @@
     self.decelOffsetX = self.cteView.contentOffset.x;
 }
 
-//performs column redraw
+//post user-initated scroll
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [cteView currentChapterNeedsUpdate];
+    
+    //update page slider to selected page
+    [self.pageSlider setValue:[cteView getCurrentPage]];
     
     //update navbar title to new chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
     item.title = [self.currentChapter title];
 }
 
-//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//performs column redraw
+//post-programmatic animations
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [cteView currentChapterNeedsUpdate];
+    
+    //update navbar title to new chapter title
+    UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
+    item.title = [self.currentChapter title];
 }
 
 //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -290,6 +317,9 @@
     NSNumber *page = [self.cteView pageNumberForChapterID:[chapter id]];
     [self.cteView setContentOffset:CGPointMake(pageWidth * [page intValue], 0.0f) animated:NO];
     [self.cteView setCurrentChapterID:[chapter id]];
+    
+    //update page slider to selected page
+    [self.pageSlider setValue:[page floatValue]];
     
     //update navbar title to chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];

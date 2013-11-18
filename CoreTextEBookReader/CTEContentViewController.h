@@ -24,6 +24,7 @@
 @property (nonatomic, strong) IBOutlet CTEView *cteView;
 @property (nonatomic, strong) UINavigationBar *navBar;
 @property (nonatomic, strong) UIToolbar *toolBar;
+@property (nonatomic, strong) UISlider *pageSlider;
 @property (nonatomic, strong) MPMoviePlayerViewController *moviePlayerController;
 //@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 //@property (nonatomic, strong) IBOutlet UIStepper *stepper;
