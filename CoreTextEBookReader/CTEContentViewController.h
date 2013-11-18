@@ -36,7 +36,6 @@
            attStrings:(NSDictionary *)allAttStrings
                images:(NSDictionary *)allImages
                 links:(NSDictionary *)allLinks;
-- (IBAction)pageControlValueChanged:(id)sender;
 - (void)slideMenuButtonTouched:(id)sender;
 - (void)playMovie:(NSString *)clipPath;
 

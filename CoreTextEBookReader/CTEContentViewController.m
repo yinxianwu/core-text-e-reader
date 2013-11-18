@@ -140,6 +140,7 @@
     UISlider *aSlider = [[UISlider alloc] init];
     UIBarButtonItem *sliderAsToolbarItem = [[UIBarButtonItem alloc] initWithCustomView:aSlider];
     [sliderAsToolbarItem setWidth:screenWidth - 100.0]; //TODO size based on other components
+    //TODO other components
     
     // Add the items to the toolbar
     [self.toolBar setItems:[NSArray arrayWithObjects:sliderAsToolbarItem, nil]];
@@ -152,54 +153,10 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:ShowSideMenu object:self];
 }
 
-//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Respond to scroll events from the CTView
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
-//    // Update the page when more than 50% of the previous/next page is visible
-//    CGFloat pageWidth = self.ctView.frame.size.width;
-//    int page = floor((self.decelOffsetX - pageWidth / 2) / pageWidth) + 1;
-//    
-//    //different impls for paging
-//    if(self.pageControl) {
-//        self.pageControl.currentPage = page;
-//    }
-//    else if(self.stepper) {
-//        self.stepper.value = page;
-//    }
-//    
-//    //update page labels
-//    double currentPage = 0.0;
-//    if(self.pageControl) {
-//        currentPage = self.pageControl.currentPage;
-//    }
-//    else if(self.stepper) {
-//        currentPage = self.stepper.value;
-//    }
-//    int currentPageInt = currentPage + 1;
-//    int pagesRemainingInt = [ctView totalPages] - currentPage;
-//    NSString *pagesRemainingStr = [NSString stringWithFormat:@"%d", pagesRemainingInt];
-//    NSString *currentPageStr = [NSString stringWithFormat:@"%d", currentPageInt];
-//    [currentPageLabel setText:currentPageStr];
-//    [pagesRemainingLabel setText:pagesRemainingStr];
 }
 
-//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//Respond to page control changes
-- (IBAction)pageControlValueChanged:(id)sender {
-//    CGRect frame;
-//    // update the scroll view to the appropriate page
-//    double currentPage = 0.0;
-//    if(sender == self.pageControl) {
-//        currentPage = self.pageControl.currentPage;
-//    }
-//    else if(sender == self.stepper) {
-//        currentPage = self.stepper.value;
-//    }
-//    frame.origin.x = self.ctView.frame.size.width * currentPage;
-//    frame.origin.y = 0;
-//    frame.size = self.ctView.frame.size;
-//    [self.ctView scrollRectToVisible:frame animated:YES];
-}
 
 //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
@@ -209,6 +166,10 @@
 //performs column redraw
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [cteView currentChapterNeedsUpdate];
+    
+    //update navbar title to new chapter title
+    UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
+    item.title = [self.currentChapter title];
 }
 
 //TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
