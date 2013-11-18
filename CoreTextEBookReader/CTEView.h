@@ -7,6 +7,7 @@
 //
 
 #import "CTEChapter.h"
+#import "CTEViewDelegate.h"
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
 
@@ -19,8 +20,7 @@
 
 extern NSString *const HTTP_PREFIX;
 
-@property (weak, nonatomic) UIViewController *modalTarget;
-
+@property (weak, nonatomic) id<CTEViewDelegate> viewDelegate;
 @property (strong, nonatomic) NSMutableArray *columns;
 @property (strong, nonatomic) NSArray *orderedKeys;
 @property (strong, nonatomic) NSDictionary *attStrings;

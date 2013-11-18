@@ -11,19 +11,16 @@
 #import "CTEView.h"
 
 @interface CTEColumnView()
-@property NSArray *spinnerViews;
 @end
 
 @implementation CTEColumnView
 
+@synthesize viewDelegate;
 @synthesize textStart;
 @synthesize textEnd;
 @synthesize imagesWithMetadata;
 @synthesize links;
 @synthesize attString;
-@synthesize modalTarget;
-@synthesize player;
-@synthesize spinnerViews;
 
 
 //inits image array
@@ -126,11 +123,11 @@
         [[UIApplication sharedApplication] openURL:url];
     }
     else if(movieClipPath != nil) {
-        [self playMovie:movieClipPath];
+        [viewDelegate playMovie:movieClipPath];
     }
     //open image or clip in new view
     //check if it's a movie-type preview image
-    else if(imageTouched != nil && imageTouchedMetadata != nil && modalTarget != nil) {
+    else if(imageTouched != nil && imageTouchedMetadata != nil && self.viewDelegate != nil) {
         NSString *imagePath = (NSString *)[imageTouchedMetadata objectForKey:@"fileName"];
         NSString *clipPath = (NSString *)[imageTouchedMetadata objectForKey:@"clipFileName"];
         
@@ -139,42 +136,12 @@
         if(![imagePath isEqualToString:@"SectionDivider169Black.png"]) {
             //image vs movie clip
             if(clipPath) {
-                [self playMovie:clipPath];
+                [viewDelegate playMovie:clipPath];
             }
             else {
-                CTEImageViewController *imageView;
-                if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-                    imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPhoneView" bundle:nil image:imageTouched];
-                }
-                else {
-                    imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPadView" bundle:nil image:imageTouched];
-                }
-                [modalTarget presentViewController:imageView animated:YES completion:nil];
+                [viewDelegate showImage:imageTouched];
             }
         }
-    }
-}
-
-//plays specified movie at path
-- (void)playMovie:(NSString *)clipPath {
-    self.spinnerViews = [CTEUtils startSpinnerOnView:self.modalTarget.view];
-    self.player = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:clipPath]];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(moviePlayerLoadStateChanged:)
-                                                 name:MPMoviePlayerLoadStateDidChangeNotification
-                                               object:nil];
-    [self.player.moviePlayer prepareToPlay];
-}
-
-//listens for state changes in movie load
-- (void)moviePlayerLoadStateChanged:(NSNotification *)notification {
-    NSLog(@"moviePlayerLoadStateChanged");
-    MPMovieLoadState loadState = self.player.moviePlayer.loadState;
-    if(loadState == MPMovieLoadStatePlayable) {
-        NSLog(@"MPMovieLoadStatePlaythroughOK; loading player...");
-        [CTEUtils stopSpinnerOnView:self.modalTarget.view withSpinner:self.spinnerViews];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
-        [modalTarget presentMoviePlayerViewControllerAnimated:self.player];
     }
 }
 

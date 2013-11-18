@@ -19,7 +19,7 @@
 
 NSString *const HTTP_PREFIX = @"http://";
 
-@synthesize modalTarget;
+@synthesize viewDelegate;
 @synthesize columns;
 @synthesize attStrings;
 @synthesize imageMetadatas;
@@ -118,7 +118,7 @@ NSString *const HTTP_PREFIX = @"http://";
             content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height);
             content.attString = attString; //for link and image touches
             content.links = chapLinks;
-            content.modalTarget = self.modalTarget;
+            content.viewDelegate = self.viewDelegate;
             [self.columns addObject:content];
             
             //set the column view contents and add it as subview

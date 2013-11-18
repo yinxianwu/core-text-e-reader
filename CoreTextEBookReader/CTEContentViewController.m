@@ -11,6 +11,7 @@
 #import "CTEImageViewController.h"
 #import "CTEChapter.h"
 #import "CTEConstants.h"
+#import "CTEUtils.h"
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -24,11 +25,12 @@
 @synthesize cteView;
 //@synthesize pageControl;
 //@synthesize stepper;
-@synthesize spinnerViews;
-@synthesize decelOffsetX;
 //@synthesize currentPageLabel;
 //@synthesize pagesRemainingLabel;
+@synthesize spinnerViews;
+@synthesize decelOffsetX;
 @synthesize navBar;
+@synthesize player;
 
 @synthesize currentChapter;
 @synthesize chapters;
@@ -61,8 +63,8 @@
     for(id<CTEChapter> chapter in self.chapters) {
         [orderedSet addObject:[chapter id]];
     }
-    //TODO redo as delegate pattern
-    self.cteView.modalTarget = self;
+
+    self.cteView.viewDelegate = self;
     [self.cteView setAttStrings:self.attStrings
                          images:self.images
                           links:self.links
@@ -232,6 +234,40 @@
 //    frame.size = self.ctView.frame.size;
 //    [self.ctView scrollRectToVisible:frame animated:YES];
     
+}
+
+//plays specified movie
+- (void)playMovie:(NSString *)clipPath {
+    self.spinnerViews = [CTEUtils startSpinnerOnView:self.view];
+    self.player = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:clipPath]];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(moviePlayerLoadStateChanged:)
+                                                 name:MPMoviePlayerLoadStateDidChangeNotification
+                                               object:nil];
+    [self.player.moviePlayer prepareToPlay];
+}
+
+//plays movie when loaded in
+- (void)moviePlayerLoadStateChanged:(NSNotification *)notification {
+    NSLog(@"moviePlayerLoadStateChanged");
+    MPMovieLoadState loadState = self.player.moviePlayer.loadState;
+    if(loadState == MPMovieLoadStatePlayable) {
+        NSLog(@"MPMovieLoadStatePlaythroughOK; loading player...");
+        [CTEUtils stopSpinnerOnView:self.view withSpinner:self.spinnerViews];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
+        [self presentMoviePlayerViewControllerAnimated:self.player];
+    }
+}
+
+- (void)showImage:(UIImage *)image {
+    CTEImageViewController *imageView;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPhoneView" bundle:nil image:image];
+    }
+    else {
+        imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPadView" bundle:nil image:image];
+    }
+    [self presentViewController:imageView animated:YES completion:nil];
 }
 
 //returns current CTEView chapter based on where the CTEView is at

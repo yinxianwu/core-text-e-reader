@@ -10,4 +10,7 @@
 
 @protocol CTEViewDelegate <NSObject>
 
+- (void)playMovie:(NSString *)clipPath;
+- (void)showImage:(UIImage *)image;
+
 @end

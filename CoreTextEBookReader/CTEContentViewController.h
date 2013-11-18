@@ -6,11 +6,14 @@
 //  Copyright (c) 2013 Holocene Press. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "CTEView.h"
 #import "CTEChapter.h"
+#import "CTEViewDelegate.h"
+#import "CTEImageViewController.h"
+#import "MediaPlayer/MediaPlayer.h"
+#import <UIKit/UIKit.h>
 
-@interface CTEContentViewController : UIViewController<UIScrollViewDelegate>
+@interface CTEContentViewController : UIViewController<UIScrollViewDelegate, CTEViewDelegate>
 
 @property (nonatomic) NSInteger contentIndex;
 
@@ -23,6 +26,7 @@
 @property (nonatomic, strong) NSDictionary *attStrings;
 @property (nonatomic, strong) NSDictionary *images;
 @property (nonatomic, strong) NSDictionary *links;
+@property (strong, nonatomic) MPMoviePlayerViewController *player;
 //@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
 //@property (nonatomic, strong) IBOutlet UIStepper *stepper;
 //@property (nonatomic, strong) IBOutlet UILabel *currentPageLabel;
@@ -36,5 +40,6 @@
                 links:(NSDictionary *)allLinks;
 - (IBAction)pageControlValueChanged:(id)sender;
 - (void)slideMenuButtonTouched:(id)sender;
+- (void)playMovie:(NSString *)clipPath;
 
 @end

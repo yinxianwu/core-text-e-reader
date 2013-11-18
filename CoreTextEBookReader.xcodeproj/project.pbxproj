@@ -43,6 +43,7 @@
 		686BE8E9183863ED00072E27 /* Chapter1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 686BE8E6183863ED00072E27 /* Chapter1.txt */; };
 		686BE8EA183863ED00072E27 /* Chapter2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 686BE8E7183863ED00072E27 /* Chapter2.txt */; };
 		686BE8EB183863ED00072E27 /* Chapter3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 686BE8E8183863ED00072E27 /* Chapter3.txt */; };
+		686BE8EC1839A32500072E27 /* CTEViewDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */; };
 		6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8C181DCE62009B8527 /* CTEContentViewController.m */; };
 		6895EFA0181DCE62009B8527 /* CTEColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8E181DCE62009B8527 /* CTEColumnView.m */; };
 		6895EFA1181DCE62009B8527 /* CTEView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF90181DCE62009B8527 /* CTEView.m */; };
@@ -100,6 +101,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				686BE8EC1839A32500072E27 /* CTEViewDelegate.h in CopyFiles */,
 				68678E91181F65C100D8B812 /* CTEChapter.h in CopyFiles */,
 				680AE81C1818C778006ABAE4 /* CoreTextEBookReader.h in CopyFiles */,
 			);

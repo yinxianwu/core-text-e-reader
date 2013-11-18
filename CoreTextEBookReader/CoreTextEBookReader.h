@@ -13,6 +13,7 @@
 #import "CTEMediaCache.h"
 #import "CTEColumnView.h"
 #import "CTEView.h"
+#import "CTEViewDelegate.h"
 #import "CTEMarkupParser.h"
 #import "CTEMenuViewController.h"
 #import "CTEImageViewController.h"
