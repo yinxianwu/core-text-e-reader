@@ -17,7 +17,6 @@
 
 @interface CTEContentViewController ()
 @property (nonatomic, strong) NSArray *spinnerViews;
-@property (nonatomic) float decelOffsetX;
 @end
 
 @implementation CTEContentViewController
@@ -26,7 +25,6 @@
 @synthesize navBar;
 @synthesize toolBar;
 @synthesize spinnerViews;
-@synthesize decelOffsetX;
 @synthesize moviePlayerController;
 @synthesize pageSlider;
 //@synthesize pageControl;
@@ -52,7 +50,6 @@
     self.attStrings = allAttStrings;
     self.images = allImages;
     self.links = allLinks;
-    self.decelOffsetX = 0.0f;
     
     return self;
 }
@@ -138,6 +135,14 @@
     
     //toolbar and its widgets init
     self.toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, screenHeight - toolBarHeight, screenWidth, toolBarHeight)];
+    UIBarButtonItem *configButton = [[UIBarButtonItem alloc] initWithTitle:@"Aa"
+                                                                     style:UIBarButtonItemStyleBordered
+                                                                    target:self
+                                                                    action:@selector(configButtonTouched:)];
+    [configButton setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"Helvetica-Bold" size:26.0],
+                                      UITextAttributeTextColor: [UIColor darkGrayColor]}
+                                forState:UIControlStateNormal];
+    
     self.pageSlider = [[UISlider alloc] init];
     self.pageSlider.minimumValue = 0.0f;
     self.pageSlider.maximumValue = [self.cteView totalPages];
@@ -146,10 +151,9 @@
               forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *sliderAsToolbarItem = [[UIBarButtonItem alloc] initWithCustomView:self.pageSlider];
     [sliderAsToolbarItem setWidth:screenWidth - 100.0]; //TODO size based on other components
-    //TODO other components
     
     // Add the items to the toolbar
-    [self.toolBar setItems:[NSArray arrayWithObjects:sliderAsToolbarItem, nil]];
+    [self.toolBar setItems:[NSArray arrayWithObjects:sliderAsToolbarItem, configButton, nil]];
     [self.toolBar setTintColor:barColor];
     [self.view addSubview:self.toolBar];
 }
@@ -173,14 +177,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:ShowSideMenu object:self];
 }
 
-//Respond to scroll events from the CTView
-- (void)scrollViewDidScroll:(UIScrollView *)sender {
-}
-
-
-//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    self.decelOffsetX = self.cteView.contentOffset.x;
+- (void)configButtonTouched:(id)sender {
+    NSLog(@"TOUCHED");
 }
 
 //post user-initated scroll
@@ -202,43 +200,6 @@
     //update navbar title to new chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
     item.title = [self.currentChapter title];
-}
-
-//TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//detect touches on page labels
-- (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
-//    [super touchesBegan:touches withEvent:event];
-//    UITouch *touch = [touches anyObject];
-//    UIView * view = touch.view;
-//    int pageDirection = 0;
-//    
-//    if(view == self.currentPageLabel) {
-//        pageDirection--;
-//    }
-//    else if(view == self.pagesRemainingLabel) {
-//        pageDirection++;
-//    }
-//    //don't do anything if a page control wasn't touched
-//    else {
-//        return;
-//    }
-//    
-//    CGRect frame;
-//    // update the page controls to the appropriate page
-//    double currentPage = 0.0;
-//    if(self.pageControl) {
-//        self.pageControl.currentPage = self.pageControl.currentPage + pageDirection;
-//        currentPage = self.pageControl.currentPage;
-//    }
-//    else if(self.stepper) {
-//        self.pageControl.currentPage = self.stepper.value + pageDirection;
-//        currentPage = self.stepper.value;
-//    }
-//    frame.origin.x = self.ctView.frame.size.width * currentPage;
-//    frame.origin.y = 0;
-//    frame.size = self.ctView.frame.size;
-//    [self.ctView scrollRectToVisible:frame animated:YES];
-    
 }
 
 //plays specified movie
