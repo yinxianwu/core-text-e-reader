@@ -34,12 +34,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.fontSmallerButton.layer.borderWidth=1.0f;
-//    self.fontSmallerButton.layer.borderColor=[[UIColor lightGrayColor] CGColor];
-//    self.fontLargerButton.layer.borderWidth=1.0f;
-//    self.fontLargerButton.layer.borderColor=[[UIColor lightGrayColor] CGColor];
+    
+    //give font buttons a background color
+    [self.fontSmallerButton setBackgroundImage:[self imageFromColor:[UIColor colorWithRed:14.0f/255 green:104.0f/255 blue: 228.0f/255 alpha:1.0f]]
+                                      forState:UIControlStateNormal];
+    self.fontSmallerButton.layer.cornerRadius = 8.0;
+    self.fontSmallerButton.layer.masksToBounds = YES;
+    self.fontSmallerButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.fontSmallerButton.layer.borderWidth = 1;
+    [self.fontLargerButton setBackgroundImage:[self imageFromColor:[UIColor colorWithRed:14.0f/255 green:104.0f/255 blue: 228.0f/255 alpha:1.0f]]
+                                     forState:UIControlStateNormal];
+    self.fontLargerButton.layer.cornerRadius = 8.0;
+    self.fontLargerButton.layer.masksToBounds = YES;
+    self.fontLargerButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.fontLargerButton.layer.borderWidth = 1;
 }
 
+//button background
+- (UIImage *) imageFromColor:(UIColor *)color {
+    CGRect rect = CGRectMake(0, 0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}
 #pragma mark - UIPickerView DataSource
 
 // returns the number of 'columns' to display.

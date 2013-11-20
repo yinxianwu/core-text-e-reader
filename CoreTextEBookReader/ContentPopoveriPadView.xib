@@ -9,7 +9,7 @@
             <connections>
                 <outlet property="doubleColumnButton" destination="azx-M0-ipP" id="Q5C-8E-hpz"/>
                 <outlet property="fontLargerButton" destination="SM4-bp-PDT" id="nKD-aC-ONn"/>
-                <outlet property="fontPicker" destination="D2m-U8-dnU" id="6Aa-hF-Fue"/>
+                <outlet property="fontPicker" destination="S4I-Ac-Ous" id="fwQ-wk-kev"/>
                 <outlet property="fontSmallerButton" destination="81c-dh-n4w" id="dXR-Ya-leG"/>
                 <outlet property="singleColumnButton" destination="4Zz-H9-sWx" id="v1O-Rx-W92"/>
                 <outlet property="view" destination="2" id="3"/>
@@ -28,43 +28,50 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="81c-dh-n4w">
-                    <rect key="frame" x="50" y="30" width="70" height="40"/>
+                    <rect key="frame" x="47" y="204" width="70" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Aa">
-                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SM4-bp-PDT">
-                    <rect key="frame" x="190" y="30" width="70" height="40"/>
+                    <rect key="frame" x="187" y="204" width="70" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                     <state key="normal" title="Aa">
-                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2m-U8-dnU">
-                    <rect key="frame" x="10" y="106" width="280" height="216"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="pkJ-bS-it2"/>
-                        <outlet property="delegate" destination="-1" id="Dsg-P0-3al"/>
-                    </connections>
-                </pickerView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Zz-H9-sWx">
-                    <rect key="frame" x="23" y="86" width="125" height="40"/>
+                    <rect key="frame" x="20" y="250" width="125" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="SingleColumn.png"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="azx-M0-ipP">
-                    <rect key="frame" x="190" y="86" width="70" height="40"/>
+                    <rect key="frame" x="187" y="250" width="70" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="DoubleColumn.png"/>
                 </button>
+                <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S4I-Ac-Ous">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="ZRP-wd-XGe"/>
+                        <outlet property="delegate" destination="-1" id="YHr-v8-I1l"/>
+                    </connections>
+                </pickerView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
         </view>
+        <pickerView contentMode="scaleToFill" id="D2m-U8-dnU">
+            <rect key="frame" x="0.0" y="0.0" width="280" height="216"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <connections>
+                <outlet property="dataSource" destination="-1" id="pkJ-bS-it2"/>
+                <outlet property="delegate" destination="-1" id="Dsg-P0-3al"/>
+            </connections>
+        </pickerView>
     </objects>
     <resources>
         <image name="DoubleColumn.png" width="70" height="40"/>
