@@ -2,7 +2,7 @@
 Motherland
 Montreal
 
-<font color="black" strokeColor="gray" face="Palatino">All nomads have a point of origin, in my case this cold-weather metropolis tucked into Canada’s east.
+<font color="black" strokeColor="gray" face="Palatino-Roman">All nomads have a point of origin, in my case this cold-weather metropolis tucked into Canada’s east.
 
 My parents and two out of three sisters still reside here and keep me coming back. Well, not entirely: it’s the little ones who do it, my nieces and nephews. Five of them, to be exact, aged one-and-a-half through six. In spite of the continent that divides us I’ve managed to keep alive a closeness. Practically all the friends of my youth are long gone—a holdover from the bad old days of Quebec secessionism a decade or two back. The upside: my Montréal visits are a concentrated yet enchanting dose of the familial.
 
@@ -18,17 +18,17 @@ My sisters inhabit lives very different from mine yet it’s safe to say we’ve
 
 It’s good to be surrounded by loved ones right now, as the tumult I’ve pledged to forget comes lunging back like tentacles in a monster film.
 
-In the middle of a small bon voyage gathering my family throws in my honor, I spot a blinking e-mail notification for me on my mom’s computer. It’s from Steve, my estranged friend. With he in the midst of some minor foot surgery and I in the middle of prepping for this trip we reached something of an <font face="Palatino Italic">entente cordial<font face="Palatino"> to leave things for stabler times. Or so I thought.
+In the middle of a small bon voyage gathering my family throws in my honor, I spot a blinking e-mail notification for me on my mom’s computer. It’s from Steve, my estranged friend. With he in the midst of some minor foot surgery and I in the middle of prepping for this trip we reached something of an <font face="Palatino-Italic">entente cordial<font face="Palatino-Roman"> to leave things for stabler times. Or so I thought.
 
 “What we have is not a friendship,” he admonishes in a hostile screed. He’s done this before—waited until an impending departure to drop a bomb. Always impersonally, always via e-mail. “Try to be intellectually honest,” he adds. He demands closure for the events of this past summer. Now. Immediately. The night before I’m set to fly off.
 
-<font face="Palatino Italic">Why? Why?<font face="Palatino"> Last time he did this he was in the throes of drug addiction. But he’s been clean now for years. One of my sisters walks in and sees the missive. She puts her arm on my shoulder.
+<font face="Palatino-Italic">Why? Why?<font face="Palatino-Roman"> Last time he did this he was in the throes of drug addiction. But he’s been clean now for years. One of my sisters walks in and sees the missive. She puts her arm on my shoulder.
 
 “Don’t respond. This isn’t the time.”
 
 So much for trying to forget. I try to push it all away, but it casts a gloom over what should be a celebratory time—my maiden voyage across the Atlantic as an adult. Bidding the little ones goodbye the following evening, I hoist my eighty-liter backpack over my shoulders and strap on a money belt for the first time. 
 
-<font face="Palatino Italic">Weird<font face="Palatino">. I used to snicker at backpackers in my days of wheelie-bag travel. Off to the airport, down the jetway onto a cavernous British Airways triple-seven. The flight’s barely longer than a transcontinental red-eye and as passengers settle in, doesn’t feel all that different either. That is, until the effortlessly polite, British-accented voice floats dreamily over the PA.
+<font face="Palatino-Italic">Weird<font face="Palatino-Roman">. I used to snicker at backpackers in my days of wheelie-bag travel. Off to the airport, down the jetway onto a cavernous British Airways triple-seven. The flight’s barely longer than a transcontinental red-eye and as passengers settle in, doesn’t feel all that different either. That is, until the effortlessly polite, British-accented voice floats dreamily over the PA.
 
 “Please be suhe to store youh possessions in the ovuhead storage lockuh.”
 

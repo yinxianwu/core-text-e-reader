@@ -8,6 +8,7 @@
 
 #import "CTEContentViewController.h"
 #import "CTEConstants.h"
+#import "CTEContentPopoverViewController.h"
 #import "CTEImageViewController.h"
 #import "CTEChapter.h"
 #import "CTEConstants.h"
@@ -27,10 +28,8 @@
 @synthesize spinnerViews;
 @synthesize moviePlayerController;
 @synthesize pageSlider;
-//@synthesize pageControl;
-//@synthesize stepper;
-//@synthesize currentPageLabel;
-//@synthesize pagesRemainingLabel;
+@synthesize configButton;
+@synthesize popoverController;
 
 @synthesize currentChapter;
 @synthesize chapters;
@@ -135,11 +134,11 @@
     
     //toolbar and its widgets init
     self.toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, screenHeight - toolBarHeight, screenWidth, toolBarHeight)];
-    UIBarButtonItem *configButton = [[UIBarButtonItem alloc] initWithTitle:@"Aa"
+    self.configButton = [[UIBarButtonItem alloc] initWithTitle:@"Aa"
                                                                      style:UIBarButtonItemStyleBordered
                                                                     target:self
                                                                     action:@selector(configButtonTouched:)];
-    [configButton setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"Helvetica-Bold" size:26.0],
+    [self.configButton setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"Helvetica-Bold" size:26.0],
                                       UITextAttributeTextColor: [UIColor darkGrayColor]}
                                 forState:UIControlStateNormal];
     
@@ -150,10 +149,11 @@
                         action:@selector(pageSliderValueChanged:)
               forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *sliderAsToolbarItem = [[UIBarButtonItem alloc] initWithCustomView:self.pageSlider];
+    
     [sliderAsToolbarItem setWidth:screenWidth - 100.0]; //TODO size based on other components
     
     // Add the items to the toolbar
-    [self.toolBar setItems:[NSArray arrayWithObjects:sliderAsToolbarItem, configButton, nil]];
+    [self.toolBar setItems:[NSArray arrayWithObjects:sliderAsToolbarItem, self.configButton, nil]];
     [self.toolBar setTintColor:barColor];
     [self.view addSubview:self.toolBar];
 }
@@ -177,8 +177,19 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:ShowSideMenu object:self];
 }
 
+//brings up settings popover
 - (void)configButtonTouched:(id)sender {
-    NSLog(@"TOUCHED");
+    CTEContentPopoverViewController *popoverView;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        //TODO with iPhone it's gonna be a separate modal view
+    }
+    else {
+        popoverView = [[CTEContentPopoverViewController alloc]initWithNibName:@"ContentPopoveriPadView" bundle:nil];
+        self.popoverController = [[UIPopoverController alloc] initWithContentViewController:popoverView];
+        [self.popoverController presentPopoverFromBarButtonItem:self.configButton
+                                  permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                  animated:YES];
+    }
 }
 
 //post user-initated scroll
