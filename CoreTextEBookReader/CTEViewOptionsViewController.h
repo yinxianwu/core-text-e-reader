@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CTEContentPopoverViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
+@interface CTEViewOptionsViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIButton *fontSmallerButton;
 @property (nonatomic, strong) IBOutlet UIButton *fontLargerButton;

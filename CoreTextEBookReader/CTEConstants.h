@@ -12,6 +12,7 @@
 
 extern NSString * const ShowSideMenu;
 extern NSString * const HideSideMenu;
+extern NSString * const ChangeFont;
 extern NSString * const NavigationBarTitle;
 
 @end

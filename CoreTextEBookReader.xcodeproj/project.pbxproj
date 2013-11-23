@@ -14,9 +14,9 @@
 		680AE82B1818C778006ABAE4 /* libCoreTextEBookReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 680AE8131818C778006ABAE4 /* libCoreTextEBookReader.a */; };
 		680AE8311818C778006ABAE4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 680AE82F1818C778006ABAE4 /* InfoPlist.strings */; };
 		680AE8331818C778006ABAE4 /* CoreTextEBookReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 680AE8321818C778006ABAE4 /* CoreTextEBookReaderTests.m */; };
-		68425AB0183B1AD40070B670 /* CTEContentPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68425AAE183B1AD40070B670 /* CTEContentPopoverViewController.m */; };
-		68425AB1183B21880070B670 /* CTEContentPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68425AAE183B1AD40070B670 /* CTEContentPopoverViewController.m */; };
-		68425AB2183B21E90070B670 /* ContentPopoveriPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68425AAF183B1AD40070B670 /* ContentPopoveriPadView.xib */; };
+		68425AB0183B1AD40070B670 /* CTEViewOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68425AAE183B1AD40070B670 /* CTEViewOptionsViewController.m */; };
+		68425AB1183B21880070B670 /* CTEViewOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68425AAE183B1AD40070B670 /* CTEViewOptionsViewController.m */; };
+		68425AB2183B21E90070B670 /* ViewOptionsiPadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68425AAF183B1AD40070B670 /* ViewOptionsiPadView.xib */; };
 		68425AB5183C65EB0070B670 /* DoubleColumn.png in Resources */ = {isa = PBXBuildFile; fileRef = 68425AB3183C628A0070B670 /* DoubleColumn.png */; };
 		68425AB6183C65ED0070B670 /* SingleColumn.png in Resources */ = {isa = PBXBuildFile; fileRef = 68425AB4183C628A0070B670 /* SingleColumn.png */; };
 		6847F014181E2469003F38B5 /* CTEConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EFB1181DD2B5009B8527 /* CTEConstants.m */; };
@@ -124,9 +124,9 @@
 		680AE82E1818C778006ABAE4 /* CoreTextEBookReaderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CoreTextEBookReaderTests-Info.plist"; sourceTree = "<group>"; };
 		680AE8301818C778006ABAE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		680AE8321818C778006ABAE4 /* CoreTextEBookReaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreTextEBookReaderTests.m; sourceTree = "<group>"; };
-		68425AAD183B1AD40070B670 /* CTEContentPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEContentPopoverViewController.h; sourceTree = "<group>"; };
-		68425AAE183B1AD40070B670 /* CTEContentPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEContentPopoverViewController.m; sourceTree = "<group>"; };
-		68425AAF183B1AD40070B670 /* ContentPopoveriPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentPopoveriPadView.xib; sourceTree = "<group>"; };
+		68425AAD183B1AD40070B670 /* CTEViewOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEViewOptionsViewController.h; sourceTree = "<group>"; };
+		68425AAE183B1AD40070B670 /* CTEViewOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEViewOptionsViewController.m; sourceTree = "<group>"; };
+		68425AAF183B1AD40070B670 /* ViewOptionsiPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewOptionsiPadView.xib; sourceTree = "<group>"; };
 		68425AB3183C628A0070B670 /* DoubleColumn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DoubleColumn.png; sourceTree = "<group>"; };
 		68425AB4183C628A0070B670 /* SingleColumn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SingleColumn.png; sourceTree = "<group>"; };
 		68678E74181E2C0600D8B812 /* CloseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseButton.png; sourceTree = "<group>"; };
@@ -302,9 +302,9 @@
 				6895EF8C181DCE62009B8527 /* CTEContentViewController.m */,
 				6895EF97181DCE62009B8527 /* ContentiPadView.xib */,
 				6895EF98181DCE62009B8527 /* ContentiPhoneView.xib */,
-				68425AAD183B1AD40070B670 /* CTEContentPopoverViewController.h */,
-				68425AAE183B1AD40070B670 /* CTEContentPopoverViewController.m */,
-				68425AAF183B1AD40070B670 /* ContentPopoveriPadView.xib */,
+				68425AAD183B1AD40070B670 /* CTEViewOptionsViewController.h */,
+				68425AAE183B1AD40070B670 /* CTEViewOptionsViewController.m */,
+				68425AAF183B1AD40070B670 /* ViewOptionsiPadView.xib */,
 				6895EF9D181DCE62009B8527 /* CTEImageViewController.h */,
 				6895EF9E181DCE62009B8527 /* CTEImageViewController.m */,
 				6895EF9B181DCE62009B8527 /* ImageiPadView.xib */,
@@ -554,7 +554,7 @@
 				68678E9A181F734400D8B812 /* Chapter5.txt in Resources */,
 				68678E87181E2D4500D8B812 /* ContentiPadView.xib in Resources */,
 				68678E88181E2D4500D8B812 /* ContentiPhoneView.xib in Resources */,
-				68425AB2183B21E90070B670 /* ContentPopoveriPadView.xib in Resources */,
+				68425AB2183B21E90070B670 /* ViewOptionsiPadView.xib in Resources */,
 				68678E89181E2D4500D8B812 /* ImageiPadView.xib in Resources */,
 				68678E99181F734400D8B812 /* Chapter4.txt in Resources */,
 				686BE8EA183863ED00072E27 /* Chapter2.txt in Resources */,
@@ -592,7 +592,7 @@
 			files = (
 				6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */,
 				6895EFA3181DCE62009B8527 /* CTEMenuViewController.m in Sources */,
-				68425AB0183B1AD40070B670 /* CTEContentPopoverViewController.m in Sources */,
+				68425AB0183B1AD40070B670 /* CTEViewOptionsViewController.m in Sources */,
 				68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */,
 				68AF284E1825A98E00EA632B /* CTEDelegate.m in Sources */,
 				6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */,
@@ -626,7 +626,7 @@
 				6847F01B181E2469003F38B5 /* CTEImageViewController.m in Sources */,
 				6895EFC6181DF20D009B8527 /* CTEAppDelegate.m in Sources */,
 				68678E94181F665000D8B812 /* CTESampleChapter.m in Sources */,
-				68425AB1183B21880070B670 /* CTEContentPopoverViewController.m in Sources */,
+				68425AB1183B21880070B670 /* CTEViewOptionsViewController.m in Sources */,
 				68AF284B18257DC700EA632B /* CTEUtils.m in Sources */,
 				6895EFC2181DF20D009B8527 /* main.m in Sources */,
 			);

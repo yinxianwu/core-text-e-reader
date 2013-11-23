@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CTEContentPopoverViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CTEViewOptionsViewController">
             <connections>
                 <outlet property="doubleColumnButton" destination="azx-M0-ipP" id="Q5C-8E-hpz"/>
                 <outlet property="fontLargerButton" destination="SM4-bp-PDT" id="nKD-aC-ONn"/>

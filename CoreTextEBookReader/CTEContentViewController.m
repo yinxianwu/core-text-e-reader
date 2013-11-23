@@ -8,7 +8,7 @@
 
 #import "CTEContentViewController.h"
 #import "CTEConstants.h"
-#import "CTEContentPopoverViewController.h"
+#import "CTEViewOptionsViewController.h"
 #import "CTEImageViewController.h"
 #import "CTEChapter.h"
 #import "CTEConstants.h"
@@ -136,9 +136,9 @@
     //toolbar and its widgets init
     self.toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, screenHeight - toolBarHeight, screenWidth, toolBarHeight)];
     self.configButton = [[UIBarButtonItem alloc] initWithTitle:@"Aa"
-                                                                     style:UIBarButtonItemStyleBordered
-                                                                    target:self
-                                                                    action:@selector(configButtonTouched:)];
+                                                         style:UIBarButtonItemStyleBordered
+                                                        target:self
+                                                        action:@selector(configButtonTouched:)];
     [self.configButton setTitleTextAttributes:@{UITextAttributeFont: [UIFont fontWithName:@"Helvetica-Bold" size:26.0],
                                       UITextAttributeTextColor: [UIColor darkGrayColor]}
                                 forState:UIControlStateNormal];
@@ -155,6 +155,13 @@
     [self.toolBar setItems:[NSArray arrayWithObjects:self.sliderAsToolbarItem, self.configButton, nil]];
     [self.toolBar setTintColor:barColor];
     [self.view addSubview:self.toolBar];
+    
+    //listen for font changes
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fontWasChanged:)
+                                                 name:ChangeFont
+                                               object:nil];
+    
 }
 
 //some component sizing
@@ -189,12 +196,12 @@
 
 //brings up settings popover
 - (void)configButtonTouched:(id)sender {
-    CTEContentPopoverViewController *popoverView;
+    CTEViewOptionsViewController *popoverView;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         //TODO with iPhone it's gonna be a separate modal view
     }
     else {
-        popoverView = [[CTEContentPopoverViewController alloc]initWithNibName:@"ContentPopoveriPadView"
+        popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPadView"
                                                                        bundle:nil
                                                                  selectedFont:@"Palatino"]; //TODO will come from parser
         self.popoverController = [[UIPopoverController alloc] initWithContentViewController:popoverView];
@@ -202,6 +209,12 @@
                                   permittedArrowDirections:UIPopoverArrowDirectionAny
                                                   animated:YES];
     }
+}
+
+- (void)fontWasChanged:(id)sender {
+    NSNotification *notification = (NSNotification *)sender;
+    NSString *fontKey = (NSString *)[notification object];
+    NSLog(@"CHANGE FONT: %@", fontKey);
 }
 
 //post user-initated scroll

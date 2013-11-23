@@ -10,9 +10,12 @@
 
 @implementation CTEConstants
 
+//events
 NSString * const ShowSideMenu = @"ShowSideMenu";
 NSString * const HideSideMenu = @"HideSideMenu";
+NSString * const ChangeFont = @"ChangeFont";
 
+//labels
 NSString * const NavigationBarTitle = @"CoreTextEBookReader";
 
 @end

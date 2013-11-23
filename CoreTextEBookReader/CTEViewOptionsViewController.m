@@ -6,15 +6,16 @@
 //  Copyright (c) 2013 com.davidjed. All rights reserved.
 //
 
-#import "CTEContentPopoverViewController.h"
+#import "CTEViewOptionsViewController.h"
 #import "CTEMarkupParser.h"
+#import "CTEConstants.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface CTEContentPopoverViewController ()
+@interface CTEViewOptionsViewController ()
 
 @end
 
-@implementation CTEContentPopoverViewController
+@implementation CTEViewOptionsViewController
 
 @synthesize fontSmallerButton;
 @synthesize fontLargerButton;
@@ -113,8 +114,7 @@
 //select font and post notification
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     self.selectedFont = (NSString *)[fonts objectAtIndex:row];
-    
-    //TODO notificashionne
+    [[NSNotificationCenter defaultCenter] postNotificationName:ChangeFont object:self.selectedFont];
 }
 
 @end
