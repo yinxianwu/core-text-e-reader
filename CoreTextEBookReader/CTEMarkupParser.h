@@ -20,6 +20,8 @@
 @property (strong, nonatomic) NSMutableArray *images;
 @property (strong, nonatomic) NSMutableArray *links;
 
++(NSDictionary *)bodyFontDictionary;
++(NSDictionary *)bodyFontItalicDictionary;
 -(NSAttributedString *)attrStringFromMarkup:(NSString *)html screenSize:(CGRect)size;
 -(void)resetParser;
 

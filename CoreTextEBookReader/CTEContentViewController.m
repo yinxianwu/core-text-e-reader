@@ -29,6 +29,7 @@
 @synthesize moviePlayerController;
 @synthesize pageSlider;
 @synthesize configButton;
+@synthesize sliderAsToolbarItem;
 @synthesize popoverController;
 
 @synthesize currentChapter;
@@ -148,14 +149,23 @@
     [self.pageSlider addTarget:self
                         action:@selector(pageSliderValueChanged:)
               forControlEvents:UIControlEventValueChanged];
-    UIBarButtonItem *sliderAsToolbarItem = [[UIBarButtonItem alloc] initWithCustomView:self.pageSlider];
-    
-    [sliderAsToolbarItem setWidth:screenWidth - 100.0]; //TODO size based on other components
+    self.sliderAsToolbarItem = [[UIBarButtonItem alloc] initWithCustomView:self.pageSlider];
     
     // Add the items to the toolbar
-    [self.toolBar setItems:[NSArray arrayWithObjects:sliderAsToolbarItem, self.configButton, nil]];
+    [self.toolBar setItems:[NSArray arrayWithObjects:self.sliderAsToolbarItem, self.configButton, nil]];
     [self.toolBar setTintColor:barColor];
     [self.view addSubview:self.toolBar];
+}
+
+//some component sizing
+//per http://stackoverflow.com/questions/5066847/get-the-width-of-a-uibarbuttonitem
+- (void)viewWillAppear:(BOOL)animated {
+    UIBarButtonItem *item = self.configButton;
+    UIView *view = [item valueForKey:@"view"];
+    CGFloat width = view ? [view frame].size.width : (CGFloat)0.0;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    [self.sliderAsToolbarItem setWidth:screenWidth - width - 40]; //adjust for borders and such
 }
 
 //syncs pages to slider value
@@ -184,7 +194,9 @@
         //TODO with iPhone it's gonna be a separate modal view
     }
     else {
-        popoverView = [[CTEContentPopoverViewController alloc]initWithNibName:@"ContentPopoveriPadView" bundle:nil];
+        popoverView = [[CTEContentPopoverViewController alloc]initWithNibName:@"ContentPopoveriPadView"
+                                                                       bundle:nil
+                                                                 selectedFont:@"Palatino"]; //TODO will come from parser
         self.popoverController = [[UIPopoverController alloc] initWithContentViewController:popoverView];
         [self.popoverController presentPopoverFromBarButtonItem:self.configButton
                                   permittedArrowDirections:UIPopoverArrowDirectionAny

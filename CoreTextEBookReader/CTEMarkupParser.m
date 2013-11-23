@@ -37,6 +37,32 @@ static CGFloat widthCallback( void* ref ){
     return self;
 }
 
+//standard body fonts
++(NSDictionary*)bodyFontDictionary {
+    static NSDictionary *BodyFontDictionary = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        BodyFontDictionary = @{@"Baskerville": @"Baskerville",
+                               @"Georgia": @"Georgia",
+                               @"Palatino": @"Palatino-Roman",
+                               @"Times New Roman": @"TimesNewRomanPSMT"};
+    });
+    return BodyFontDictionary;
+}
+
+//standard italic body fonts
++(NSDictionary *)bodyFontItalicDictionary {
+    static NSDictionary *BodyFontItalicDictionary = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        BodyFontItalicDictionary = @{@"Baskerville": @"Baskerville-Italic",
+                                     @"Georgia": @"Georgia-Italic",
+                                     @"Palatino": @"Palatino-Italic",
+                                     @"Times New Roman": @"TimesNewRomanPS-ItalicMT"};
+    });
+    return BodyFontItalicDictionary;
+}
+
 //resets parser and clears image cache
 -(void)resetParser {
     self.font = @"Arial";
@@ -119,6 +145,18 @@ static CGFloat widthCallback( void* ref ){
                                           usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
                     SEL colorSel = NSSelectorFromString([NSString stringWithFormat: @"%@Color", [tag substringWithRange:match.range]]);
                     self.color = [UIColor performSelector:colorSel];
+                }];
+                
+                //size
+                NSRegularExpression* sizeRegex = [[NSRegularExpression alloc] initWithPattern:@"(?<=size=\")\\w+"
+                                                                                       options:0
+                                                                                         error:NULL];
+                [sizeRegex enumerateMatchesInString:tag
+                                            options:0
+                                              range:NSMakeRange(0, [tag length])
+                                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+                    NSString *fontSizeStr = [tag substringWithRange:match.range];
+                    self.fontSize = [fontSizeStr floatValue];
                 }];
                 
                 //face

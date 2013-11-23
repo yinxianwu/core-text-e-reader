@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UIToolbar *toolBar;
 @property (nonatomic, strong) UISlider *pageSlider;
 @property (nonatomic, strong) UIBarButtonItem *configButton;
+@property (nonatomic, strong) UIBarButtonItem *sliderAsToolbarItem;
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (nonatomic, strong) MPMoviePlayerViewController *moviePlayerController;
 //@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;

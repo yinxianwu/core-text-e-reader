@@ -1,6 +1,5 @@
-<font color="black" strokeColor="gray" face="Arial Bold">
-Flanders to Funsterdam
-Bruges & Amsterdam
+<font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Flanders to Funsterdam
+<font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">Bruges & Amsterdam
 
 <font color="black" strokeColor="gray" face="Palatino-Roman">“It’s about as exciting as riding BART to Oakland.”
 

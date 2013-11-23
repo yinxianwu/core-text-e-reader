@@ -17,5 +17,7 @@
 @property (nonatomic, strong) IBOutlet UIPickerView *fontPicker;
 
 @property (nonatomic, strong) NSArray *fonts;
+@property (nonatomic, strong) NSString *selectedFont;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil selectedFont:(NSString *)fontKey;
 @end

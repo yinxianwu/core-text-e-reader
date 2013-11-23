@@ -1,6 +1,5 @@
-<font color="black" strokeColor="gray" face="Arial Bold">
-Isle to Isle
-London & Dublin
+<font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Isle to Isle
+<font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">London & Dublin
 
 <img src="http://www.holisticideas.com/wtrmobile/images/BigBenGoldenSunlight.jpg" width="240" height="320">
 

@@ -1,6 +1,5 @@
-<font color="black" strokeColor="gray" face="Arial Bold">
-Rocky Mountain High
-Denver
+<font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Rocky Mountain High
+<font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">Denver
 
 <font color="black" strokeColor="gray" face="Palatino-Roman">We’re coming down from an Ecstasy high on an unseasonably warm September morning in San Francisco. Ryan’s beat-up Honda Civic pulls out of the Embarcadero Center garage in downtown San Francisco and heads east, across the Bay Bridge to Oakland Airport.
 
