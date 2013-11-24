@@ -19,6 +19,14 @@
 @property (readwrite) float strokeWidth;
 @property (strong, nonatomic) NSMutableArray *images;
 @property (strong, nonatomic) NSMutableArray *links;
+@property (strong, nonatomic) NSString *currentBodyFont;
+
+extern NSString * const BodyFontKey;
+extern NSString * const BodyItalicFontKey;
+extern NSString * const BaskervilleFontKey;
+extern NSString * const GeorgiaFontKey;
+extern NSString * const PalatinoFontKey;
+extern NSString * const TimesNewRomanFontKey;
 
 +(NSDictionary *)bodyFontDictionary;
 +(NSDictionary *)bodyFontItalicDictionary;

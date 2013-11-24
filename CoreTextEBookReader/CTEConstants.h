@@ -13,6 +13,8 @@
 extern NSString * const ShowSideMenu;
 extern NSString * const HideSideMenu;
 extern NSString * const ChangeFont;
+extern NSString * const ChangeFontSize;
+extern NSString * const ChangeColumnCount;
 extern NSString * const NavigationBarTitle;
 
 @end

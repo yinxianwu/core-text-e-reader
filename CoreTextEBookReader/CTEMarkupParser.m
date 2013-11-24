@@ -20,6 +20,13 @@ static CGFloat widthCallback( void* ref ){
 
 @implementation CTEMarkupParser
 
+NSString * const BodyFontKey = @"BODY_FONT";
+NSString * const BodyItalicFontKey = @"BODY_FONT_ITALIC";
+NSString * const BaskervilleFontKey = @"Baskerville";
+NSString * const GeorgiaFontKey = @"Georgia";
+NSString * const PalatinoFontKey = @"Palatino";
+NSString * const TimesNewRomanFontKey = @"Times New Roman";
+
 @synthesize font;
 @synthesize fontSize;
 @synthesize color;
@@ -27,6 +34,7 @@ static CGFloat widthCallback( void* ref ){
 @synthesize strokeWidth;
 @synthesize images;
 @synthesize links;
+@synthesize currentBodyFont;
 
 //constructor; resets parser
 -(id)init {
@@ -42,10 +50,10 @@ static CGFloat widthCallback( void* ref ){
     static NSDictionary *BodyFontDictionary = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        BodyFontDictionary = @{@"Baskerville": @"Baskerville",
-                               @"Georgia": @"Georgia",
-                               @"Palatino": @"Palatino-Roman",
-                               @"Times New Roman": @"TimesNewRomanPSMT"};
+        BodyFontDictionary = @{BaskervilleFontKey: @"Baskerville",
+                               GeorgiaFontKey: @"Georgia",
+                               PalatinoFontKey: @"Palatino-Roman",
+                               TimesNewRomanFontKey: @"TimesNewRomanPSMT"};
     });
     return BodyFontDictionary;
 }
@@ -55,17 +63,18 @@ static CGFloat widthCallback( void* ref ){
     static NSDictionary *BodyFontItalicDictionary = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        BodyFontItalicDictionary = @{@"Baskerville": @"Baskerville-Italic",
-                                     @"Georgia": @"Georgia-Italic",
-                                     @"Palatino": @"Palatino-Italic",
-                                     @"Times New Roman": @"TimesNewRomanPS-ItalicMT"};
+        BodyFontItalicDictionary = @{BaskervilleFontKey: @"Baskerville-Italic",
+                                     GeorgiaFontKey: @"Georgia-Italic",
+                                     PalatinoFontKey: @"Palatino-Italic",
+                                     TimesNewRomanFontKey: @"TimesNewRomanPS-ItalicMT"};
     });
     return BodyFontItalicDictionary;
 }
 
 //resets parser and clears image cache
 -(void)resetParser {
-    self.font = @"Arial";
+    self.currentBodyFont = PalatinoFontKey;
+    self.font = PalatinoFontKey;
     self.fontSize = 18.0;
     self.color = [UIColor blackColor];
     self.strokeColor = [UIColor whiteColor];
@@ -159,15 +168,23 @@ static CGFloat widthCallback( void* ref ){
                     self.fontSize = [fontSizeStr floatValue];
                 }];
                 
-                //face
+                //face -- special handling for body versus custom fonts
                 NSRegularExpression* faceRegex = [[NSRegularExpression alloc] initWithPattern:@"(?<=face=\")[^\"]+"
                                                                                       options:0
                                                                                         error:NULL];
                 [faceRegex enumerateMatchesInString:tag
                                             options:0
                                               range:NSMakeRange(0, [tag length])
-                                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
-                    self.font = [tag substringWithRange:match.range];
+                                         usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+                    NSString *fontFace = [tag substringWithRange:match.range];
+                    if([fontFace isEqualToString:BodyFontKey]) {
+                        fontFace = (NSString *)[[CTEMarkupParser bodyFontDictionary] valueForKey:self.currentBodyFont];
+                    }
+                    else if([fontFace isEqualToString:BodyItalicFontKey]) {
+                        fontFace = (NSString *)[[CTEMarkupParser bodyFontItalicDictionary] valueForKey:self.currentBodyFont];
+                    }
+                    
+                    self.font = fontFace;
                 }];
             } //end of font parsing
             

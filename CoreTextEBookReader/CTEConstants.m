@@ -14,6 +14,8 @@
 NSString * const ShowSideMenu = @"ShowSideMenu";
 NSString * const HideSideMenu = @"HideSideMenu";
 NSString * const ChangeFont = @"ChangeFont";
+NSString * const ChangeFontSize = @"ChangeFontSize";
+NSString * const ChangeColumnCount = @"ChangeColumnCount";
 
 //labels
 NSString * const NavigationBarTitle = @"CoreTextEBookReader";

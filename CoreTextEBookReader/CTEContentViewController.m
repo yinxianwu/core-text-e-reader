@@ -156,12 +156,19 @@
     [self.toolBar setTintColor:barColor];
     [self.view addSubview:self.toolBar];
     
-    //listen for font changes
+    //listen for view option changes
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(fontWasChanged:)
                                                  name:ChangeFont
                                                object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(fontSizeWasChanged:)
+                                                 name:ChangeFontSize
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(columnCountWasChanged:)
+                                                 name:ChangeColumnCount
+                                               object:nil];
 }
 
 //some component sizing
@@ -202,8 +209,10 @@
     }
     else {
         popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPadView"
-                                                                       bundle:nil
-                                                                 selectedFont:@"Palatino"]; //TODO will come from parser
+                                                                    bundle:nil
+                                                              selectedFont:@"Palatino"
+                                                          selectedFontSize:[NSNumber numberWithInt:18]
+                                                     selectedColumnsInView:[NSNumber numberWithInt:2]]; //TODO will come from parser
         self.popoverController = [[UIPopoverController alloc] initWithContentViewController:popoverView];
         [self.popoverController presentPopoverFromBarButtonItem:self.configButton
                                   permittedArrowDirections:UIPopoverArrowDirectionAny
@@ -215,6 +224,18 @@
     NSNotification *notification = (NSNotification *)sender;
     NSString *fontKey = (NSString *)[notification object];
     NSLog(@"CHANGE FONT: %@", fontKey);
+}
+
+- (void)fontSizeWasChanged:(id)sender {
+    NSNotification *notification = (NSNotification *)sender;
+    NSNumber *fontSize = (NSNumber *)[notification object];
+    NSLog(@"CHANGE FONT SIZE: %@", fontSize);
+}
+
+- (void)columnCountWasChanged:(id)sender {
+    NSNotification *notification = (NSNotification *)sender;
+    NSNumber *columnCount = (NSNumber *)[notification object];
+    NSLog(@"CHANGE COL COUNT: %@", columnCount);
 }
 
 //post user-initated scroll

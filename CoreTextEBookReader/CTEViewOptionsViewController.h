@@ -10,14 +10,18 @@
 
 @interface CTEViewOptionsViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (nonatomic, strong) IBOutlet UIButton *fontSmallerButton;
-@property (nonatomic, strong) IBOutlet UIButton *fontLargerButton;
-@property (nonatomic, strong) IBOutlet UIButton *singleColumnButton;
-@property (nonatomic, strong) IBOutlet UIButton *doubleColumnButton;
-@property (nonatomic, strong) IBOutlet UIPickerView *fontPicker;
+@property (nonatomic, strong) IBOutlet UIPickerView *pickerView;
 
 @property (nonatomic, strong) NSArray *fonts;
+@property (nonatomic, strong) NSArray *fontSizes;
+@property (nonatomic, strong) NSArray *columns;
 @property (nonatomic, strong) NSString *selectedFont;
+@property (nonatomic, strong) NSNumber *selectedFontSize;
+@property (nonatomic, strong) NSNumber *selectedColumnsInView;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil selectedFont:(NSString *)fontKey;
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+         selectedFont:(NSString *)fontKey
+     selectedFontSize:(NSNumber *)selectedFontSize
+selectedColumnsInView:(NSNumber *)selectedColumnsInView;
 @end

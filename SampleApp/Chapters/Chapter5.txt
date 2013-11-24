@@ -1,33 +1,33 @@
 <font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Flanders to Funsterdam
 <font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">Bruges & Amsterdam
 
-<font color="black" strokeColor="gray" face="Palatino-Roman">“It’s about as exciting as riding BART to Oakland.”
+<font color="black" strokeColor="gray" face="BODY_FONT">“It’s about as exciting as riding BART to Oakland.”
 
-That was one friend’s take on the Eurostar trip beneath the English Channel. But nay, I refuse, <font face="Palatino-Italic">refuse<font face="Palatino-Roman">, to be so blasé about the engineering triumph of the late-twentieth century. When I heard of the completion of the EuroTunnel—the rail tube running between Britain and mainland Europe—I vowed to make it my first Channel crossing. In spite of cost overruns, initially low ridership, and—only a few weeks before I board—a fire in the tunnel that reduces service, nothing stands in my way of crossing this body of water without leaving terra firma—or, for that matter, my seat.
+That was one friend’s take on the Eurostar trip beneath the English Channel. But nay, I refuse, <font face="BODY_FONT_ITALIC">refuse<font face="BODY_FONT">, to be so blasé about the engineering triumph of the late-twentieth century. When I heard of the completion of the EuroTunnel—the rail tube running between Britain and mainland Europe—I vowed to make it my first Channel crossing. In spite of cost overruns, initially low ridership, and—only a few weeks before I board—a fire in the tunnel that reduces service, nothing stands in my way of crossing this body of water without leaving terra firma—or, for that matter, my seat.
 
 <img src="http://www.holisticideas.com/wtrmobile/images/EurostarCoach.jpg" width="320" height="240">
 
 The escalator offers a slow-motion reveal of the long, sleek, blue-yellow-and-white tube of wheeled steel. Even though I’m in First Class, my plushy gray seat is a bit worn—a reminder that all this is business-as-usual travel in these parts.
 
-The Brits recently—and at long last—completed their high-speed rail link from the tunnel opening near Dover right into the heart of London. To go with it, they remodeled St. Pancras railway station, a soaring masterpiece of red-brick Victorian gothic revival. So grand was this station that it stood in for neighboring Kings Cross in the <font face="Palatino-Italic">Harry Potter<font face="Palatino-Roman"> films; before boarding I spot a luggage trolley embedded into a brick wall below a sign for “PLATFORM 9 ¾.”
+The Brits recently—and at long last—completed their high-speed rail link from the tunnel opening near Dover right into the heart of London. To go with it, they remodeled St. Pancras railway station, a soaring masterpiece of red-brick Victorian gothic revival. So grand was this station that it stood in for neighboring Kings Cross in the <font face="BODY_FONT_ITALIC">Harry Potter<font face="BODY_FONT"> films; before boarding I spot a luggage trolley embedded into a brick wall below a sign for “PLATFORM 9 ¾.”
 
-As we glide out of the station on time, a voice comes over the intercom indicating that service will be slower due to the fire. <font face="Palatino-Italic">Uh-oh<font face="Palatino-Roman">. I envision hours-long delays, like those at U.S. airports during thunderstorm season. The conductor, in English and French, obligingly details the delay to profuse apology.
+As we glide out of the station on time, a voice comes over the intercom indicating that service will be slower due to the fire. <font face="BODY_FONT_ITALIC">Uh-oh<font face="BODY_FONT">. I envision hours-long delays, like those at U.S. airports during thunderstorm season. The conductor, in English and French, obligingly details the delay to profuse apology.
 
 “We’ll be arriving in Brussels nine minutes behind schedule.”
 
-<font face="Palatino-Italic">Tragedy<font face="Palatino-Roman">.
+<font face="BODY_FONT_ITALIC">Tragedy<font face="BODY_FONT">.
 
 <mov src="http://www.holisticideas.com/wtrmobile/movies/Eurostar.jpg" clip="http://www.holisticideas.com/wtrmobile/movies/EurostarSmall.mp4" width="320" height="240">
 
 High-speed rail lines are purpose built: their solid welded tracks, curved embankments to handle centrifugal forces, and grade-separated construction (no street-level crossings) facilitate speeds in excess of 150 miles an hour. To enable such velocity, these trainsets—using the same TGV technology as those in France—are known as “EMU.” Not after the animal, but short for “Electric Multiple Unit.” Each train car is a locomotive in and of itself. As we leave suburban London and reach the countryside around Kent, I spot cars on the freeway traveling at half our speed.  
 
-Soon after—black. Yes, twenty-some minutes inside a tunnel should be as exciting as watching grass grow, but it’s the <font face="Palatino-Italic">idea<font face="Palatino-Roman"> of it—the dream of centuries, confounding Napoleon and scores of others with conquest or connectedness on the brain. Now it’s the province of bored Euro-commuters who are unwittingly transforming the London-Paris-Brussels-Amsterdam nexus into one West European mega-center. Some may cringe but for me it’s a delight.  
+Soon after—black. Yes, twenty-some minutes inside a tunnel should be as exciting as watching grass grow, but it’s the <font face="BODY_FONT_ITALIC">idea<font face="BODY_FONT"> of it—the dream of centuries, confounding Napoleon and scores of others with conquest or connectedness on the brain. Now it’s the province of bored Euro-commuters who are unwittingly transforming the London-Paris-Brussels-Amsterdam nexus into one West European mega-center. Some may cringe but for me it’s a delight.  
 
 We emerge on the other side and on the surface, nothing’s changed: more rolling green fields, more country roads, a smattering of cars. But look closer: the signage is French, the cars right-hand drive. The Continent awaits!
 
 <img src="SectionDivider169Black.png" width="84" height="16">
 
-Brussels is boring. Or so they say. I don’t bother finding out as I’m more interested in one of Belgium’s smaller centers. Sleepy and forgotten for centuries, nowadays it’s hot on the tourist map—at least if the plethora of guidebook sales is to be believed. It was even the star of a recent indie crime thriller: <font face="Palatino-Italic">In Bruges<font face="Palatino-Roman">.
+Brussels is boring. Or so they say. I don’t bother finding out as I’m more interested in one of Belgium’s smaller centers. Sleepy and forgotten for centuries, nowadays it’s hot on the tourist map—at least if the plethora of guidebook sales is to be believed. It was even the star of a recent indie crime thriller: <font face="BODY_FONT_ITALIC">In Bruges<font face="BODY_FONT">.
 
 Bruges is perhaps the ideal spot to indulge anyone’s “how did it get that way?” fixation. It was, by my estimation, the New York City of the 1200s: a Middle Ages trading powerhouse equivalent to the London of the day. But times and the city’s fortune changed: West Flanders declined in power and importance, and the city’s river silted in, leaving Bruges cut off from the sea. (A latter-day nearby port, Zeebrugge, retains some importance.)  
 
@@ -35,11 +35,11 @@ Bruges is perhaps the ideal spot to indulge anyone’s “how did it get that wa
 
 An early-evening reconnoiter reveals few cars but lots of bicycles speeding along the narrow, curving streets. I’m nearly jingle-belled to death, a fate I suspect the Brugians enjoy inflicting on the hordes of tourists passing through their burg. I reach Markt, the main town square, shrouded in the moody mist. It’s adorably lined with upscale touristy eateries and stairstep-gabled roofs. With lights aglow and horses atrot on the cobbles, it’s hard not to feel overcome with nostalgia and romance and think…
 
-<font face="Palatino-Italic">Wow, it feels just like Disneyland.<font face="Palatino-Roman">
+<font face="BODY_FONT_ITALIC">Wow, it feels just like Disneyland.<font face="BODY_FONT">
 
-There’s more to that sentiment than dumb Americana: Walt and his team of “imagineers,” in re-enacting medieval town centers with toy-like precision, were actually on to something that town planners of the 1950s utterly failed to appreciate. People <font face="Palatino-Italic">enjoy<font face="Palatino-Roman"> spaces like these for their scale, their accessibility, their mix of residence and commerce, church and hearth. It was only decades later when urban gentrification took root that architects and city officials paid heed; nowadays everyplace wants to be Bruges, or Bruges-esque.
+There’s more to that sentiment than dumb Americana: Walt and his team of “imagineers,” in re-enacting medieval town centers with toy-like precision, were actually on to something that town planners of the 1950s utterly failed to appreciate. People <font face="BODY_FONT_ITALIC">enjoy<font face="BODY_FONT"> spaces like these for their scale, their accessibility, their mix of residence and commerce, church and hearth. It was only decades later when urban gentrification took root that architects and city officials paid heed; nowadays everyplace wants to be Bruges, or Bruges-esque.
 
-<font face="Palatino-Italic">That’s not English they’re speaking<font face="Palatino-Roman">. Glottal Flemish carries on the soggy breeze. So what? I grew up in a city where English was the minority, and that’s partly why this pricks up my ears. Secessionist-era Quebec wasn’t exactly the friendliest to Anglophones. Aside from my hometown, I haven’t visited a non-English-speaking place in decades, and perhaps the stale memory of that tense time partly accounts for that. Still, Flemish and English share common roots, as evidenced by looking around: a sign over a local pub bears a polished black wood-carved feline with wording above that reads “DE KAT.”
+<font face="BODY_FONT_ITALIC">That’s not English they’re speaking<font face="BODY_FONT">. Glottal Flemish carries on the soggy breeze. So what? I grew up in a city where English was the minority, and that’s partly why this pricks up my ears. Secessionist-era Quebec wasn’t exactly the friendliest to Anglophones. Aside from my hometown, I haven’t visited a non-English-speaking place in decades, and perhaps the stale memory of that tense time partly accounts for that. Still, Flemish and English share common roots, as evidenced by looking around: a sign over a local pub bears a polished black wood-carved feline with wording above that reads “DE KAT.”
 
 <img src="SectionDivider169Black.png" width="84" height="16">
 
@@ -47,21 +47,21 @@ There’s more to that sentiment than dumb Americana: Walt and his team of “im
 
 So says a hefty Canadian guy. He and five of his friends—two others guys and two girls—are sitting in a circle drinking beer in my hostel’s chandelier-draped common room. They’ve just come from Amsterdam, and, like all independent travelers this side of northwestern Europe, they’re eager to share the lowdown on substances elsewhere illicit.
 
-In this case, psilocybin, magic mushrooms. The fungal-based hallucinogen is, in addition to cannabis, available at retail outlets in Holland, though only at specific establishments. <font face="Palatino-Italic">Everyone’s got a specialty.<font face="Palatino-Roman"> Mushrooms have been on my to-do list for a number of years, so this whets my curiosity.
+In this case, psilocybin, magic mushrooms. The fungal-based hallucinogen is, in addition to cannabis, available at retail outlets in Holland, though only at specific establishments. <font face="BODY_FONT_ITALIC">Everyone’s got a specialty.<font face="BODY_FONT"> Mushrooms have been on my to-do list for a number of years, so this whets my curiosity.
 
-For now, however, I must address my <font face="Palatino-Italic">real<font face="Palatino-Roman"> substance abuse problem. I cannot for the life of me understand the dismissal, by certain U.S. officials, of Belgium and France as “chocolate-making countries.” Uhm, this is a <font face="Palatino-Italic">bad<font face="Palatino-Roman"> thing? Screw the museums and architecture…<font face="Palatino-Italic">this<font face="Palatino-Roman"> is why we come to Europe, at least this part of it.
+For now, however, I must address my <font face="BODY_FONT_ITALIC">real<font face="BODY_FONT"> substance abuse problem. I cannot for the life of me understand the dismissal, by certain U.S. officials, of Belgium and France as “chocolate-making countries.” Uhm, this is a <font face="BODY_FONT_ITALIC">bad<font face="BODY_FONT"> thing? Screw the museums and architecture…<font face="BODY_FONT_ITALIC">this<font face="BODY_FONT"> is why we come to Europe, at least this part of it.
 
 I hold—with what some dismiss as religious fervor, but what do they know?—that chocolate is best served with…more chocolate. None of this jellied fruit crap they keep trying to stick inside otherwise-respectable devil’s food cake. Though the odd fresh strawberry makes for a nice accompaniment, and banana even better. But best of all…oh yeah, there it is, sold here on pushcarts on the street: a waffle. Calling it “Belgian” would be redundant.
 
-Since I’ve never seen it back home, I try the denser, chewier “Liege-style” variety…drizzled with chocolate syrup, of course. Oh sure, it’s touristy: I’m guessing not one of this vendor’s clientele is local. But really, <font face="Palatino-Italic">so what<font face="Palatino-Roman">?
+Since I’ve never seen it back home, I try the denser, chewier “Liege-style” variety…drizzled with chocolate syrup, of course. Oh sure, it’s touristy: I’m guessing not one of this vendor’s clientele is local. But really, <font face="BODY_FONT_ITALIC">so what<font face="BODY_FONT">?
 
 <img src="http://www.holisticideas.com/wtrmobile/images/BrugesChocolateBreasts.jpg" width="240" height="320">
 
-More awaits in a nearby shop window: all manner of cacaoy bon bons, including a bunch done up as women’s breasts—ah, Europe! I resist the pull, however, and offer up a pledge to keep my girlish—uhm, boyish—waistline. Looking up at the church tower looming over Markt, I offer up a mantra to the gods of vanity and good health: <font face="Palatino-Italic">I shall climb every major church steeple or cathedral tower<font face="Palatino-Roman">.  
+More awaits in a nearby shop window: all manner of cacaoy bon bons, including a bunch done up as women’s breasts—ah, Europe! I resist the pull, however, and offer up a pledge to keep my girlish—uhm, boyish—waistline. Looking up at the church tower looming over Markt, I offer up a mantra to the gods of vanity and good health: <font face="BODY_FONT_ITALIC">I shall climb every major church steeple or cathedral tower<font face="BODY_FONT">.  
 
 <img src="http://www.holisticideas.com/wtrmobile/images/BellTowerSteps1.jpg" width="240" height="320">
 
-Here in Bruges, that translates into 353 steps. Hardly a challenge for those in decent shape…well, okay, <font face="Palatino-Italic">something<font face="Palatino-Roman"> of a challenge: huffing and puffing a bit in the rarified air up top, I take in the sweeping view. Aside from the odd steeple everything’s a couple of stories tall, a prairie of humble roofs. All cities looked like this once, before the advent of structural steel and reinforced concrete
+Here in Bruges, that translates into 353 steps. Hardly a challenge for those in decent shape…well, okay, <font face="BODY_FONT_ITALIC">something<font face="BODY_FONT"> of a challenge: huffing and puffing a bit in the rarified air up top, I take in the sweeping view. Aside from the odd steeple everything’s a couple of stories tall, a prairie of humble roofs. All cities looked like this once, before the advent of structural steel and reinforced concrete
 
 <img src="http://www.holisticideas.com/wtrmobile/images/BrugesViewFromBellTower1.jpg" width="320" height="240">
 
@@ -73,7 +73,7 @@ A surly ticket agent and two more train rides and I’m in Noord-Holland, in Ams
 
 <img src="http://www.holisticideas.com/wtrmobile/images/AmsterdamSignCU.jpg" width="320" height="240">
 
-Like every bud-fiend passing through these parts I beeline it to a coffeeshop. John Travolta’s character from <font face="Palatino-Italic">Pulp Fiction<font face="Palatino-Roman"> had it right: cannabis is legal but it ain’t a hundred percent legal. The shops cannot advertise what they’re selling, and lighting up on the street is <font face="Palatino-Italic">verboten<font face="Palatino-Roman">. Interestingly, Dutch use of the stuff actually is lower than in many other countries; the coffeeshop contains mostly foreigners, though this is one time I’m happy to have the brand “tourist” stamped on my forehead. On the recommendation of some friends I stop in at Grey Area, a tiny establishment run by some expat Americans—the mellowest ones I’ve seen. The joint (pun intended) is festooned with colorful signs and bumper stickers; what <font face="Palatino-Italic">is<font face="Palatino-Roman"> it with cannabis culture and the overuse of goofy signage?  
+Like every bud-fiend passing through these parts I beeline it to a coffeeshop. John Travolta’s character from <font face="BODY_FONT_ITALIC">Pulp Fiction<font face="BODY_FONT"> had it right: cannabis is legal but it ain’t a hundred percent legal. The shops cannot advertise what they’re selling, and lighting up on the street is <font face="BODY_FONT_ITALIC">verboten<font face="BODY_FONT">. Interestingly, Dutch use of the stuff actually is lower than in many other countries; the coffeeshop contains mostly foreigners, though this is one time I’m happy to have the brand “tourist” stamped on my forehead. On the recommendation of some friends I stop in at Grey Area, a tiny establishment run by some expat Americans—the mellowest ones I’ve seen. The joint (pun intended) is festooned with colorful signs and bumper stickers; what <font face="BODY_FONT_ITALIC">is<font face="BODY_FONT"> it with cannabis culture and the overuse of goofy signage?  
 
 A friendly trio from Chicago, meanwhile, sits at a tiny round table, perplexed. They turn to me.
 
@@ -87,7 +87,7 @@ Across the broad grassy park of Museumplein is the Rijksmuseum. Too much to tack
 
 Nighttime. Amsterdam needs no introduction as a gay mecca, its other lifestyle bona-fide on top of the almost legal weed. I stride down pub-saturated streets, anticipating the grandest gay nightlife scene the world has to offer…
 
-<font face="Palatino-Italic">Wait, where is it?<font face="Palatino-Roman">
+<font face="BODY_FONT_ITALIC">Wait, where is it?<font face="BODY_FONT">
 
 A couple of places in and around the tongue-twistingly named Regulierdrawsstrat look promising: ultramodern furniture, fruity drinks, backlit bars. But they’re half-empty, and remain so as the evening gets later and later…even though it should be a busy weekend night in late September.
 
@@ -97,9 +97,9 @@ A couple of places in and around the tongue-twistingly named Regulierdrawsstrat 
 
 The subdued bars are no random slow night, he offers. “Better if you’re kinky,” he adds, wrinkling his nose at one place I’m thinking of visiting. If you’re into leather, bondage, big hairy “bears,” this is your town. Not so much for those, like me, into pretty boys. The hordes I’ve been seeing on the streets are (mostly) straight. Leiden boy, meanwhile, has a boyfriend and leaves soon after.
 
-<font face="Palatino-Italic">So much for post-gay.<font face="Palatino-Roman"> I wonder: as Western societies become more open, does the underground allure, the need to push the envelope, commensurately dissipate? Consider the film <font face="Palatino-Italic">Party Monster<font face="Palatino-Roman">, which chronicles the travails of New York City club kids of the 1980s: fleeing repressive small-town America, they congregate in the Big Apple to do drugs, wear outlandish outfits, embark on radical self-expression. But what if they had nothing to flee from? Gazing at the glitzy yet deserted nightspots, I wonder whether Amsterdam can claim to have lost something in its pragmatic policy of acceptance.
+<font face="BODY_FONT_ITALIC">So much for post-gay.<font face="BODY_FONT"> I wonder: as Western societies become more open, does the underground allure, the need to push the envelope, commensurately dissipate? Consider the film <font face="BODY_FONT_ITALIC">Party Monster<font face="BODY_FONT">, which chronicles the travails of New York City club kids of the 1980s: fleeing repressive small-town America, they congregate in the Big Apple to do drugs, wear outlandish outfits, embark on radical self-expression. But what if they had nothing to flee from? Gazing at the glitzy yet deserted nightspots, I wonder whether Amsterdam can claim to have lost something in its pragmatic policy of acceptance.
 
-Or perhaps my disappointment has an ulterior motive. I’d hoped to make this stop my Rome <font face="Palatino-Italic">à la<font face="Palatino-Roman"> Fellini <font face="Palatino-Italic">Satyricon<font face="Palatino-Roman">: willful indulgence as part of my bid to clean the mental slate. Perhaps this is a herald from the travel gods: try as one might, destinations are what they are, anticipation and expectation be damned.
+Or perhaps my disappointment has an ulterior motive. I’d hoped to make this stop my Rome <font face="BODY_FONT_ITALIC">à la<font face="BODY_FONT"> Fellini <font face="BODY_FONT_ITALIC">Satyricon<font face="BODY_FONT">: willful indulgence as part of my bid to clean the mental slate. Perhaps this is a herald from the travel gods: try as one might, destinations are what they are, anticipation and expectation be damned.
 
 <img src="SectionDivider169Black.png" width="84" height="16">
 
@@ -117,7 +117,7 @@ But it’s the mental trip that does it: I daydream I’m at a big gathering, a 
 
 Hours pass. As reality begins to reassert itself, I feel the need to wander the city in the lurid night. I stroll through the red-light district—obviously I’m not its target market but the place captivates for another reason: it’s the oldest part of town, its streetscapes narrow as any in Bruges, though with a lot more neon and crowds. Crossing over the canals I come upon a building that looks oddly familiar: an incongruously modern-looking edifice trying to fit into the cityscape, brick walls and angular bay windows straddling a many-arched concrete base.
 
-<font face="Palatino-Italic">I’ve been here before.<font face="Palatino-Roman">
+<font face="BODY_FONT_ITALIC">I’ve been here before.<font face="BODY_FONT">
 
 In my childhood mind’s eye, I remember it resembled one of my grandmother’s nightstands. On a layover to Canada from the Middle East sometime in the seventies my family stayed here overnight. But in this altered state, that otherwise-banal recollection takes on phantasmagorical significance: a marker stone in my nomadic life. I find myself overcome with gratitude at this welcoming, sheltering city that housed my clan of errant travelers, long, long ago.
 
