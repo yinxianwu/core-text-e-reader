@@ -21,7 +21,7 @@ NSString *const HTTP_PREFIX = @"http://";
 
 @synthesize viewDelegate;
 @synthesize columns;
-@synthesize attStrings;
+@synthesize attStrings = _attStrings;
 @synthesize imageMetadatas;
 @synthesize links;
 @synthesize totalPages;
@@ -34,11 +34,23 @@ NSString *const HTTP_PREFIX = @"http://";
                images:(NSDictionary *)allImages
                 links:(NSDictionary *)allLinks
                 order:(NSArray *)allKeys {
-    self.attStrings = allAttStrings;
+    _attStrings = allAttStrings;
     self.imageMetadatas = allImages;
     self.links = allLinks;
     self.orderedKeys = allKeys;
     self.orderedChapterPages = [NSMutableArray arrayWithCapacity:self.orderedKeys.count];
+}
+
+//sets att strings and rebuilds all frames
+//links and images are NOT assumed to have changed or need to change
+- (void)setAttStrings:(NSDictionary *)attStrings {
+    _attStrings = attStrings;
+    self.columns = [[NSMutableArray alloc] init];
+    
+    for (UIView *v in self.subviews) {
+        [v removeFromSuperview];
+    }
+    [self buildFrames];
 }
 
 //builds all columns of text & images

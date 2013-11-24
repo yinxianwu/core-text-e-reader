@@ -16,8 +16,11 @@
 @interface CTEContentViewController : UIViewController<UIScrollViewDelegate, CTEViewDelegate>
 
 @property (nonatomic, strong) id <CTEChapter> currentChapter;
+@property (nonatomic, strong) NSString *currentFont;
+@property (nonatomic, strong) NSNumber *currentFontSize;
+@property (nonatomic, strong) NSNumber *currentColumnsInView;
 @property (nonatomic, strong) NSArray *chapters;
-@property (nonatomic, strong) NSDictionary *attStrings;
+@property (nonatomic, strong) NSMutableDictionary *attStrings;
 @property (nonatomic, strong) NSDictionary *images;
 @property (nonatomic, strong) NSDictionary *links;
 
@@ -29,10 +32,6 @@
 @property (nonatomic, strong) UIBarButtonItem *sliderAsToolbarItem;
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (nonatomic, strong) MPMoviePlayerViewController *moviePlayerController;
-//@property (nonatomic, strong) IBOutlet UIPageControl *pageControl;
-//@property (nonatomic, strong) IBOutlet UIStepper *stepper;
-//@property (nonatomic, strong) IBOutlet UILabel *currentPageLabel;
-//@property (nonatomic, strong) IBOutlet UILabel *pagesRemainingLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
