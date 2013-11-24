@@ -3,7 +3,7 @@
 
 <img src="http://www.holisticideas.com/wtrmobile/images/BigBenGoldenSunlight.jpg" width="240" height="320">
 
-<font color="black" strokeColor="gray" face="BODY_FONT">I pour down the jetway into a cloudy London morning filtering through windows of a building under renovation. A mess of exposed ceilings and faded, half-torn-out 1980s décor is my hello to the U.K. Heathrow’s Terminal Four is in use beyond its expected lifespan while kinks are ironed out at the flashy yet troubled new Terminal Five.
+<font color="black" size="BODY_FONT_SIZE" strokeColor="gray" face="BODY_FONT">I pour down the jetway into a cloudy London morning filtering through windows of a building under renovation. A mess of exposed ceilings and faded, half-torn-out 1980s décor is my hello to the U.K. Heathrow’s Terminal Four is in use beyond its expected lifespan while kinks are ironed out at the flashy yet troubled new Terminal Five.
 
 The building may reflect my unsettled mood, but not to worry: London serves as almost as good a refuge for me as Montréal, filled with close family friends and other chums.
 

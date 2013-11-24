@@ -53,7 +53,7 @@
     self.images = allImages;
     self.links = allLinks;
     
-    //TODO this will probably come from somewhere else
+    //TODO this will probably come from a stored cache
     self.currentColumnsInView = [NSNumber numberWithInt:2];
     self.currentFont = PalatinoFontKey;
     self.currentFontSize = [NSNumber numberWithInt:18];
@@ -194,6 +194,9 @@
                           order:orderedSet];
     [self.cteView buildFrames];
 
+    self.pageSlider.minimumValue = 0.0f;
+    self.pageSlider.maximumValue = [self.cteView totalPages];
+    self.pageSlider.value = 0.0f; //TODO this should "sync" to same page
 }
 
 //syncs pages to slider value
@@ -225,8 +228,8 @@
         popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPadView"
                                                                     bundle:nil
                                                               selectedFont:self.currentFont
-                                                          selectedFontSize:[NSNumber numberWithInt:18]
-                                                     selectedColumnsInView:[NSNumber numberWithInt:2]]; //TODO will come from parser
+                                                          selectedFontSize:self.currentFontSize
+                                                     selectedColumnsInView:self.currentColumnsInView];
         self.popoverController = [[UIPopoverController alloc] initWithContentViewController:popoverView];
         [self.popoverController presentPopoverFromBarButtonItem:self.configButton
                                   permittedArrowDirections:UIPopoverArrowDirectionAny

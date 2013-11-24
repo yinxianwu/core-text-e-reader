@@ -103,7 +103,9 @@
             delegate.parser.currentBodyFont = fontKey;
         }
         else if([[notification name] isEqualToString:ChangeFontSize]) {
-            //TODO parser doesn't support this yet...
+            NSNumber *fontSize = (NSNumber *)[notification object];
+            delegate.contentViewController.currentFontSize = fontSize;
+            delegate.parser.currentBodyFontSize = [fontSize floatValue];
         }
         else if([[notification name] isEqualToString:ChangeColumnCount]) {
             //TODO parser doesn't support this yet...

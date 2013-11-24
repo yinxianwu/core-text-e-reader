@@ -30,16 +30,16 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
          selectedFont:(NSString *)fontKey
-     selectedFontSize:(NSNumber *)selectedFontSize
-selectedColumnsInView:(NSNumber *)selectedColumnsInView {
+     selectedFontSize:(NSNumber *)fontSize
+selectedColumnsInView:(NSNumber *)columnsInView {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
         NSDictionary *bodyFonts = [CTEMarkupParser bodyFontDictionary];
         self.fonts = [[bodyFonts allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
         self.selectedFont = fontKey;
-        self.selectedFontSize = [NSNumber numberWithInt:18];
-        self.selectedColumnsInView = [NSNumber numberWithInt:2];
-        self.fontSizes = @[@"12", @"14", @"16", @"18", @"20", @"24"];
+        self.selectedFontSize = fontSize;
+        self.selectedColumnsInView = columnsInView;
+        self.fontSizes = @[@"16", @"18", @"20", @"24", @"28"];
         self.columns = @[@"One Column", @"Two Columns"];
 
         formatter = [[NSNumberFormatter alloc] init];

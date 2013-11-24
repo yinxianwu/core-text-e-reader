@@ -1,7 +1,7 @@
 <font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Origins
 <font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">Boston & San Francisco
 
-<font color="black" size="18.0" strokeColor="gray" face="BODY_FONT">It’s my very last morning with a liver in one piece.
+<font color="black" size="BODY_FONT_SIZE" strokeColor="gray" face="BODY_FONT">It’s my very last morning with a liver in one piece.
 
 Bradley, my partner of almost three years, stirs next to me in bed in the predawn darkness. His body is warm—too warm with a mild fever. His normally pinkish, pale skin is jaundiced and sallow, contrasting strangely with his deep brown eyes and dyed black hair. It may be five in the morning but it’s time for us to get up—though if all goes well we won’t be conscious for too long.
 

@@ -1,7 +1,7 @@
 <font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Motherland
 <font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">Montreal
 
-<font color="black" strokeColor="gray" face="BODY_FONT">All nomads have a point of origin, in my case this cold-weather metropolis tucked into Canada’s east.
+<font color="black" size="BODY_FONT_SIZE" strokeColor="gray" face="BODY_FONT">All nomads have a point of origin, in my case this cold-weather metropolis tucked into Canada’s east.
 
 My parents and two out of three sisters still reside here and keep me coming back. Well, not entirely: it’s the little ones who do it, my nieces and nephews. Five of them, to be exact, aged one-and-a-half through six. In spite of the continent that divides us I’ve managed to keep alive a closeness. Practically all the friends of my youth are long gone—a holdover from the bad old days of Quebec secessionism a decade or two back. The upside: my Montréal visits are a concentrated yet enchanting dose of the familial.
 

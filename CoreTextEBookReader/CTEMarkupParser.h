@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSMutableArray *images;
 @property (strong, nonatomic) NSMutableArray *links;
 @property (strong, nonatomic) NSString *currentBodyFont;
+@property (nonatomic) float currentBodyFontSize;
 
 extern NSString * const BodyFontKey;
 extern NSString * const BodyItalicFontKey;

@@ -1,7 +1,7 @@
 <font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Flanders to Funsterdam
 <font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">Bruges & Amsterdam
 
-<font color="black" strokeColor="gray" face="BODY_FONT">“It’s about as exciting as riding BART to Oakland.”
+<font color="black" size="BODY_FONT_SIZE" strokeColor="gray" face="BODY_FONT">“It’s about as exciting as riding BART to Oakland.”
 
 That was one friend’s take on the Eurostar trip beneath the English Channel. But nay, I refuse, <font face="BODY_FONT_ITALIC">refuse<font face="BODY_FONT">, to be so blasé about the engineering triumph of the late-twentieth century. When I heard of the completion of the EuroTunnel—the rail tube running between Britain and mainland Europe—I vowed to make it my first Channel crossing. In spite of cost overruns, initially low ridership, and—only a few weeks before I board—a fire in the tunnel that reduces service, nothing stands in my way of crossing this body of water without leaving terra firma—or, for that matter, my seat.
 

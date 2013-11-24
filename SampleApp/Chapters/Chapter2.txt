@@ -1,7 +1,7 @@
 <font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Rocky Mountain High
 <font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">Denver
 
-<font color="black" strokeColor="gray" face="BODY_FONT">We’re coming down from an Ecstasy high on an unseasonably warm September morning in San Francisco. Ryan’s beat-up Honda Civic pulls out of the Embarcadero Center garage in downtown San Francisco and heads east, across the Bay Bridge to Oakland Airport.
+<font color="black" size="BODY_FONT_SIZE" strokeColor="gray" face="BODY_FONT">We’re coming down from an Ecstasy high on an unseasonably warm September morning in San Francisco. Ryan’s beat-up Honda Civic pulls out of the Embarcadero Center garage in downtown San Francisco and heads east, across the Bay Bridge to Oakland Airport.
 
 Ryan and I met just after my life went sideways. A twenty-six-year-old wholesome-looking swimming instructor from the eastern reaches of the San Francisco Bay Area, his blue eyes, pug nose, and towhead boy-next-door haircut conceal a wild side. We’ve managed to sustain a surprisingly solid romance over the past months. In his no-nonsense way he’s been a stabilizing force amid all the melodrama. This final weekend together is our send-off, the first push eastward on my globe-circling odyssey.
 

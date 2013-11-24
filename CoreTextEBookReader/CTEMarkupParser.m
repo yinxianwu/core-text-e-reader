@@ -28,6 +28,7 @@ static CGFloat widthCallback( void* ref ){
 
 NSString * const BodyFontKey = @"BODY_FONT";
 NSString * const BodyItalicFontKey = @"BODY_FONT_ITALIC";
+NSString * const BodyFontSizeKey = @"BODY_FONT_SIZE";
 NSString * const BaskervilleFontKey = @"Baskerville";
 NSString * const GeorgiaFontKey = @"Georgia";
 NSString * const PalatinoFontKey = @"Palatino";
@@ -41,14 +42,16 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
 @synthesize images;
 @synthesize links;
 @synthesize currentBodyFont;
+@synthesize currentBodyFontSize;
 
 //constructor; resets parser
 -(id)init {
     self = [super init];
     if (self) {
-        self.currentBodyFont = PalatinoFontKey;
         self.font = PalatinoFontKey;
-        self.fontSize = 18.0;
+        self.fontSize = 18.0f;
+        self.currentBodyFont = self.font;
+        self.currentBodyFontSize = self.fontSize;
         [self resetParser];
     }
     return self;
@@ -171,7 +174,12 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
                                               range:NSMakeRange(0, [tag length])
                                          usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
                     NSString *fontSizeStr = [tag substringWithRange:match.range];
-                    self.fontSize = [fontSizeStr floatValue];
+                    if([fontSizeStr isEqualToString:BodyFontSizeKey]) {
+                        self.fontSize = self.currentBodyFontSize;
+                    }
+                    else {
+                        self.fontSize = [fontSizeStr floatValue];
+                    }
                 }];
                 
                 //face -- special handling for body versus custom fonts
