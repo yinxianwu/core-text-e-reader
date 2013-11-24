@@ -35,6 +35,7 @@ extern NSString *const HTTP_PREFIX;
                images:(NSDictionary *)allImages
                 links:(NSDictionary *)allLinks
                 order:(NSArray *)allKeys;
+- (void)clearFrames;
 - (void)buildFrames;
 - (int)getCurrentPage;
 - (int)indexOfColumn:(id)column;

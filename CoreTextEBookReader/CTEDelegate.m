@@ -17,11 +17,16 @@
 @synthesize menuViewController;
 @synthesize window;
 @synthesize parser;
+@synthesize attStrings;
+@synthesize images;
+@synthesize links;
+@synthesize chapters;
 
 + (CTEDelegate *)delegateWithWindow:(UIWindow *)appWindow andChapters:(NSArray *)chapters {
     CTEDelegate *delegate = [[CTEDelegate alloc] init];
     if(delegate) {
         delegate.window = appWindow;
+        delegate.chapters = chapters;
         
         // create the content view controller that contains detail content
         CTEContentViewController *contentViewCtrlr = nil;
@@ -31,36 +36,24 @@
         CTEMenuViewController *menuViewCtrlr = nil;
         
         //create att strs for all chapters
-        delegate.parser = [[CTEMarkupParser alloc] init];
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        NSMutableDictionary *attStrings = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
-        NSMutableDictionary *images = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
-        NSMutableDictionary *links = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
-        for(id<CTEChapter>chapter in chapters) {
-            NSAttributedString *contentAttStr = [delegate.parser attrStringFromMarkup:[chapter body]
-                                                                           screenSize:screenRect];
-            [attStrings setObject:contentAttStr forKey:[chapter id]];
-            [images setObject:delegate.parser.images forKey:[chapter id]];
-            [links setObject:delegate.parser.links forKey:[chapter id]];
-            [delegate.parser resetParser];
-        }
+        [CTEDelegate buildAttStringsForDelegate:delegate chapters:chapters notification:nil];
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPadView"
                                                                           bundle:nil
-                                                                        chapters:chapters
-                                                                      attStrings:attStrings
-                                                                          images:images
-                                                                           links:links];
+                                                                        chapters:delegate.chapters
+                                                                      attStrings:delegate.attStrings
+                                                                          images:delegate.images
+                                                                           links:delegate.links];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPadView" bundle:nil];
         }
         else {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPhoneView"
                                                                           bundle:nil
-                                                                        chapters:chapters
-                                                                      attStrings:attStrings
-                                                                          images:images
-                                                                           links:links];
+                                                                        chapters:delegate.chapters
+                                                                      attStrings:delegate.attStrings
+                                                                          images:delegate.images
+                                                                           links:delegate.links];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPhoneView" bundle:nil];
         }
         
@@ -76,12 +69,61 @@
                                                  selector:@selector(sideMenuWasHidden:)
                                                      name:HideSideMenu
                                                    object:nil];
+        //listen for view option changes
+        [[NSNotificationCenter defaultCenter] addObserver:delegate
+                                                 selector:@selector(contentViewOptionsUpdated:)
+                                                     name:ChangeFont
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:delegate
+                                                 selector:@selector(contentViewOptionsUpdated:)
+                                                     name:ChangeFontSize
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:delegate
+                                                 selector:@selector(contentViewOptionsUpdated:)
+                                                     name:ChangeColumnCount
+                                                   object:nil];
         
         //set the rootViewController to the contentViewController
         delegate.window.rootViewController = delegate.contentViewController;
     }
     
     return delegate;
+}
+
+//Parses all chapters and builds appropriate att strings using delegate settings
+//if no NSNotification is specified, builds with default view options settings
++ (void)buildAttStringsForDelegate:(CTEDelegate *)delegate
+                          chapters:(NSArray *)chapters
+                      notification:(NSNotification *)notification {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    if(notification && delegate.parser) {
+        if([[notification name] isEqualToString:ChangeFont]) {
+            NSString *fontKey = (NSString *)[notification object];
+            delegate.parser.currentBodyFont = fontKey;
+        }
+        else if([[notification name] isEqualToString:ChangeFontSize]) {
+            //TODO parser doesn't support this yet...
+        }
+        else if([[notification name] isEqualToString:ChangeColumnCount]) {
+            //TODO parser doesn't support this yet...
+        }
+
+    }
+    else {
+        delegate.parser = [[CTEMarkupParser alloc] init];
+    }
+    
+    delegate.attStrings = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+    delegate.images = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+    delegate.links = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+    for(id<CTEChapter>chapter in chapters) {
+        NSAttributedString *contentAttStr = [delegate.parser attrStringFromMarkup:[chapter body]
+                                                                       screenSize:screenRect];
+        [delegate.attStrings setObject:contentAttStr forKey:[chapter id]];
+        [delegate.images setObject:delegate.parser.images forKey:[chapter id]];
+        [delegate.links setObject:delegate.parser.links forKey:[chapter id]];
+        [delegate.parser resetParser];
+    }
 }
 
 //Selects appropriate chapter then does side menu reveal
@@ -118,6 +160,12 @@
     id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
     [self.contentViewController setCurrentChapter:chapter];
     self.window.rootViewController = self.contentViewController;
+}
+
+//Updates attributed Strings for content, then applies them to content view
+- (void)contentViewOptionsUpdated:(NSNotification *)notification {
+    [CTEDelegate buildAttStringsForDelegate:self chapters:self.chapters notification:notification];
+    [self.contentViewController rebuildContent:self.attStrings images:self.images links:self.links];
 }
 
 @end

@@ -17,7 +17,12 @@
 @property (strong, nonatomic) CTEMenuViewController *menuViewController;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CTEMarkupParser *parser;
-
+@property (strong, nonatomic) NSMutableDictionary *attStrings;
+@property (strong, nonatomic) NSMutableDictionary *images;
+@property (strong, nonatomic) NSMutableDictionary *links;
+@property (strong, nonatomic) NSArray *chapters;
 + (CTEDelegate *)delegateWithWindow:(UIWindow *)window andChapters:(NSArray *)chapters;
-
++ (void)buildAttStringsForDelegate:(CTEDelegate *)delegate
+                          chapters:(NSArray *)chapters
+                      notification:(NSNotification *)notification;
 @end

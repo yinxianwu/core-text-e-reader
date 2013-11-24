@@ -162,20 +162,6 @@
     [self.toolBar setItems:[NSArray arrayWithObjects:self.sliderAsToolbarItem, self.configButton, nil]];
     [self.toolBar setTintColor:barColor];
     [self.view addSubview:self.toolBar];
-    
-    //listen for view option changes
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fontWasChanged:)
-                                                 name:ChangeFont
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(fontSizeWasChanged:)
-                                                 name:ChangeFontSize
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(columnCountWasChanged:)
-                                                 name:ChangeColumnCount
-                                               object:nil];
 }
 
 //some component sizing
@@ -187,6 +173,27 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     [self.sliderAsToolbarItem setWidth:screenWidth - width - 40]; //adjust for borders and such
+}
+
+//rebuilds content with current data
+- (void)rebuildContent:(NSMutableDictionary *)allAttStrings
+                images:(NSDictionary *)allImages
+                 links:(NSDictionary *)allLinks {
+    self.attStrings = allAttStrings;
+    self.images = allImages;
+    self.links = allLinks;
+    [self.cteView clearFrames];
+    NSMutableArray *orderedSet = [NSMutableArray arrayWithCapacity:[self.chapters count]];
+    for(id<CTEChapter> chapter in self.chapters) {
+        [orderedSet addObject:[chapter id]];
+    }
+    
+    [self.cteView setAttStrings:self.attStrings
+                         images:self.images
+                          links:self.links
+                          order:orderedSet];
+    [self.cteView buildFrames];
+
 }
 
 //syncs pages to slider value
@@ -227,66 +234,66 @@
     }
 }
 
-- (void)fontWasChanged:(id)sender {
-    NSNotification *notification = (NSNotification *)sender;
-    NSString *newFontKey = (NSString *)[notification object];
-    
-    //do nothing if no change
-    if([newFontKey isEqualToString:self.currentFont]) {
-        return;
-    }
-    
-    for(id<CTEChapter> chapter in self.chapters) {
-        NSMutableAttributedString *attString = (NSMutableAttributedString *)[self.attStrings objectForKey:[chapter id]];
-
-        NSRange range = NSMakeRange(0, attString.length);
-        [attString enumerateAttributesInRange:range
-                                      options:NSAttributedStringEnumerationReverse
-                                   usingBlock:^(NSDictionary *attributes, NSRange range, BOOL *stop) {
-                                       UIFont *font = attributes[NSFontAttributeName];
-                                       NSString *fontName = [font fontName];
-                                       
-                                       //check to see if existing font matches previous current
-                                       //if so, change it to new selected value
-                                       BOOL shouldChangeFont = NO;
-                                       NSDictionary *bodyFonts = [CTEMarkupParser bodyFontDictionary];
-                                       for(NSString *fontKey in [bodyFonts allKeys]) {
-                                           NSString *matchFontValue = (NSString *)[bodyFonts valueForKey:fontKey];
-                                           if([matchFontValue isEqualToString:fontName]) {
-                                               shouldChangeFont = YES;
-                                               break;
-                                           }
-                                           
-                                       }
-                                       
-                                       if(shouldChangeFont) {
-                                           NSString *newFontValue = (NSString *)[bodyFonts valueForKey:newFontKey];
-                                           CTFontRef fontRef = CTFontCreateWithName((__bridge CFStringRef)newFontValue,
-                                                                                    font.pointSize,
-                                                                                    NULL);
-                                           NSMutableDictionary *mutableAttributes = [NSMutableDictionary dictionaryWithDictionary:attributes];
-                                           [mutableAttributes setObject:(__bridge id)fontRef forKey:(__bridge id)kCTFontAttributeName];//]@"NSFont"];
-                                           [attString setAttributes:mutableAttributes range:range];
-                                       }
-                                   }];
-        [self.attStrings setObject:attString forKey:[chapter id]];
-    }
-    
-    //rebuild only when all done
-    [cteView setAttStrings:self.attStrings];
-}
-
-- (void)fontSizeWasChanged:(id)sender {
-    NSNotification *notification = (NSNotification *)sender;
-    NSNumber *fontSize = (NSNumber *)[notification object];
-    NSLog(@"CHANGE FONT SIZE: %@", fontSize);
-}
-
-- (void)columnCountWasChanged:(id)sender {
-    NSNotification *notification = (NSNotification *)sender;
-    NSNumber *columnCount = (NSNumber *)[notification object];
-    NSLog(@"CHANGE COL COUNT: %@", columnCount);
-}
+//- (void)fontWasChanged:(id)sender {
+//    NSNotification *notification = (NSNotification *)sender;
+//    NSString *newFontKey = (NSString *)[notification object];
+//    
+//    //do nothing if no change
+//    if([newFontKey isEqualToString:self.currentFont]) {
+//        return;
+//    }
+//    
+//    for(id<CTEChapter> chapter in self.chapters) {
+//        NSMutableAttributedString *attString = (NSMutableAttributedString *)[self.attStrings objectForKey:[chapter id]];
+//
+//        NSRange range = NSMakeRange(0, attString.length);
+//        [attString enumerateAttributesInRange:range
+//                                      options:NSAttributedStringEnumerationReverse
+//                                   usingBlock:^(NSDictionary *attributes, NSRange range, BOOL *stop) {
+//                                       UIFont *font = attributes[NSFontAttributeName];
+//                                       NSString *fontName = [font fontName];
+//                                       
+//                                       //check to see if existing font matches previous current
+//                                       //if so, change it to new selected value
+//                                       BOOL shouldChangeFont = NO;
+//                                       NSDictionary *bodyFonts = [CTEMarkupParser bodyFontDictionary];
+//                                       for(NSString *fontKey in [bodyFonts allKeys]) {
+//                                           NSString *matchFontValue = (NSString *)[bodyFonts valueForKey:fontKey];
+//                                           if([matchFontValue isEqualToString:fontName]) {
+//                                               shouldChangeFont = YES;
+//                                               break;
+//                                           }
+//                                           
+//                                       }
+//                                       
+//                                       if(shouldChangeFont) {
+//                                           NSString *newFontValue = (NSString *)[bodyFonts valueForKey:newFontKey];
+//                                           CTFontRef fontRef = CTFontCreateWithName((__bridge CFStringRef)newFontValue,
+//                                                                                    font.pointSize,
+//                                                                                    NULL);
+//                                           NSMutableDictionary *mutableAttributes = [NSMutableDictionary dictionaryWithDictionary:attributes];
+//                                           [mutableAttributes setObject:(__bridge id)fontRef forKey:(__bridge id)kCTFontAttributeName];//]@"NSFont"];
+//                                           [attString setAttributes:mutableAttributes range:range];
+//                                       }
+//                                   }];
+//        [self.attStrings setObject:attString forKey:[chapter id]];
+//    }
+//    
+//    //rebuild only when all done
+//    [cteView setAttStrings:self.attStrings];
+//}
+//
+//- (void)fontSizeWasChanged:(id)sender {
+//    NSNotification *notification = (NSNotification *)sender;
+//    NSNumber *fontSize = (NSNumber *)[notification object];
+//    NSLog(@"CHANGE FONT SIZE: %@", fontSize);
+//}
+//
+//- (void)columnCountWasChanged:(id)sender {
+//    NSNotification *notification = (NSNotification *)sender;
+//    NSNumber *columnCount = (NSNumber *)[notification object];
+//    NSLog(@"CHANGE COL COUNT: %@", columnCount);
+//}
 
 //post user-initated scroll
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

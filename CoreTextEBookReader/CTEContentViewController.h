@@ -39,6 +39,9 @@
            attStrings:(NSDictionary *)allAttStrings
                images:(NSDictionary *)allImages
                 links:(NSDictionary *)allLinks;
+- (void)rebuildContent:(NSMutableDictionary *)allAttStrings
+                images:(NSDictionary *)allImages
+                 links:(NSDictionary *)allLinks;
 - (void)slideMenuButtonTouched:(id)sender;
 - (void)playMovie:(NSString *)clipPath;
 

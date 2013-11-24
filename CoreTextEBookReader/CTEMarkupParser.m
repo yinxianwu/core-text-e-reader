@@ -9,13 +9,19 @@
 #import "CTEMarkupParser.h"
 
 static CGFloat ascentCallback( void *ref ){
-    return [(NSString*)[(__bridge NSDictionary*)ref objectForKey:@"height"] floatValue];
+    NSString *val = (NSString*)[(__bridge NSDictionary*)ref objectForKey:@"height"];
+    return [val floatValue];
+//    return [(NSNumber *)[(__bridge NSDictionary*)ref objectForKey:@"height"] floatValue];
 }
 static CGFloat descentCallback( void *ref ){
-    return [(NSString*)[(__bridge NSDictionary*)ref objectForKey:@"descent"] floatValue];
+    NSString *val = (NSString*)[(__bridge NSDictionary*)ref objectForKey:@"descent"];
+    return [val floatValue];
+//    return [(NSNumber *)[(__bridge NSDictionary*)ref objectForKey:@"descent"] floatValue];
 }
 static CGFloat widthCallback( void* ref ){
-    return [(NSString*)[(__bridge NSDictionary*)ref objectForKey:@"width"] floatValue];
+    NSString *val = (NSString*)[(__bridge NSDictionary*)ref objectForKey:@"width"];
+    return [val floatValue];
+//    return [(NSNumber *)[(__bridge NSDictionary*)ref objectForKey:@"width"] floatValue];
 }
 
 @implementation CTEMarkupParser
@@ -40,6 +46,9 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
 -(id)init {
     self = [super init];
     if (self) {
+        self.currentBodyFont = PalatinoFontKey;
+        self.font = PalatinoFontKey;
+        self.fontSize = 18.0;
         [self resetParser];
     }
     return self;
@@ -73,9 +82,6 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
 
 //resets parser and clears image cache
 -(void)resetParser {
-    self.currentBodyFont = PalatinoFontKey;
-    self.font = PalatinoFontKey;
-    self.fontSize = 18.0;
     self.color = [UIColor blackColor];
     self.strokeColor = [UIColor whiteColor];
     self.strokeWidth = 0.0;
