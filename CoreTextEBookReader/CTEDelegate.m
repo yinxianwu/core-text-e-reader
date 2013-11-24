@@ -99,6 +99,7 @@
     if(notification && delegate.parser) {
         if([[notification name] isEqualToString:ChangeFont]) {
             NSString *fontKey = (NSString *)[notification object];
+            delegate.contentViewController.currentFont = fontKey;
             delegate.parser.currentBodyFont = fontKey;
         }
         else if([[notification name] isEqualToString:ChangeFontSize]) {

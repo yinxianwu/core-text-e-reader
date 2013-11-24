@@ -1,7 +1,7 @@
 <font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Rocky Mountain High
 <font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">Denver
 
-<font color="black" strokeColor="gray" face="Palatino-Roman">We’re coming down from an Ecstasy high on an unseasonably warm September morning in San Francisco. Ryan’s beat-up Honda Civic pulls out of the Embarcadero Center garage in downtown San Francisco and heads east, across the Bay Bridge to Oakland Airport.
+<font color="black" strokeColor="gray" face="BODY_FONT">We’re coming down from an Ecstasy high on an unseasonably warm September morning in San Francisco. Ryan’s beat-up Honda Civic pulls out of the Embarcadero Center garage in downtown San Francisco and heads east, across the Bay Bridge to Oakland Airport.
 
 Ryan and I met just after my life went sideways. A twenty-six-year-old wholesome-looking swimming instructor from the eastern reaches of the San Francisco Bay Area, his blue eyes, pug nose, and towhead boy-next-door haircut conceal a wild side. We’ve managed to sustain a surprisingly solid romance over the past months. In his no-nonsense way he’s been a stabilizing force amid all the melodrama. This final weekend together is our send-off, the first push eastward on my globe-circling odyssey.
 
@@ -17,13 +17,13 @@ Arrival. The usual drill for we seasoned domestic travelers: rental car, drive t
 
 “Nice!” I exclaim as we plop down our bags in our room in one of Denver’s more elegant downtown hotels. The room sports a king-sized bed with linens crisply matching walls done up in cream and chocolate brown.
 
-“Yeah, whatever. This isn’t even anything special for me,” Ryan replies. Okay, <font face="BODY_FONT_ITALIC">that<font face="Palatino-Roman"> was a tad bitchy. I chalk it up to morning-after recovery, though I sense something deeper. Ryan found this deal for us on Priceline—amid my skepticism—and his remark has <font face="BODY_FONT_ITALIC">I told you so<font face="Palatino-Roman"> written all over it.
+“Yeah, whatever. This isn’t even anything special for me,” Ryan replies. Okay, <font face="BODY_FONT_ITALIC">that<font face="BODY_FONT"> was a tad bitchy. I chalk it up to morning-after recovery, though I sense something deeper. Ryan found this deal for us on Priceline—amid my skepticism—and his remark has <font face="BODY_FONT_ITALIC">I told you so<font face="BODY_FONT"> written all over it.
 
 No time to discuss it now: we pick up Eric, my long-distance friend-with-benefits going back several years. A slender, tall, good-looking mixed-race guy about Ryan’s age, he describes himself as the love child of Johnny Depp and Leonardo DiCaprio—if such offspring had become an aspiring gay punk rocker. He points us northwest to the one town in the region I’ve been long overdue to visit.
 
-I’m a big-city boy, but have always been fascinated by unusually cosmopolitan smaller centers. I call it the <font face="BODY_FONT_ITALIC"><a href="http://en.wikipedia.org/wiki/Northern_Exposure">Northern Exposure</a><font face="Palatino-Roman"> effect, after the show and its offbeat center of culture and smarts, Cicely, Alaska. In real-life America it’s typically college towns that pull this off—the Ann Arbors; the Madison, Wisconsins; the Burlington, Vermonts. I’ve been out to Colorado many times—the snowsports enthusiast in me craves big mountains—but this is my first time visiting its entrant into collegiate sophistication: Boulder.
+I’m a big-city boy, but have always been fascinated by unusually cosmopolitan smaller centers. I call it the <font face="BODY_FONT_ITALIC"><a href="http://en.wikipedia.org/wiki/Northern_Exposure">Northern Exposure</a><font face="BODY_FONT"> effect, after the show and its offbeat center of culture and smarts, Cicely, Alaska. In real-life America it’s typically college towns that pull this off—the Ann Arbors; the Madison, Wisconsins; the Burlington, Vermonts. I’ve been out to Colorado many times—the snowsports enthusiast in me craves big mountains—but this is my first time visiting its entrant into collegiate sophistication: Boulder.
 
-“Dude, we <font face="BODY_FONT_ITALIC">have<font face="Palatino-Roman"> to try the <a href="http://www.boulderteahouse.com/">Dushanbe Teahouse</a>,” Eric offers. He’s right: a small pavilion straight out of Central Asia with elaborate wood-carved ceiling; a dizzying array of infusions black, green, and herbal; and equally diverse range of snacks. We feast on a mélange of scones and chicken curry wraps. Afterward, we stroll the downtown pedestrian mall festooned with post-convention Obama paraphernalia. An Art Deco courthouse façade feels straight out of a 1930s painting. Eric stops in at his favorite anime and comic-book store, which bears an array of works from Japan ranging from the cutesy to the edgy.
+“Dude, we <font face="BODY_FONT_ITALIC">have<font face="BODY_FONT"> to try the <a href="http://www.boulderteahouse.com/">Dushanbe Teahouse</a>,” Eric offers. He’s right: a small pavilion straight out of Central Asia with elaborate wood-carved ceiling; a dizzying array of infusions black, green, and herbal; and equally diverse range of snacks. We feast on a mélange of scones and chicken curry wraps. Afterward, we stroll the downtown pedestrian mall festooned with post-convention Obama paraphernalia. An Art Deco courthouse façade feels straight out of a 1930s painting. Eric stops in at his favorite anime and comic-book store, which bears an array of works from Japan ranging from the cutesy to the edgy.
 
 <img src="http://www.holisticideas.com/wtrmobile/images/BoulderCourthouse.jpg" width="240" height="320">
 
@@ -33,29 +33,29 @@ Seems that even here, at the base of the Rockies, the rest of the world is calli
 
 The following day we pick up the partying again. That’s the thing about hanging with twentysomethings: there’s always another opportunity to get shitfaced. We start things off at a divey gay bar hosting an afternoon beer bust; I’m not much of a drinker—a tendency the liver donation only amplified—so Eric and Ryan leave me in the dust. My substance of choice beckons at our next stop, a house party at one of Eric’s friends: Denver, almost as much as San Francisco, is something of a haven for cannabis fans. I get pleasantly stoned and enjoy earnest conversations with the straight female roommate while the boys pound back shot after shot.
 
-Heading down the elevator of the mid-rise apartment building, Eric pulls us in for a three-way kiss. Now <font face="BODY_FONT_ITALIC">that’s<font face="Palatino-Roman"> what I was hoping for: that these two fetching lads would hit if off more than socially. Eric breaks the kiss and smiles guiltily at Ryan.
+Heading down the elevator of the mid-rise apartment building, Eric pulls us in for a three-way kiss. Now <font face="BODY_FONT_ITALIC">that’s<font face="BODY_FONT"> what I was hoping for: that these two fetching lads would hit if off more than socially. Eric breaks the kiss and smiles guiltily at Ryan.
 
 “I’m way too punk-rock for you.”
 
-“Oh, you’d be surprised.” They start sharing some of their more sordid sexual adventures. <font face="BODY_FONT_ITALIC">Okay, you’ve lost me, boys<font face="Palatino-Roman">. Dominance and bondage aren’t my thing. Though if there’s one thing I’ve learned to appreciate about the gay lifestyle, it’s the receptive attitude toward all kinds of sexual practices. To wit: Eric wants to up the ante even more. He hauls us to a nearby nightspot to see if we’ll fancy the couple who’d gang-banged him the night previous.
+“Oh, you’d be surprised.” They start sharing some of their more sordid sexual adventures. <font face="BODY_FONT_ITALIC">Okay, you’ve lost me, boys<font face="BODY_FONT">. Dominance and bondage aren’t my thing. Though if there’s one thing I’ve learned to appreciate about the gay lifestyle, it’s the receptive attitude toward all kinds of sexual practices. To wit: Eric wants to up the ante even more. He hauls us to a nearby nightspot to see if we’ll fancy the couple who’d gang-banged him the night previous.
 
 The couple seem friendly at first, but as they get drunker I get more and more put off: one of them, a pint-sized fellow with beaky nose, starts bossing me around. 
  
-“Dance like this,” he says, pulling me in. Obviously <font color="black" strokeColor="gray" face="BODY_FONT_ITALIC">he<font color="black" strokeColor="gray" face="Palatino-Roman"> was a good fit for Eric’s submissiveness but it’s not flying with me. He tries kissing me but I’m not feeling it.
+“Dance like this,” he says, pulling me in. Obviously <font color="black" strokeColor="gray" face="BODY_FONT_ITALIC">he<font color="black" strokeColor="gray" face="BODY_FONT"> was a good fit for Eric’s submissiveness but it’s not flying with me. He tries kissing me but I’m not feeling it.
 
-“Use your <font face="BODY_FONT_ITALIC">tongue<font face="Palatino-Roman">!” he barks. Okay, that’s enough.
+“Use your <font face="BODY_FONT_ITALIC">tongue<font face="BODY_FONT">!” he barks. Okay, that’s enough.
 
 “You need to back off,” I say. Actually, it’s not just him: Eric’s gotten too drunk and segued from lively to maudlin. He starts to cry.
 
-“I thought my life would end up like a <font face="BODY_FONT_ITALIC">Disney movie<font face="Palatino-Roman">,” he chokes. He’s one of the few adults I know who’s got a diorama model of a fairy castle at home. “I’m <font face="BODY_FONT_ITALIC">always<font face="Palatino-Roman"> gonna be single.” Like lots of gay guys he vacillates between committed relationships and slutsville, never fully comfortable in either. I turn to Ryan.
+“I thought my life would end up like a <font face="BODY_FONT_ITALIC">Disney movie<font face="BODY_FONT">,” he chokes. He’s one of the few adults I know who’s got a diorama model of a fairy castle at home. “I’m <font face="BODY_FONT_ITALIC">always<font face="BODY_FONT"> gonna be single.” Like lots of gay guys he vacillates between committed relationships and slutsville, never fully comfortable in either. I turn to Ryan.
 
 “It’s time to go home.”
 
 He’s mad at me again, says I’m being a buzzkill—though he soon relents and comes with me. Back at the hotel, he lets it all out.
 
-“You act like you <font face="BODY_FONT_ITALIC">always<font face="Palatino-Roman"> know everything,” he says. “Did you see that father’s face when you cut in front of him at the airport?” He reiterates how he’s feeling condescended-to about my doubting his Priceline find. He’s equally unhappy about how I handled the evening: <font face="BODY_FONT_ITALIC">he<font face="Palatino-Roman"> didn’t notice Eric’s friend’s agro vibe. 
+“You act like you <font face="BODY_FONT_ITALIC">always<font face="BODY_FONT"> know everything,” he says. “Did you see that father’s face when you cut in front of him at the airport?” He reiterates how he’s feeling condescended-to about my doubting his Priceline find. He’s equally unhappy about how I handled the evening: <font face="BODY_FONT_ITALIC">he<font face="BODY_FONT"> didn’t notice Eric’s friend’s agro vibe. 
 
-I sense what this is really about: our impending parting of the ways. Will we <font face="BODY_FONT_ITALIC">really<font face="Palatino-Roman"> stay in touch for seven months? Will we pick up again after I return—<font face="BODY_FONT_ITALIC">if<font face="Palatino-Roman"> I return? This relationship is in a sense totemic of my headspace as I head off: lots of unfinished business about to go into a deep freeze. We reconcile, however, before falling asleep. The mantra is
+I sense what this is really about: our impending parting of the ways. Will we <font face="BODY_FONT_ITALIC">really<font face="BODY_FONT"> stay in touch for seven months? Will we pick up again after I return—<font face="BODY_FONT_ITALIC">if<font face="BODY_FONT"> I return? This relationship is in a sense totemic of my headspace as I head off: lots of unfinished business about to go into a deep freeze. We reconcile, however, before falling asleep. The mantra is
 right-on: never go to bed angry.
 
 <img src="SectionDivider169Black.png" width="84" height="16">

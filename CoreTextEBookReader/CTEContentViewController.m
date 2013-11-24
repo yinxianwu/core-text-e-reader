@@ -224,7 +224,7 @@
     else {
         popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPadView"
                                                                     bundle:nil
-                                                              selectedFont:@"Palatino"
+                                                              selectedFont:self.currentFont
                                                           selectedFontSize:[NSNumber numberWithInt:18]
                                                      selectedColumnsInView:[NSNumber numberWithInt:2]]; //TODO will come from parser
         self.popoverController = [[UIPopoverController alloc] initWithContentViewController:popoverView];
@@ -233,67 +233,6 @@
                                                   animated:YES];
     }
 }
-
-//- (void)fontWasChanged:(id)sender {
-//    NSNotification *notification = (NSNotification *)sender;
-//    NSString *newFontKey = (NSString *)[notification object];
-//    
-//    //do nothing if no change
-//    if([newFontKey isEqualToString:self.currentFont]) {
-//        return;
-//    }
-//    
-//    for(id<CTEChapter> chapter in self.chapters) {
-//        NSMutableAttributedString *attString = (NSMutableAttributedString *)[self.attStrings objectForKey:[chapter id]];
-//
-//        NSRange range = NSMakeRange(0, attString.length);
-//        [attString enumerateAttributesInRange:range
-//                                      options:NSAttributedStringEnumerationReverse
-//                                   usingBlock:^(NSDictionary *attributes, NSRange range, BOOL *stop) {
-//                                       UIFont *font = attributes[NSFontAttributeName];
-//                                       NSString *fontName = [font fontName];
-//                                       
-//                                       //check to see if existing font matches previous current
-//                                       //if so, change it to new selected value
-//                                       BOOL shouldChangeFont = NO;
-//                                       NSDictionary *bodyFonts = [CTEMarkupParser bodyFontDictionary];
-//                                       for(NSString *fontKey in [bodyFonts allKeys]) {
-//                                           NSString *matchFontValue = (NSString *)[bodyFonts valueForKey:fontKey];
-//                                           if([matchFontValue isEqualToString:fontName]) {
-//                                               shouldChangeFont = YES;
-//                                               break;
-//                                           }
-//                                           
-//                                       }
-//                                       
-//                                       if(shouldChangeFont) {
-//                                           NSString *newFontValue = (NSString *)[bodyFonts valueForKey:newFontKey];
-//                                           CTFontRef fontRef = CTFontCreateWithName((__bridge CFStringRef)newFontValue,
-//                                                                                    font.pointSize,
-//                                                                                    NULL);
-//                                           NSMutableDictionary *mutableAttributes = [NSMutableDictionary dictionaryWithDictionary:attributes];
-//                                           [mutableAttributes setObject:(__bridge id)fontRef forKey:(__bridge id)kCTFontAttributeName];//]@"NSFont"];
-//                                           [attString setAttributes:mutableAttributes range:range];
-//                                       }
-//                                   }];
-//        [self.attStrings setObject:attString forKey:[chapter id]];
-//    }
-//    
-//    //rebuild only when all done
-//    [cteView setAttStrings:self.attStrings];
-//}
-//
-//- (void)fontSizeWasChanged:(id)sender {
-//    NSNotification *notification = (NSNotification *)sender;
-//    NSNumber *fontSize = (NSNumber *)[notification object];
-//    NSLog(@"CHANGE FONT SIZE: %@", fontSize);
-//}
-//
-//- (void)columnCountWasChanged:(id)sender {
-//    NSNotification *notification = (NSNotification *)sender;
-//    NSNumber *columnCount = (NSNumber *)[notification object];
-//    NSLog(@"CHANGE COL COUNT: %@", columnCount);
-//}
 
 //post user-initated scroll
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
