@@ -51,21 +51,6 @@ selectedColumnsInView:(NSNumber *)columnsInView {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //give font buttons a background color
-    //[UIColor colorWithRed:14.0f/255 green:104.0f/255 blue: 228.0f/255 alpha:1.0f]]
-//    [self.fontSmallerButton setBackgroundImage:[self imageFromColor:[UIColor darkGrayColor]]
-//                                      forState:UIControlStateNormal];
-//    self.fontSmallerButton.layer.cornerRadius = 8.0;
-//    self.fontSmallerButton.layer.masksToBounds = YES;
-//    self.fontSmallerButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//    self.fontSmallerButton.layer.borderWidth = 1;
-//    [self.fontLargerButton setBackgroundImage:[self imageFromColor:[UIColor darkGrayColor]]
-//                                     forState:UIControlStateNormal];
-//    self.fontLargerButton.layer.cornerRadius = 8.0;
-//    self.fontLargerButton.layer.masksToBounds = YES;
-//    self.fontLargerButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//    self.fontLargerButton.layer.borderWidth = 1;
 
     //horizontal line after title
     //http://stackoverflow.com/questions/6254556/how-to-draw-a-line-in-interface-builder-in-xcode-4
@@ -88,7 +73,10 @@ selectedColumnsInView:(NSNumber *)columnsInView {
     int selectedColumnsIndex = 1; //TODO mapping//[self.fonts indexOfObject:@"Two Columns"];
     [self.pickerView selectRow:selectedFontIndex inComponent:0 animated:NO];
     [self.pickerView selectRow:selectedFontSizeIndex inComponent:1 animated:NO];
-    [self.pickerView selectRow:selectedColumnsIndex inComponent:2 animated:NO];
+
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPhone) {
+        [self.pickerView selectRow:selectedColumnsIndex inComponent:2 animated:NO];
+    }
 }
 
 //prevents popover from stretching to max height
@@ -112,7 +100,12 @@ selectedColumnsInView:(NSNumber *)columnsInView {
 
 // returns the number of 'columns' to display.
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 3;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        return 2;
+    }
+    else {
+        return 3;
+    }
 }
 
 // returns the # of rows in each component..
@@ -139,14 +132,25 @@ selectedColumnsInView:(NSNumber *)columnsInView {
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     CGFloat width = 0.0;
-    if(component == 0) {
-        width = 260.0;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        if(component == 0) {
+            width = 240.0;
+        }
+        else if(component == 1) {
+            width = 80.0;
+        }
     }
-    else if(component == 1) {
-        width = 80.0;
-    }
-    else if(component == 2) {
-        width = 200.0;
+    else {
+        if(component == 0) {
+            width = 260.0;
+        }
+        else if(component == 1) {
+            width = 80.0;
+        }
+        else if(component == 2) {
+            width = 200.0;
+        }
     }
     
     return width;

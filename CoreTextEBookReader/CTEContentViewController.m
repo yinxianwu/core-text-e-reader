@@ -12,6 +12,7 @@
 #import "CTEUtils.h"
 #import "CTEConstants.h"
 #import "CTEMarkupParser.h"
+#import "UIViewController+KNSemiModal.h"
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -222,7 +223,15 @@
 - (void)configButtonTouched:(id)sender {
     CTEViewOptionsViewController *popoverView;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        //TODO with iPhone it's gonna be a separate modal view
+        popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPhoneView"
+                                                                    bundle:nil
+                                                              selectedFont:self.currentFont
+                                                          selectedFontSize:self.currentFontSize
+                                                     selectedColumnsInView:self.currentColumnsInView];
+        [self presentSemiViewController:popoverView withOptions:@{
+                                                              KNSemiModalOptionKeys.pushParentBack : @(NO),
+                                                              KNSemiModalOptionKeys.parentAlpha : @(0.8)
+                                                              }];
     }
     else {
         popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPadView"
