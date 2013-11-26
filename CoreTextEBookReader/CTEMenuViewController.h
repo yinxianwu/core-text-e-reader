@@ -19,7 +19,11 @@
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
 @property (strong, nonatomic) NSArray *chapterData;
+@property (strong, nonatomic) UIColor *highlightColor;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+       highlightColor:(UIColor *)color;
 - (void)slideThenHide;
 - (void)adjustAnchorPointForGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer ;
 

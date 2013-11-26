@@ -32,13 +32,15 @@
 @property (nonatomic, strong) UIBarButtonItem *sliderAsToolbarItem;
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (nonatomic, strong) MPMoviePlayerViewController *moviePlayerController;
+@property (nonatomic, strong) UIColor *barColor;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
              chapters:(NSArray *)allChapters
            attStrings:(NSDictionary *)allAttStrings
                images:(NSDictionary *)allImages
-                links:(NSDictionary *)allLinks;
+                links:(NSDictionary *)allLinks
+             barColor:(UIColor *)color;
 - (void)rebuildContent:(NSMutableDictionary *)allAttStrings
                 images:(NSDictionary *)allImages
                  links:(NSDictionary *)allLinks;

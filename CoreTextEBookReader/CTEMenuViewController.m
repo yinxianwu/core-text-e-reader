@@ -18,12 +18,16 @@
 @synthesize panGesture;
 @synthesize chapterTableView;
 @synthesize chapterData;
+@synthesize highlightColor;
 
-- (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+- (id)initWithNibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+       highlightColor:(UIColor *)color {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if(self) {
+        self.highlightColor = color;
+    }
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -58,7 +62,7 @@
         NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
         [chapterTableView selectRowAtIndexPath:indexPath animated:YES
                                 scrollPosition:UITableViewScrollPositionTop];
-     }
+    }
 
     CGRect imageFrame = self.view.frame;
     CGSize imageSize = imageFrame.size;
@@ -111,8 +115,8 @@
         
         //75 47 29 -- WTR cover brown
         //TODO needs to be adjustable
-        UIColor *cellSelectedColor = [UIColor colorWithRed:(75.0f / 255.0f) green:(47.0 / 255.0f) blue:(29.0f / 255.0f) alpha:1.0f];
-        cell.selectedBackgroundView.backgroundColor = cellSelectedColor;
+//        UIColor *cellSelectedColor = [UIColor colorWithRed:(75.0f / 255.0f) green:(47.0 / 255.0f) blue:(29.0f / 255.0f) alpha:1.0f];
+        cell.selectedBackgroundView.backgroundColor = self.highlightColor;
         cell.textLabel.highlightedTextColor = [UIColor whiteColor];
         cell.detailTextLabel.highlightedTextColor = [UIColor whiteColor];
     }

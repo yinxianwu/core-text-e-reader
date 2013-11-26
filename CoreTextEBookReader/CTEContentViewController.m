@@ -31,6 +31,7 @@
 @synthesize configButton;
 @synthesize sliderAsToolbarItem;
 @synthesize popoverController;
+@synthesize barColor;
 
 @synthesize currentChapter;
 @synthesize currentFont;
@@ -47,12 +48,14 @@
              chapters:(NSArray *)allChapters
            attStrings:(NSMutableDictionary *)allAttStrings
                images:(NSDictionary *)allImages
-                links:(NSDictionary *)allLinks {
+                links:(NSDictionary *)allLinks
+             barColor:(UIColor *)color {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     self.chapters = allChapters;
     self.attStrings = allAttStrings;
     self.images = allImages;
     self.links = allLinks;
+    self.barColor = color;
     
     //TODO this will probably come from a stored cache
     self.currentColumnsInView = [NSNumber numberWithInt:2];
@@ -77,13 +80,6 @@
                           links:self.links
                           order:orderedSet];
     [self.cteView buildFrames];
-
-    //color for bars
-    //TODO make configurable
-    CGFloat red = 225.0f/255.0f;
-    CGFloat green = 210.0f/255.0f;
-    CGFloat blue = 169.0f/255.0f;
-    UIColor *barTintColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0f];
     
     //nav bar init
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
@@ -105,14 +101,14 @@
             [cteView setFrame:ctViewNewRect];
         }
     }
-    UIColor *barColor = nil;
+    UIColor *barBackgroundColor = nil;
     if(isIOS7) {
-        [[UINavigationBar appearance] setBarTintColor:barTintColor];
-        [[UIToolbar appearance] setBarTintColor:barTintColor];
-        barColor = [UIColor blackColor];
+        [[UINavigationBar appearance] setBarTintColor:self.barColor];
+        [[UIToolbar appearance] setBarTintColor:self.barColor];
+        barBackgroundColor = [UIColor blackColor];
     }
     else {
-        barColor = barTintColor;
+        barBackgroundColor = self.barColor;
         navBarHeight -= 20.0f;
         toolBarHeight += 30.0f;
     }
@@ -125,7 +121,7 @@
     self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, navBarHeight)];
     if(!isIOS7) [navBar setBarStyle:UIBarStyleBlack];
     [self.navBar setDelegate:self];
-    [self.navBar setTintColor:barColor];
+    [self.navBar setTintColor:barBackgroundColor];
     [self.view addSubview:self.navBar];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
                                   initWithImage:[UIImage imageNamed:@"ThreeLines.png"]
@@ -161,7 +157,7 @@
     
     // Add the items to the toolbar
     [self.toolBar setItems:[NSArray arrayWithObjects:self.sliderAsToolbarItem, self.configButton, nil]];
-    [self.toolBar setTintColor:barColor];
+    [self.toolBar setTintColor:barBackgroundColor];
     [self.view addSubview:self.toolBar];
 }
 
@@ -227,7 +223,8 @@
                                                                     bundle:nil
                                                               selectedFont:self.currentFont
                                                           selectedFontSize:self.currentFontSize
-                                                     selectedColumnsInView:self.currentColumnsInView];
+                                                     selectedColumnsInView:self.currentColumnsInView
+                                                                  barColor:self.barColor];
         [self presentSemiViewController:popoverView withOptions:@{
                                                               KNSemiModalOptionKeys.pushParentBack : @(NO),
                                                               KNSemiModalOptionKeys.parentAlpha : @(0.8)
@@ -238,7 +235,8 @@
                                                                     bundle:nil
                                                               selectedFont:self.currentFont
                                                           selectedFontSize:self.currentFontSize
-                                                     selectedColumnsInView:self.currentColumnsInView];
+                                                     selectedColumnsInView:self.currentColumnsInView
+                                                                  barColor:self.barColor];
         self.popoverController = [[UIPopoverController alloc] initWithContentViewController:popoverView];
         [self.popoverController presentPopoverFromBarButtonItem:self.configButton
                                   permittedArrowDirections:UIPopoverArrowDirectionAny

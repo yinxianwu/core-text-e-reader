@@ -18,10 +18,14 @@
 @property (nonatomic, strong) NSString *selectedFont;
 @property (nonatomic, strong) NSNumber *selectedFontSize;
 @property (nonatomic, strong) NSNumber *selectedColumnsInView;
+@property (nonatomic, strong) UIColor *barColor;
+
+@property (nonatomic, strong) IBOutlet UIView *backgroundHeader;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
          selectedFont:(NSString *)fontKey
      selectedFontSize:(NSNumber *)selectedFontSize
-selectedColumnsInView:(NSNumber *)selectedColumnsInView;
+selectedColumnsInView:(NSNumber *)selectedColumnsInView
+             barColor:(UIColor *)color;
 @end

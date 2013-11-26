@@ -26,12 +26,15 @@
 @synthesize selectedFont;
 @synthesize selectedFontSize;
 @synthesize selectedColumnsInView;
+@synthesize backgroundHeader;
+@synthesize barColor;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
          selectedFont:(NSString *)fontKey
      selectedFontSize:(NSNumber *)fontSize
-selectedColumnsInView:(NSNumber *)columnsInView {
+selectedColumnsInView:(NSNumber *)columnsInView
+             barColor:(UIColor *)color {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
         NSDictionary *bodyFonts = [CTEMarkupParser bodyFontDictionary];
@@ -41,6 +44,7 @@ selectedColumnsInView:(NSNumber *)columnsInView {
         self.selectedColumnsInView = columnsInView;
         self.fontSizes = @[@"16", @"18", @"20", @"24", @"28"];
         self.columns = @[@"One Column", @"Two Columns"];
+        self.barColor = color;
 
         formatter = [[NSNumberFormatter alloc] init];
         [formatter setNumberStyle:NSNumberFormatterNoStyle];
@@ -55,8 +59,8 @@ selectedColumnsInView:(NSNumber *)columnsInView {
     //horizontal line after title
     //http://stackoverflow.com/questions/6254556/how-to-draw-a-line-in-interface-builder-in-xcode-4
     float width = self.view.bounds.size.width;
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 30, width, 1.0f)];
-    line.backgroundColor = [UIColor darkGrayColor];//[UIColor colorWithRed:(200.0f/255.0f) green:(200.0f/255.0f) blue:(200.0f/255.0f) alpha:1.0f];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 32, width, 1.0f)];
+    line.backgroundColor = [UIColor darkGrayColor];
     line.layer.shadowColor = [UIColor darkGrayColor].CGColor;
     line.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
     line.layer.shadowRadius = 0.5f;
@@ -64,6 +68,9 @@ selectedColumnsInView:(NSNumber *)columnsInView {
     line.layer.masksToBounds = NO;
     [self.view addSubview:line];
     
+    //title background color for bars
+    backgroundHeader.backgroundColor = self.barColor;
+   
     //set selections in picker
     NSString *fontSizeStr = [formatter stringFromNumber:self.selectedFontSize];
 

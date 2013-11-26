@@ -15,8 +15,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
+    UIColor *barTintColor = [UIColor colorWithRed:(225.0f/255.0f) green:(210.0f/255.0f) blue:(169.0f/255.0f) alpha:1.0f];
+    UIColor *highlightColor = [UIColor colorWithRed:(75.0f/255.0f) green:(47.0/255.0f) blue:(29.0f/255.0f) alpha:1.0f];
     NSArray *chapters = [self getChapterData];
-    self.delegate = [CTEDelegate delegateWithWindow:self.window andChapters:chapters];
+    self.delegate = [CTEDelegate delegateWithWindow:self.window
+                                        andChapters:chapters
+                                        andBarColor:barTintColor
+                                  andHighlightColor:highlightColor];
     [self.window makeKeyAndVisible];
     
     return YES;

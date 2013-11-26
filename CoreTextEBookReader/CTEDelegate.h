@@ -21,7 +21,13 @@
 @property (strong, nonatomic) NSMutableDictionary *images;
 @property (strong, nonatomic) NSMutableDictionary *links;
 @property (strong, nonatomic) NSArray *chapters;
-+ (CTEDelegate *)delegateWithWindow:(UIWindow *)window andChapters:(NSArray *)chapters;
+@property (strong, nonatomic) UIColor *barColor;
+@property (strong, nonatomic) UIColor *highlightColor;
+
++ (CTEDelegate *)delegateWithWindow:(UIWindow *)window
+                        andChapters:(NSArray *)chapters
+                        andBarColor:(UIColor *)color
+                  andHighlightColor:(UIColor *)highlight;
 + (void)buildAttStringsForDelegate:(CTEDelegate *)delegate
                           chapters:(NSArray *)chapters
                       notification:(NSNotification *)notification;

@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CTEViewOptionsViewController">
             <connections>
+                <outlet property="backgroundHeader" destination="ULN-DB-usF" id="vaO-vD-P4W"/>
                 <outlet property="pickerView" destination="S4I-Ac-Ous" id="b2L-5e-R87"/>
                 <outlet property="view" destination="2" id="3"/>
             </connections>
@@ -16,11 +17,16 @@
             <rect key="frame" x="0.0" y="0.0" width="540" height="240"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ULN-DB-usF">
+                    <rect key="frame" x="0.0" y="0.0" width="540" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.88235294117647056" green="0.82352941176470584" blue="0.66274509803921566" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="View Options" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dzo-YD-G6s">
                     <rect key="frame" x="0.0" y="6" width="540" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S4I-Ac-Ous">

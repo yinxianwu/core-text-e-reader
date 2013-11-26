@@ -21,12 +21,19 @@
 @synthesize images;
 @synthesize links;
 @synthesize chapters;
+@synthesize barColor;
+@synthesize highlightColor;
 
-+ (CTEDelegate *)delegateWithWindow:(UIWindow *)appWindow andChapters:(NSArray *)chapters {
++ (CTEDelegate *)delegateWithWindow:(UIWindow *)appWindow
+                        andChapters:(NSArray *)chapters
+                        andBarColor:(UIColor *)color
+                  andHighlightColor:(UIColor *)highlight {
     CTEDelegate *delegate = [[CTEDelegate alloc] init];
     if(delegate) {
         delegate.window = appWindow;
         delegate.chapters = chapters;
+        delegate.barColor = color;
+        delegate.highlightColor = highlight;
         
         // create the content view controller that contains detail content
         CTEContentViewController *contentViewCtrlr = nil;
@@ -44,8 +51,11 @@
                                                                         chapters:delegate.chapters
                                                                       attStrings:delegate.attStrings
                                                                           images:delegate.images
-                                                                           links:delegate.links];
-            menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPadView" bundle:nil];
+                                                                           links:delegate.links
+                                                                        barColor:delegate.barColor];
+            menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPadView"
+                                                                    bundle:nil
+                                                            highlightColor:delegate.highlightColor];
         }
         else {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPhoneView"
@@ -53,8 +63,11 @@
                                                                         chapters:delegate.chapters
                                                                       attStrings:delegate.attStrings
                                                                           images:delegate.images
-                                                                           links:delegate.links];
-            menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPhoneView" bundle:nil];
+                                                                           links:delegate.links
+                                                                        barColor:delegate.barColor];
+            menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPhoneView"
+                                                                    bundle:nil
+                                                            highlightColor:delegate.highlightColor];
         }
         
         delegate.contentViewController = contentViewCtrlr;
