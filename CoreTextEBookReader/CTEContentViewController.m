@@ -36,7 +36,7 @@
 @synthesize currentChapter;
 @synthesize currentFont;
 @synthesize currentFontSize;
-@synthesize currentColumnsInView;
+@synthesize currentColumnsInView = _currentColumnsInView;
 @synthesize chapters;
 @synthesize attStrings;
 @synthesize images;
@@ -57,8 +57,15 @@
     self.links = allLinks;
     self.barColor = color;
     
+    //default column counts depend on device
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//        self.currentColumnsInView = [NSNumber numberWithInt:2];
+//    }
+//    else {
+        self.currentColumnsInView = [NSNumber numberWithInt:1];
+//    }
+
     //TODO this will probably come from a stored cache
-    self.currentColumnsInView = [NSNumber numberWithInt:2];
     self.currentFont = PalatinoFontKey;
     self.currentFontSize = [NSNumber numberWithInt:18];
     
@@ -74,6 +81,8 @@
         [orderedSet addObject:[chapter id]];
     }
 
+    int colCount = [self.currentColumnsInView intValue];
+    self.cteView.pageColumnCount = colCount;
     self.cteView.viewDelegate = self;
     [self.cteView setAttStrings:self.attStrings
                          images:self.images
@@ -348,6 +357,12 @@
     //update navbar title to chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
     item.title = [chapter title];
+}
+
+//sets in CTEView
+- (void)setCurrentColumnsInView:(NSNumber *)colCount {
+    _currentColumnsInView = colCount;
+    self.cteView.pageColumnCount = [colCount intValue];
 }
 
 //TODO other orientations

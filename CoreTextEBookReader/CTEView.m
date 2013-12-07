@@ -58,19 +58,16 @@ NSString *const HTTP_PREFIX = @"http://";
     NSLog(@"CTView: START buildFrames");
     
     //determine device type and size of text frame
-    //TODO user may be able to set these someday...
     float columnWidthRightMargin;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         frameXOffset = 20;
         frameYOffset = 20;
         columnWidthRightMargin = frameYOffset;
-        self.pageColumnCount = 2;
     }
     else {
         frameXOffset = 0;
         frameYOffset = 0;
         columnWidthRightMargin = 20;
-        self.pageColumnCount = 1;
     }
     
     [self setContentOffset:CGPointZero animated:NO]; //reset view to top
@@ -98,7 +95,7 @@ NSString *const HTTP_PREFIX = @"http://";
         //this ensure chapters always begin on a new page
         if(pageCount != floorPageCount) {
             CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / pageColumnCount), 20 );
-            CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/pageColumnCount - columnWidthRightMargin, textFrame.size.height - 40);
+            CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/self.pageColumnCount - columnWidthRightMargin, textFrame.size.height - 40);
             CGMutablePathRef path = CGPathCreateMutable();
             CGPathAddRect(path, NULL, colRect);
             CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
@@ -114,7 +111,7 @@ NSString *const HTTP_PREFIX = @"http://";
         while (textPos < [attString length]) {
             NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
             
-            CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / pageColumnCount), 20 );
+            CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / self.pageColumnCount), 20 );
             CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/pageColumnCount - columnWidthRightMargin, textFrame.size.height - 40);
             
             CGMutablePathRef path = CGPathCreateMutable();
@@ -335,9 +332,5 @@ NSString *const HTTP_PREFIX = @"http://";
         }
     }
 }
-
-//- (id<CTEChapter>)currentChapter {
-//    return _currentChapter;
-//}
 
 @end
