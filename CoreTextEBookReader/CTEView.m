@@ -59,23 +59,34 @@ NSString *const HTTP_PREFIX = @"http://";
     
     //determine device type and size of text frame
     float columnWidthRightMargin;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        frameXOffset = 20;
-        frameYOffset = 20;
-        columnWidthRightMargin = frameYOffset;
+    float columnWidthLeftMargin;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        frameYOffset = 20.0f;
+        if(self.pageColumnCount == 2) {
+            frameXOffset = 20.0f;
+            columnWidthLeftMargin = 10.0f;
+            columnWidthRightMargin = 10.0f;
+        }
+        else {
+            frameXOffset = 0.0f;
+            columnWidthLeftMargin = 0.0f;
+            columnWidthRightMargin = 0.0f;
+        }
     }
     else {
-        frameXOffset = 0;
-        frameYOffset = 0;
-        columnWidthRightMargin = 20;
+        frameXOffset = 0.0f;
+        frameYOffset = 0.0f;
+        columnWidthLeftMargin = 0.0f;
+        columnWidthRightMargin = 20.0f;
     }
     
     [self setContentOffset:CGPointZero animated:NO]; //reset view to top
     self.pagingEnabled = YES;
     self.columns = [NSMutableArray array];
     
-    CGMutablePathRef path = CGPathCreateMutable(); 
-    CGRect textFrame = CGRectInset(self.bounds, frameXOffset, frameYOffset);
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGRect scrollBounds = self.bounds;
+    CGRect textFrame = CGRectInset(scrollBounds, frameXOffset, frameYOffset);
     CGPathAddRect(path, NULL, textFrame);
     
     //build for all chapters in order
@@ -94,13 +105,17 @@ NSString *const HTTP_PREFIX = @"http://";
         //check if column count isn't even; if not, means it's in mid-page and should create an empty column
         //this ensure chapters always begin on a new page
         if(pageCount != floorPageCount) {
-            CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / pageColumnCount), 20 );
-            CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/self.pageColumnCount - columnWidthRightMargin, textFrame.size.height - 40);
+            CGFloat colRectWidth = [self columnWidthWithLeftMargin:columnWidthLeftMargin
+                                                       rightMargin:columnWidthRightMargin
+                                                        frameWidth:textFrame.size.width];
+            CGFloat colRectHeight = textFrame.size.height - 40;
+            CGPoint colOffset = CGPointMake([self offsetXForColumn:columnIndex frameWidth:textFrame.size.width], 20);
+            CGRect colRect = CGRectMake(0, 0, colRectWidth, colRectHeight);
             CGMutablePathRef path = CGPathCreateMutable();
             CGPathAddRect(path, NULL, colRect);
             CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
             content.backgroundColor = [UIColor clearColor];
-            content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height);
+            content.frame = CGRectMake(colOffset.x, colOffset.y, colRectWidth, colRectHeight);
             [self.columns addObject:content];
             [self addSubview: content];
             columnIndex++;
@@ -111,8 +126,12 @@ NSString *const HTTP_PREFIX = @"http://";
         while (textPos < [attString length]) {
             NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
             
-            CGPoint colOffset = CGPointMake( (columnIndex + 1) * frameXOffset + columnIndex * (textFrame.size.width / self.pageColumnCount), 20 );
-            CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/pageColumnCount - columnWidthRightMargin, textFrame.size.height - 40);
+            CGFloat colRectWidth = [self columnWidthWithLeftMargin:columnWidthLeftMargin
+                                                       rightMargin:columnWidthRightMargin
+                                                        frameWidth:textFrame.size.width];
+            CGFloat colRectHeight = textFrame.size.height - 40;
+            CGPoint colOffset = CGPointMake([self offsetXForColumn:columnIndex frameWidth:textFrame.size.width], 20);
+            CGRect colRect = CGRectMake(0, 0, colRectWidth, colRectHeight);
             
             CGMutablePathRef path = CGPathCreateMutable();
             CGPathAddRect(path, NULL, colRect);
@@ -124,7 +143,7 @@ NSString *const HTTP_PREFIX = @"http://";
             //create an empty column view
             CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
             content.backgroundColor = [UIColor clearColor];
-            content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height);
+            content.frame = CGRectMake(colOffset.x, colOffset.y, colRectWidth, colRectHeight);
             content.attString = attString; //for link and image touches
             content.links = chapLinks;
             content.viewDelegate = self.viewDelegate;
@@ -198,6 +217,26 @@ NSString *const HTTP_PREFIX = @"http://";
     self.currentChapterID = (NSNumber *)[self.orderedKeys objectAtIndex:0];
     
     NSLog(@"CTView: END buildFrames");
+}
+
+//Returns column width with specified laft & right margins
+- (CGFloat)columnWidthWithLeftMargin:(float)leftMargin rightMargin:(float)rightMargin frameWidth:(CGFloat)frameWidth {
+    CGFloat colWidth = (frameWidth / self.pageColumnCount) - leftMargin - rightMargin;
+    //iPad adjustments
+    if(self.pageColumnCount == 1 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        colWidth -= 50.0f;
+    }
+    return colWidth;
+}
+
+//Returns offset for specified frame column
+- (CGFloat)offsetXForColumn:(int)columnIndex frameWidth:(CGFloat)frameWidth {
+    CGFloat offsetX = (columnIndex + 1) * frameXOffset + columnIndex * (frameWidth / self.pageColumnCount);
+    //iPad adjustments
+    if(self.pageColumnCount == 1 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        offsetX += 20.0f;
+    }
+    return offsetX;
 }
 
 //async image download

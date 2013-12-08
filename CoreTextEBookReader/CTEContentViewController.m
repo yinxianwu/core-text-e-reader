@@ -58,12 +58,12 @@
     self.barColor = color;
     
     //default column counts depend on device
-//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//        self.currentColumnsInView = [NSNumber numberWithInt:2];
-//    }
-//    else {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.currentColumnsInView = [NSNumber numberWithInt:2];
+    }
+    else {
         self.currentColumnsInView = [NSNumber numberWithInt:1];
-//    }
+    }
 
     //TODO this will probably come from a stored cache
     self.currentFont = PalatinoFontKey;

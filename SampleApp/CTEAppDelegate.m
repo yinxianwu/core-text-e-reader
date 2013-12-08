@@ -41,55 +41,55 @@
     [array addObject:chapter];
     NSLog(@"Created chapter: %@", chapter.title);
     
-//    path = [[NSBundle mainBundle] pathForResource:@"Chapter2" ofType:@"txt"];
-//    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-//    chapter = [[CTESampleChapter alloc] init];
-//    chapter.id = [NSNumber numberWithInt:2];
-//    chapter.title = @"Rocky Mountain High";
-//    chapter.subtitle = @"Denver";
-//    chapter.body = chapterBody;
-//    [array addObject:chapter];
-//    NSLog(@"Created chapter: %@", chapter.title);
-//    
-//    path = [[NSBundle mainBundle] pathForResource:@"Chapter3" ofType:@"txt"];
-//    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-//    chapter = [[CTESampleChapter alloc] init];
-//    chapter.id = [NSNumber numberWithInt:3];
-//    chapter.title = @"Motherland";
-//    chapter.subtitle = @"Montreal";
-//    chapter.body = chapterBody;
-//    [array addObject:chapter];
-//    NSLog(@"Created chapter: %@", chapter.title);
-//    
-//    path = [[NSBundle mainBundle] pathForResource:@"Chapter4" ofType:@"txt"];
-//    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-//    chapter = [[CTESampleChapter alloc] init];
-//    chapter.id = [NSNumber numberWithInt:4];
-//    chapter.title = @"Isle to Isle";
-//    chapter.subtitle = @"London & Dublin";
-//    chapter.body = chapterBody;
-//    [array addObject:chapter];
-//    NSLog(@"Created chapter: %@", chapter.title);
-//    
-//    path = [[NSBundle mainBundle] pathForResource:@"Chapter5" ofType:@"txt"];
-//    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-//    chapter = [[CTESampleChapter alloc] init];
-//    chapter.id = [NSNumber numberWithInt:5];
-//    chapter.title = @"Flanders to Funsterdam";
-//    chapter.subtitle = @"Bruges & Amsterdam";
-//    chapter.body = chapterBody;
-//    [array addObject:chapter];
-//    NSLog(@"Created chapter: %@", chapter.title);
-//    
-//    path = [[NSBundle mainBundle] pathForResource:@"Chapter6" ofType:@"txt"];
-//    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-//    chapter = [[CTESampleChapter alloc] init];
-//    chapter.id = [NSNumber numberWithInt:6];
-//    chapter.title = @"La Belle et le Bad Boy";
-//    chapter.subtitle = @"Paris & Nice";
-//    chapter.body = chapterBody;
-//    [array addObject:chapter];
-//    NSLog(@"Created chapter: %@", chapter.title);
+    path = [[NSBundle mainBundle] pathForResource:@"Chapter2" ofType:@"txt"];
+    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    chapter = [[CTESampleChapter alloc] init];
+    chapter.id = [NSNumber numberWithInt:2];
+    chapter.title = @"Rocky Mountain High";
+    chapter.subtitle = @"Denver";
+    chapter.body = chapterBody;
+    [array addObject:chapter];
+    NSLog(@"Created chapter: %@", chapter.title);
+
+    path = [[NSBundle mainBundle] pathForResource:@"Chapter3" ofType:@"txt"];
+    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    chapter = [[CTESampleChapter alloc] init];
+    chapter.id = [NSNumber numberWithInt:3];
+    chapter.title = @"Motherland";
+    chapter.subtitle = @"Montreal";
+    chapter.body = chapterBody;
+    [array addObject:chapter];
+    NSLog(@"Created chapter: %@", chapter.title);
+    
+    path = [[NSBundle mainBundle] pathForResource:@"Chapter4" ofType:@"txt"];
+    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    chapter = [[CTESampleChapter alloc] init];
+    chapter.id = [NSNumber numberWithInt:4];
+    chapter.title = @"Isle to Isle";
+    chapter.subtitle = @"London & Dublin";
+    chapter.body = chapterBody;
+    [array addObject:chapter];
+    NSLog(@"Created chapter: %@", chapter.title);
+    
+    path = [[NSBundle mainBundle] pathForResource:@"Chapter5" ofType:@"txt"];
+    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    chapter = [[CTESampleChapter alloc] init];
+    chapter.id = [NSNumber numberWithInt:5];
+    chapter.title = @"Flanders to Funsterdam";
+    chapter.subtitle = @"Bruges & Amsterdam";
+    chapter.body = chapterBody;
+    [array addObject:chapter];
+    NSLog(@"Created chapter: %@", chapter.title);
+    
+    path = [[NSBundle mainBundle] pathForResource:@"Chapter6" ofType:@"txt"];
+    chapterBody = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    chapter = [[CTESampleChapter alloc] init];
+    chapter.id = [NSNumber numberWithInt:6];
+    chapter.title = @"La Belle et le Bad Boy";
+    chapter.subtitle = @"Paris & Nice";
+    chapter.body = chapterBody;
+    [array addObject:chapter];
+    NSLog(@"Created chapter: %@", chapter.title);
     
     return array;
 }
