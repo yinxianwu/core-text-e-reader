@@ -13,5 +13,7 @@
 - (void)playMovie:(NSString *)clipPath;
 - (void)showImage:(UIImage *)image;
 - (void)toggleUtilityBars;
+- (NSMutableSet *)columnsRendered;
+- (NSArray *)columnsToRenderBasedOnPosition:(CGPoint)position;
 
 @end

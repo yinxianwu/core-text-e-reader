@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSMutableArray *imagesWithMetadata;
 @property (strong, nonatomic) NSArray *links;
 @property (strong, nonatomic) NSAttributedString *attString;
+@property (nonatomic) BOOL shouldDrawRect;
 
 - (void)setCTFrame:(id)f;
 

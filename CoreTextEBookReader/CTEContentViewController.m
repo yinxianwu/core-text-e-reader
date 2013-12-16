@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Holocene Press. All rights reserved.
 //
 
+#import "CTEColumnView.h"
 #import "CTEContentViewController.h"
 #import "CTEViewOptionsViewController.h"
 #import "CTEImageViewController.h"
@@ -16,7 +17,9 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface CTEContentViewController ()
+@interface CTEContentViewController () {
+    NSMutableSet *columnsRendered;
+}
 @property (nonatomic, strong) NSArray *spinnerViews;
 @end
 
@@ -56,6 +59,9 @@
     self.images = allImages;
     self.links = allLinks;
     self.barColor = color;
+    
+    //init the set of rendered columns
+    columnsRendered = [NSMutableSet set];
     
     //default column counts depend on device
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -159,6 +165,7 @@
     self.pageSlider = [[UISlider alloc] init];
     self.pageSlider.minimumValue = 0.0f;
     self.pageSlider.maximumValue = [self.cteView totalPages];
+    self.pageSlider.continuous = YES;
     [self.pageSlider addTarget:self
                         action:@selector(pageSliderValueChanged:)
               forControlEvents:UIControlEventValueChanged];
@@ -179,6 +186,11 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     [self.sliderAsToolbarItem setWidth:screenWidth - width - 40]; //adjust for borders and such
+}
+
+//tell subview to determine initial columns to draw
+- (void)viewDidAppear:(BOOL)animated {
+    [self.cteView setNeedsDisplay];
 }
 
 //rebuilds content with current data
@@ -205,7 +217,7 @@
     self.pageSlider.value = 0.0f; //TODO this should "sync" to same page
 }
 
-//syncs pages to slider value
+//syncs pages to slider value and performs whatever updating/redrawing needed
 - (void)pageSliderValueChanged:(id)sender {
     float sliderValue = self.pageSlider.value;
     float sliderPageValue = floorf(sliderValue);
@@ -213,6 +225,7 @@
     NSNumber *page = [NSNumber numberWithFloat:sliderPageValue];
     [self.cteView setContentOffset:CGPointMake(pageWidth * [page intValue], 0.0f) animated:YES];
     [self.cteView currentChapterNeedsUpdate];
+    [self.cteView setNeedsDisplay];
     
     //update navbar title to new chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
@@ -263,6 +276,17 @@
     //update navbar title to new chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
     item.title = [self.currentChapter title];
+
+    [self.cteView setNeedsDisplay];
+
+//    NSArray *subviews = [self.cteView subviews];
+//    for(UIView *subview in subviews) {
+//        [subview setNeedsDisplay];
+//    }
+//    [CATransaction flush];
+//    [cteView setNeedsDisplay];
+//    [cteView setNeedsLayout];
+//    [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate: [NSDate date]];
 }
 
 //post-programmatic animations
@@ -324,6 +348,37 @@
                     animations:NULL
                     completion:NULL];
     self.toolBar.hidden = !hidden;
+}
+
+//returns the current set of columns rendered
+- (NSMutableSet *)columnsRendered {
+    return columnsRendered;
+}
+
+//returns columns that should be rendered immediately based on current position
+//columns that have already been rendered are NOT included
+- (NSArray *)columnsToRenderBasedOnPosition:(CGPoint)position {
+    NSMutableArray *columnsToRender = [NSMutableArray array];
+    CGPoint currentPosition = [cteView contentOffset];
+    CGFloat currentPositionX = currentPosition.x;
+    CGSize viewSize = self.view.frame.size;
+    CGFloat viewWidth = viewSize.width;
+    
+    //rule is: column at current position, column before, column after
+    //EXCEPT if any of these are already on the list
+    NSArray *subviews = [self.cteView subviews];
+    for(UIView *subview in subviews) {
+        CGRect subviewRect = [self.view convertRect:subview.frame fromView:subview];
+        CGFloat subviewStartX = subviewRect.origin.x;
+        CGFloat subviewEndX = subviewStartX + subviewRect.size.width;
+        if(![columnsRendered member:subview] &&
+           (subviewStartX >= currentPositionX - viewWidth) &&
+           (subviewEndX < currentPositionX + (viewWidth * 2))) {
+            [columnsToRender addObject:subview];
+        }
+    }
+
+    return columnsToRender;
 }
 
 //returns current CTEView chapter based on where the CTEView is at

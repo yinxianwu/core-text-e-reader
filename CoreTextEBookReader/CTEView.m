@@ -372,4 +372,17 @@ NSString *const HTTP_PREFIX = @"http://";
     }
 }
 
+//determines which columns to draw, based on position
+- (void)setNeedsDisplay {
+    CGPoint scrollOffset = self.contentOffset;
+    NSArray *columnsToRender = [viewDelegate columnsToRenderBasedOnPosition:scrollOffset];
+    for(UIView *subview in columnsToRender) {
+        if([subview isKindOfClass:[CTEColumnView class]]) {
+            CTEColumnView *column = (CTEColumnView *)subview;
+            column.shouldDrawRect =YES;
+        }
+        [subview setNeedsDisplay];
+    }
+}
+
 @end

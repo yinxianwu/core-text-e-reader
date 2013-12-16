@@ -21,6 +21,7 @@
 @synthesize imagesWithMetadata;
 @synthesize links;
 @synthesize attString;
+@synthesize shouldDrawRect;
 
 
 //inits image array
@@ -28,6 +29,7 @@
     if ([super initWithFrame:frame]!=nil) {
         self.imagesWithMetadata = [NSMutableArray array];
         self.links = [NSMutableArray array];
+        self.shouldDrawRect = NO; //defaults to "don't draw" until otherwise instructed
     }
     return self;
 }
@@ -150,7 +152,12 @@
 
 //drawing method
 - (void)drawRect:(CGRect)rect {
-    NSLog(@"CTColumnView: START drawRect");
+    
+    if(![self shouldDrawRect]) {
+        return;
+    }
+    
+    NSLog(@"CTColumnView: START drawRect; frame: %f", self.frame.origin.x);
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     // Flip the coordinate system
@@ -210,6 +217,8 @@
         imageIndex++;
     }
 
+    //add to the delegate's count of columns rendered
+    [viewDelegate.columnsRendered addObject:self];
     NSLog(@"CTColumnView: END drawRect");
 }
 
