@@ -21,6 +21,7 @@
     NSMutableSet *columnsRendered;
 }
 @property (nonatomic, strong) NSArray *spinnerViews;
+
 @end
 
 @implementation CTEContentViewController
@@ -44,6 +45,13 @@
 @synthesize attStrings;
 @synthesize images;
 @synthesize links;
+
+CGFloat const iPhone4OriginOffset = 10.0;
+CGFloat const iPhone4HeightOffset = 60.0;
+CGFloat const navBarDefaultHeight = 64.0f;
+CGFloat const toolBarDefaultHeight = 50.0f;
+CGFloat const navBarLegacyHeight = 44.0f;
+CGFloat const toolBarLegacyHeight = 80.0f;
 
 //Constructor
 - (id)initWithNibName:(NSString *)nibNameOrNil
@@ -81,7 +89,24 @@
 //inits the UI elements
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    //height adjustment for first time view is shown
+    //this is an issue when displaying on 3.5-inch displays
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        CGRect viewRect = [self.view bounds];
+        if(viewRect.size.height > screenRect.size.height) {
+            CGRect ctViewFrame = [cteView frame];
+            CGRect ctViewNewFrame = CGRectMake(ctViewFrame.origin.x,
+                                               ctViewFrame.origin.y - iPhone4OriginOffset,
+                                               ctViewFrame.size.width,
+                                               screenRect.size.height - iPhone4HeightOffset);
+            [cteView setFrame:ctViewNewFrame];
+        }
+    }
+
     NSMutableArray *orderedSet = [NSMutableArray arrayWithCapacity:[self.chapters count]];
     for(id<CTEChapter> chapter in self.chapters) {
         [orderedSet addObject:[chapter id]];
@@ -98,24 +123,8 @@
     
     //nav bar init
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
-    CGFloat screenHeight = screenRect.size.height;
-    CGFloat navBarHeight = 64.0f;
-    CGFloat toolBarHeight = 50.0f;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        //height adjustment for first time view is shown
-        //this is an issue when displaying on 3.5-inch displays
-        CGRect viewRect = [self.view bounds];
-        if(viewRect.size.height > screenRect.size.height) {
-            CGRect ctViewRect = [cteView bounds];
-            CGRect ctViewNewRect = CGRectMake(ctViewRect.origin.x,
-                                              ctViewRect.origin.y,
-                                              ctViewRect.size.width,
-                                              screenRect.size.height - 88);
-            [cteView setFrame:ctViewNewRect];
-        }
-    }
+    CGFloat navBarHeight = navBarDefaultHeight;
+    CGFloat toolBarHeight = toolBarDefaultHeight;
     UIColor *barBackgroundColor = nil;
     if(isIOS7) {
         [[UINavigationBar appearance] setBarTintColor:self.barColor];
@@ -124,13 +133,11 @@
     }
     else {
         barBackgroundColor = self.barColor;
-        navBarHeight -= 20.0f;
-        toolBarHeight += 30.0f;
+        navBarHeight = navBarLegacyHeight;
+        toolBarHeight = toolBarLegacyHeight;
     }
     NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                [UIColor blackColor], NSForegroundColorAttributeName,
-//                                               [UIColor blackColor], UITextAttributeTextShadowColor,
-//                                               [NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset,
                                                nil];
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
     self.navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, screenWidth, navBarHeight)];
