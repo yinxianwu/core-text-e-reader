@@ -368,19 +368,21 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     NSMutableArray *columnsToRender = [NSMutableArray array];
     CGPoint currentPosition = [cteView contentOffset];
     CGFloat currentPositionX = currentPosition.x;
-    CGSize viewSize = self.view.frame.size;
+    CGSize viewSize = cteView.frame.size;
     CGFloat viewWidth = viewSize.width;
     
     //rule is: column at current position, column before, column after
     //EXCEPT if any of these are already on the list
     NSArray *subviews = [self.cteView subviews];
     for(UIView *subview in subviews) {
-        CGRect subviewRect = [self.view convertRect:subview.frame fromView:subview];
-        CGFloat subviewStartX = subviewRect.origin.x;
-        CGFloat subviewEndX = subviewStartX + subviewRect.size.width;
+        CGRect subviewFrame = subview.frame;
+        CGFloat subviewStartX = subviewFrame.origin.x;
+        CGFloat subviewEndX = subviewStartX + subviewFrame.size.width;
+        CGFloat prevPageStartX = currentPositionX - viewWidth;
+        CGFloat nextPageEndX = currentPositionX + (viewWidth * 2);
         if(![columnsRendered member:subview] &&
-           (subviewStartX >= currentPositionX - viewWidth) &&
-           (subviewEndX < currentPositionX + (viewWidth * 2))) {
+           (subviewStartX >= prevPageStartX) &&
+           (subviewEndX < nextPageEndX)) {
             [columnsToRender addObject:subview];
         }
     }
