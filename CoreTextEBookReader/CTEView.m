@@ -383,6 +383,8 @@ NSString *const HTTP_PREFIX = @"http://";
         }
         [subview setNeedsDisplay];
     }
+    
+    [super setNeedsDisplay];
 }
 
 @end

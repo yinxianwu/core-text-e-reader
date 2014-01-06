@@ -19,6 +19,7 @@
 
 @interface CTEContentViewController () {
     NSMutableSet *columnsRendered;
+    BOOL initialLoad;
 }
 @property (nonatomic, strong) NSArray *spinnerViews;
 
@@ -67,6 +68,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     self.images = allImages;
     self.links = allLinks;
     self.barColor = color;
+    initialLoad = YES;
     
     //init the set of rendered columns
     columnsRendered = [NSMutableSet set];
@@ -184,15 +186,18 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     [self.view addSubview:self.toolBar];
 }
 
-//some component sizing
+//some component sizing on initial load
 //per http://stackoverflow.com/questions/5066847/get-the-width-of-a-uibarbuttonitem
 - (void)viewWillAppear:(BOOL)animated {
-    UIBarButtonItem *item = self.configButton;
-    UIView *view = [item valueForKey:@"view"];
-    CGFloat width = view ? [view frame].size.width : (CGFloat)0.0;
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
-    [self.sliderAsToolbarItem setWidth:screenWidth - width - 40]; //adjust for borders and such
+    if(initialLoad) {
+        UIBarButtonItem *item = self.configButton;
+        UIView *view = [item valueForKey:@"view"];
+        CGFloat width = view ? [view frame].size.width : (CGFloat)0.0;
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        [self.sliderAsToolbarItem setWidth:screenWidth - width - 40]; //adjust for borders and such
+        initialLoad = NO;
+    }
 }
 
 //tell subview to determine initial columns to draw
@@ -285,15 +290,6 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     item.title = [self.currentChapter title];
 
     [self.cteView setNeedsDisplay];
-
-//    NSArray *subviews = [self.cteView subviews];
-//    for(UIView *subview in subviews) {
-//        [subview setNeedsDisplay];
-//    }
-//    [CATransaction flush];
-//    [cteView setNeedsDisplay];
-//    [cteView setNeedsLayout];
-//    [[NSRunLoop currentRunLoop] runMode: NSDefaultRunLoopMode beforeDate: [NSDate date]];
 }
 
 //post-programmatic animations
@@ -370,6 +366,8 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     CGFloat currentPositionX = currentPosition.x;
     CGSize viewSize = cteView.frame.size;
     CGFloat viewWidth = viewSize.width;
+    CGFloat prevPageStartX = currentPositionX - viewWidth;
+    CGFloat nextPageEndX = currentPositionX + (viewWidth * 2);
     
     //rule is: column at current position, column before, column after
     //EXCEPT if any of these are already on the list
@@ -378,9 +376,8 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         CGRect subviewFrame = subview.frame;
         CGFloat subviewStartX = subviewFrame.origin.x;
         CGFloat subviewEndX = subviewStartX + subviewFrame.size.width;
-        CGFloat prevPageStartX = currentPositionX - viewWidth;
-        CGFloat nextPageEndX = currentPositionX + (viewWidth * 2);
-        if(![columnsRendered member:subview] &&
+        if([subview isKindOfClass:[CTEColumnView class]] &&
+           ![columnsRendered member:subview] &&
            (subviewStartX >= prevPageStartX) &&
            (subviewEndX < nextPageEndX)) {
             [columnsToRender addObject:subview];
@@ -431,8 +428,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
 //TODO other orientations
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
 }
 
 @end

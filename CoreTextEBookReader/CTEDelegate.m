@@ -149,7 +149,7 @@
     if([[notification object] isKindOfClass:[CTEContentViewController class]]) {
         CTEContentViewController *contentView = (CTEContentViewController *)[notification object];
         id<CTEChapter> chapter = contentView.currentChapter;
-        int selectedRow = [self.contentViewController.chapters indexOfObject:chapter];
+        long selectedRow = [self.contentViewController.chapters indexOfObject:chapter];
         NSIndexPath *path = [NSIndexPath indexPathForRow:selectedRow inSection:0];
         [self.menuViewController.chapterTableView selectRowAtIndexPath:path animated:NO scrollPosition:UITableViewScrollPositionTop];
     }

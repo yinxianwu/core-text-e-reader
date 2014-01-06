@@ -75,8 +75,8 @@ selectedColumnsInView:(NSNumber *)columnsInView
     NSString *fontSizeStr = [formatter stringFromNumber:self.selectedFontSize];
 
     [self.pickerView setShowsSelectionIndicator:YES];
-    int selectedFontIndex = [self.fonts indexOfObject:self.selectedFont];
-    int selectedFontSizeIndex = [self.fontSizes indexOfObject:fontSizeStr];
+    long selectedFontIndex = [self.fonts indexOfObject:self.selectedFont];
+    long selectedFontSizeIndex = [self.fontSizes indexOfObject:fontSizeStr];
     int selectedColumnsIndex = 1; //TODO mapping//[self.fonts indexOfObject:@"Two Columns"];
     [self.pickerView selectRow:selectedFontIndex inComponent:0 animated:NO];
     [self.pickerView selectRow:selectedFontSizeIndex inComponent:1 animated:NO];
