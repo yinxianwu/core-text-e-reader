@@ -42,16 +42,33 @@
     if (!self.image) {
         self.image = [UIImage imageNamed:@"ImageError.png"];
     }
+    
     imageView.image = self.image;
-    [imageView sizeToFit];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;    
     CGSize imgSize = self.image.size;
     [imageScrollView setContentSize:CGSizeMake(imgSize.width, imgSize.height)];
     [imageScrollView setMinimumZoomScale: 0.5];
     [imageScrollView setMaximumZoomScale:3.0];
     [imageScrollView setScrollEnabled:YES];
     
+    //double-tap to zoom/unzoom
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageDoubleTap:)];
+    tapGesture.numberOfTapsRequired = 2;
+    [self.view addGestureRecognizer:tapGesture];
+    
     [super viewDidLoad];
+}
 
+//Toggles image zoom
+- (void)handleImageDoubleTap:(id)sender {
+    CGFloat currentScale = imageScrollView.zoomScale;
+    
+    if(currentScale != 1.0f) {
+        [imageScrollView setZoomScale:1.0f animated:YES];
+    }
+    else {
+        [imageScrollView setZoomScale:2.0f animated:YES];
+    }
 }
 
 //zoom handling
