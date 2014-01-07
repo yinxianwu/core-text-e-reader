@@ -26,6 +26,11 @@
     return self;
 }
 
+//Hide status bar for better full-screen image viewing
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 //loads in the image
 - (void)viewDidLoad {
     [imageScrollView setBackgroundColor:[UIColor blackColor]];
