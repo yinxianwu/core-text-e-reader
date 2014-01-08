@@ -174,7 +174,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     self.pageSlider = [[UISlider alloc] init];
     self.pageSlider.minimumValue = 0.0f;
     self.pageSlider.maximumValue = [self.cteView totalPages];
-    self.pageSlider.continuous = YES;
+    self.pageSlider.continuous = NO;
     [self.pageSlider addTarget:self
                         action:@selector(pageSliderValueChanged:)
               forControlEvents:UIControlEventValueChanged];
@@ -233,9 +233,10 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 - (void)pageSliderValueChanged:(id)sender {
     float sliderValue = self.pageSlider.value;
     float sliderPageValue = floorf(sliderValue);
-    CGFloat pageWidth = self.cteView.frame.size.width;
-    NSNumber *page = [NSNumber numberWithFloat:sliderPageValue];
-    [self.cteView setContentOffset:CGPointMake(pageWidth * [page intValue], 0.0f) animated:YES];
+    CGRect cteViewFrame = self.cteView.frame;
+    cteViewFrame.origin.x = cteViewFrame.size.width * sliderPageValue;
+    cteViewFrame.origin.y = 0;
+    [self.cteView scrollRectToVisible:cteViewFrame animated:NO];
     [self.cteView currentChapterNeedsUpdate];
     [self.cteView setNeedsDisplay];
     
