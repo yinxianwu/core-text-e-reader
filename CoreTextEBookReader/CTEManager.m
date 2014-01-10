@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 com.davidjed. All rights reserved.
 //
 
-#import "CTEDelegate.h"
+#import "CTEManager.h"
 #import "CTEChapter.h"
 #import "CTEConstants.h"
 #import "CTEContentViewController.h"
 
-@implementation CTEDelegate
+@implementation CTEManager
 
 @synthesize contentViewController;
 @synthesize menuViewController;
@@ -24,11 +24,11 @@
 @synthesize barColor;
 @synthesize highlightColor;
 
-+ (CTEDelegate *)delegateWithWindow:(UIWindow *)appWindow
++ (CTEManager *)managerWithWindow:(UIWindow *)appWindow
                         andChapters:(NSArray *)chapters
                         andBarColor:(UIColor *)color
                   andHighlightColor:(UIColor *)highlight {
-    CTEDelegate *delegate = [[CTEDelegate alloc] init];
+    CTEManager *delegate = [[CTEManager alloc] init];
     if(delegate) {
         delegate.window = appWindow;
         delegate.chapters = chapters;
@@ -43,7 +43,7 @@
         CTEMenuViewController *menuViewCtrlr = nil;
         
         //create att strs for all chapters
-        [CTEDelegate buildAttStringsForDelegate:delegate chapters:chapters notification:nil];
+        [CTEManager buildAttStringsForDelegate:delegate chapters:chapters notification:nil];
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPadView"
@@ -105,7 +105,7 @@
 
 //Parses all chapters and builds appropriate att strings using delegate settings
 //if no NSNotification is specified, builds with default view options settings
-+ (void)buildAttStringsForDelegate:(CTEDelegate *)delegate
++ (void)buildAttStringsForDelegate:(CTEManager *)delegate
                           chapters:(NSArray *)chapters
                       notification:(NSNotification *)notification {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -181,7 +181,7 @@
 
 //Updates attributed Strings for content, then applies them to content view
 - (void)contentViewOptionsUpdated:(NSNotification *)notification {
-    [CTEDelegate buildAttStringsForDelegate:self chapters:self.chapters notification:notification];
+    [CTEManager buildAttStringsForDelegate:self chapters:self.chapters notification:notification];
     [self.contentViewController rebuildContent:self.attStrings images:self.images links:self.links];
 }
 

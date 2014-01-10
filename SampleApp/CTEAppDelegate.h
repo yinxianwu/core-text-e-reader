@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 com.davidjed. All rights reserved.
 //
 
-#import "CTEDelegate.h"
+#import "CTEManager.h"
 #import "CTEContentViewController.h"
 #import "CTEMenuViewController.h"
 #import <UIKit/UIKit.h>
@@ -14,6 +14,6 @@
 @interface CTEAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) CTEDelegate *delegate;
+@property (strong, nonatomic) CTEManager *manager;
 
 @end

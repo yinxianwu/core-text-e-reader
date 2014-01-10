@@ -9,6 +9,7 @@
 #import "CTEColumnView.h"
 #import "CTEUtils.h"
 #import "CTEView.h"
+#import "CTEConstants.h"
 
 @interface CTEColumnView()
 @end
@@ -39,7 +40,7 @@
     ctFrame = f;
 }
 
-//Begin touch; determine location and if it's a link or image
+//End touch; determine location and if it's a link or image or other event
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     //kick out if ctFrame is null -- means it's an empty column
     if(!ctFrame) {
@@ -61,8 +62,7 @@
 		
 		CGFloat y = rect.origin.y + rect.size.height - origin.y;
         
-		if ((location.y >= y) && (location.x >= origin.x))
-		{
+		if ((location.y >= y) && (location.x >= origin.x)) {
 			line = CFArrayGetValueAtIndex(lines, i);
 			lineOrigin = origin;
 		}
@@ -145,14 +145,29 @@
     }
     //toggle toolbars or flip pages, depending on location
     else if(self.viewDelegate != nil) {
-        //TODO location for page turn
-        [viewDelegate toggleUtilityBars];
+        CGRect viewFrameInWindow = [self convertRect:self.bounds toView:nil];
+        CGFloat endX = viewFrameInWindow.origin.x + viewFrameInWindow.size.width;
+        CGPoint locationInWindow = [touch locationInView:nil];
+        CGFloat pageTurnBoundary = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ?
+                                   PageTurnBoundaryPhone :
+                                   PageTurnBoundaryPad;
+
+        //if it's anywhere within range of left or right edge, consider that a page turn request
+        if(locationInWindow.x < pageTurnBoundary) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:PageBackward object:self];
+        }
+        else if(locationInWindow.x > (endX - pageTurnBoundary)) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:PageForward object:self];
+        }
+        //otherwise, it's a utility bar toggle
+        else {
+            [viewDelegate toggleUtilityBars];
+        }
     }
 }
 
 //drawing method
 - (void)drawRect:(CGRect)rect {
-    
     if(![self shouldDrawRect]) {
         return;
     }

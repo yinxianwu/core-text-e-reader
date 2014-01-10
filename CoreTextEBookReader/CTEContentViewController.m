@@ -38,7 +38,7 @@
 @synthesize popoverController;
 @synthesize barColor;
 
-@synthesize currentChapter;
+@synthesize currentChapter = _currentChapter;
 @synthesize currentFont;
 @synthesize currentFontSize;
 @synthesize currentColumnsInView = _currentColumnsInView;
@@ -184,6 +184,16 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     [self.toolBar setItems:[NSArray arrayWithObjects:self.sliderAsToolbarItem, self.configButton, nil]];
     [self.toolBar setTintColor:barBackgroundColor];
     [self.view addSubview:self.toolBar];
+    
+    //listen for page turn events
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handlePageForward:)
+                                                 name:PageForward
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handlePageBackward:)
+                                                 name:PageBackward
+                                               object:nil];
 }
 
 //some component sizing on initial load
@@ -279,6 +289,34 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     }
 }
 
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+    CGRect viewFrameInWindow = [self.view convertRect:self.view.bounds toView:nil];
+    CGFloat endX = viewFrameInWindow.origin.x + viewFrameInWindow.size.width;
+    CGPoint locationInWindow = [touch locationInView:nil];
+    CGFloat pageTurnBoundary = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ?
+                               PageTurnBoundaryPhone :
+                               PageTurnBoundaryPad;
+    
+    //if it's anywhere within range of left or right edge, consider that a page turn request
+    if(locationInWindow.x < pageTurnBoundary) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:PageBackward object:self];
+    }
+    else if(locationInWindow.x > (endX - pageTurnBoundary)) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:PageForward object:self];
+    }
+}
+
+//event handler
+-(void)handlePageForward:(id)sender {
+    [self nextPage];
+}
+
+//event handler
+-(void)handlePageBackward:(id)sender {
+    [self prevPage];
+}
+
 //post user-initated scroll
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [cteView currentChapterNeedsUpdate];
@@ -335,6 +373,33 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPadView" bundle:nil image:image];
     }
     [self presentViewController:imageView animated:YES completion:nil];
+}
+
+- (void)nextPage {
+    int pageNb = [cteView getCurrentPage] + 1;
+    if(pageNb < cteView.totalPages) {
+        [self scrollToPage:pageNb];
+    }
+}
+
+- (void)prevPage {
+    int pageNb = [cteView getCurrentPage] - 1;
+    if(pageNb >= 0) {
+        [self scrollToPage:pageNb];
+    }
+}
+
+- (void)scrollToPage:(int)page {
+    CGRect cteViewFrame = self.cteView.frame;
+    cteViewFrame.origin.x = cteViewFrame.size.width * page;
+    cteViewFrame.origin.y = 0;
+    [self.cteView scrollRectToVisible:cteViewFrame animated:YES];
+    [self.cteView currentChapterNeedsUpdate];
+    [self.cteView setNeedsDisplay];
+    
+    //update navbar title to new chapter title
+    UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
+    item.title = [self.currentChapter title];
 }
 
 //shows/hides nav & toolbars
@@ -399,6 +464,8 @@ CGFloat const toolBarLegacyHeight = 80.0f;
             break;
         }
     }
+    
+    _currentChapter = retVal;
     return retVal;
 }
 

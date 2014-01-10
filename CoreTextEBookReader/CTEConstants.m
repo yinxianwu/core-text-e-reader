@@ -16,6 +16,12 @@ NSString * const HideSideMenu = @"HideSideMenu";
 NSString * const ChangeFont = @"ChangeFont";
 NSString * const ChangeFontSize = @"ChangeFontSize";
 NSString * const ChangeColumnCount = @"ChangeColumnCount";
+NSString * const PageForward = @"PageForward";
+NSString * const PageBackward = @"PageBackward";
+
+//settings
+CGFloat const PageTurnBoundaryPhone = 50.0;
+CGFloat const PageTurnBoundaryPad = 100.0;
 
 //labels
 NSString * const NavigationBarTitle = @"CoreTextEBookReader";

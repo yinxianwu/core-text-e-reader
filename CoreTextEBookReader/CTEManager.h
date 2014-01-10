@@ -11,7 +11,7 @@
 #import "CTEMenuViewController.h"
 #import "CTEMarkupParser.h"
 
-@interface CTEDelegate : NSObject
+@interface CTEManager : NSObject
 
 @property (strong, nonatomic) CTEContentViewController *contentViewController;
 @property (strong, nonatomic) CTEMenuViewController *menuViewController;
@@ -24,11 +24,11 @@
 @property (strong, nonatomic) UIColor *barColor;
 @property (strong, nonatomic) UIColor *highlightColor;
 
-+ (CTEDelegate *)delegateWithWindow:(UIWindow *)window
++ (CTEManager *)managerWithWindow:(UIWindow *)window
                         andChapters:(NSArray *)chapters
                         andBarColor:(UIColor *)color
                   andHighlightColor:(UIColor *)highlight;
-+ (void)buildAttStringsForDelegate:(CTEDelegate *)delegate
++ (void)buildAttStringsForDelegate:(CTEManager *)delegate
                           chapters:(NSArray *)chapters
                       notification:(NSNotification *)notification;
 @end

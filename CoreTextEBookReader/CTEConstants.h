@@ -15,6 +15,11 @@ extern NSString * const HideSideMenu;
 extern NSString * const ChangeFont;
 extern NSString * const ChangeFontSize;
 extern NSString * const ChangeColumnCount;
+extern NSString * const PageForward;
+extern NSString * const PageBackward;
+extern CGFloat const PageTurnBoundaryPhone;
+extern CGFloat const PageTurnBoundaryPad;
+
 extern NSString * const NavigationBarTitle;
 
 @end

@@ -46,5 +46,8 @@
                  links:(NSDictionary *)allLinks;
 - (void)slideMenuButtonTouched:(id)sender;
 - (void)playMovie:(NSString *)clipPath;
+- (void)nextPage;
+- (void)prevPage;
+- (void)scrollToPage:(int)page;
 
 @end

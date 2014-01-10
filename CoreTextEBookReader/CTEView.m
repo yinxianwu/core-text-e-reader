@@ -8,6 +8,7 @@
 
 #import "CTEView.h"
 #import "CTEColumnView.h"
+#import "CTEConstants.h"
 
 @interface CTEView() {
     int imagesLoaded;
@@ -334,6 +335,28 @@ NSString *const HTTP_PREFIX = @"http://";
     if(matchData) {
         [matchData replaceObjectAtIndex:0 withObject:img];
         [col setNeedsDisplay];
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+    CGRect viewFrameInWindow = [self convertRect:self.bounds toView:nil];
+    CGFloat endX = viewFrameInWindow.origin.x + viewFrameInWindow.size.width;
+    CGPoint locationInWindow = [touch locationInView:nil];
+    CGFloat pageTurnBoundary = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ?
+                               PageTurnBoundaryPhone :
+                               PageTurnBoundaryPad;
+    
+    //if it's anywhere within range of left or right edge, consider that a page turn request
+    if(locationInWindow.x < pageTurnBoundary) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:PageBackward object:self];
+    }
+    else if(locationInWindow.x > (endX - pageTurnBoundary)) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:PageForward object:self];
+    }
+    //otherwise, it's a utility bar toggle
+    else {
+        [viewDelegate toggleUtilityBars];
     }
 }
 

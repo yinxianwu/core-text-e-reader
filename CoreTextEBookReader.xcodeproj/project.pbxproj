@@ -78,8 +78,8 @@
 		6895EFDA181DF20D009B8527 /* SampleAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EFD9181DF20D009B8527 /* SampleAppTests.m */; };
 		68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284918257D8C00EA632B /* CTEUtils.m */; };
 		68AF284B18257DC700EA632B /* CTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284918257D8C00EA632B /* CTEUtils.m */; };
-		68AF284E1825A98E00EA632B /* CTEDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEDelegate.m */; };
-		68AF284F1825B3EC00EA632B /* CTEDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEDelegate.m */; };
+		68AF284E1825A98E00EA632B /* CTEManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEManager.m */; };
+		68AF284F1825B3EC00EA632B /* CTEManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEManager.m */; };
 		68D34997182E823400345F12 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D34996182E823400345F12 /* NSMutableArray+QueueAdditions.m */; };
 		68FBF140183493BE0057223E /* Placeholder240x320.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68FBF13E183493BE0057223E /* Placeholder240x320.jpg */; };
 		68FBF141183493BE0057223E /* Placeholder320x240.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68FBF13F183493BE0057223E /* Placeholder320x240.jpg */; };
@@ -188,8 +188,8 @@
 		6895EFD9181DF20D009B8527 /* SampleAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleAppTests.m; sourceTree = "<group>"; };
 		68AF284818257D8C00EA632B /* CTEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEUtils.h; sourceTree = "<group>"; };
 		68AF284918257D8C00EA632B /* CTEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEUtils.m; sourceTree = "<group>"; };
-		68AF284C1825A98E00EA632B /* CTEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEDelegate.h; sourceTree = "<group>"; };
-		68AF284D1825A98E00EA632B /* CTEDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEDelegate.m; sourceTree = "<group>"; };
+		68AF284C1825A98E00EA632B /* CTEManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEManager.h; sourceTree = "<group>"; };
+		68AF284D1825A98E00EA632B /* CTEManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEManager.m; sourceTree = "<group>"; };
 		68D34995182E823400345F12 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
 		68D34996182E823400345F12 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTEViewDelegate.h; sourceTree = "<group>"; };
@@ -288,8 +288,8 @@
 			isa = PBXGroup;
 			children = (
 				680AE81B1818C778006ABAE4 /* CoreTextEBookReader.h */,
-				68AF284C1825A98E00EA632B /* CTEDelegate.h */,
-				68AF284D1825A98E00EA632B /* CTEDelegate.m */,
+				68AF284C1825A98E00EA632B /* CTEManager.h */,
+				68AF284D1825A98E00EA632B /* CTEManager.m */,
 				68678E8B181F62EE00D8B812 /* CTEChapter.h */,
 				6895EFB0181DD2B5009B8527 /* CTEConstants.h */,
 				6895EFB1181DD2B5009B8527 /* CTEConstants.m */,
@@ -605,7 +605,7 @@
 				6895EFA3181DCE62009B8527 /* CTEMenuViewController.m in Sources */,
 				68425AB0183B1AD40070B670 /* CTEViewOptionsViewController.m in Sources */,
 				68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */,
-				68AF284E1825A98E00EA632B /* CTEDelegate.m in Sources */,
+				68AF284E1825A98E00EA632B /* CTEManager.m in Sources */,
 				6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */,
 				68D34997182E823400345F12 /* NSMutableArray+QueueAdditions.m in Sources */,
 				6895EFA1181DCE62009B8527 /* CTEView.m in Sources */,
@@ -630,7 +630,7 @@
 				6847F014181E2469003F38B5 /* CTEConstants.m in Sources */,
 				6847F015181E2469003F38B5 /* CTEContentViewController.m in Sources */,
 				6847F016181E2469003F38B5 /* CTEColumnView.m in Sources */,
-				68AF284F1825B3EC00EA632B /* CTEDelegate.m in Sources */,
+				68AF284F1825B3EC00EA632B /* CTEManager.m in Sources */,
 				6847F017181E2469003F38B5 /* CTEView.m in Sources */,
 				6847F018181E2469003F38B5 /* CTEMarkupParser.m in Sources */,
 				6847F019181E2469003F38B5 /* CTEMenuViewController.m in Sources */,
