@@ -24,7 +24,6 @@
 @synthesize attString;
 @synthesize shouldDrawRect;
 
-
 //inits image array
 -(id)initWithFrame:(CGRect)frame {
     if ([super initWithFrame:frame]!=nil) {
@@ -187,27 +186,77 @@
     
     //draw images
     int imageIndex = 0;
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenBounds.size.width;
+    CGFloat screenHeight = screenBounds.size.height;
     for (NSArray *imageData in self.imagesWithMetadata) {
-        UIImage* img = [imageData objectAtIndex:0];
-        NSDictionary *imageMetadata = [imageData objectAtIndex:2];
-        CGRect imgBounds = CGRectFromString([imageData objectAtIndex:1]);
+        UIImage *img = [imageData objectAtIndex:0];
+        CGFloat imgWidth = img.size.width;
+        CGFloat imgHeight = img.size.height;
+        NSDictionary *imgMetadata = [imageData objectAtIndex:2];
         
-        CGFloat imgWidthOffset = 0.0;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            imgWidthOffset = (columnWidth - imgBounds.size.width) / 2;
+        //RULE: we ignore size tags for remote images and size per column dimensions:
+        //- size proportionately up to column width up to half screen width OR
+        //- size proportionately up to half of column height
+        NSString *imgFileName = (NSString *)[imgMetadata objectForKey:@"fileName"];
+        NSString *fileNamePrefix = [imgFileName substringToIndex:[HTTP_PREFIX length]];
+        CGRect imgBounds;
+        CGFloat imgXOffset = 0.0;
+        if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
+            //allowable max width: column width up to half of screen width
+            CGFloat allowableMaxWidth = (columnWidth * 2) < screenWidth ?
+                                        columnWidth :
+                                        screenWidth / 2;
+            //allowable max height: 3/5 of screen height (columns are always full-height, less insets)
+            CGFloat allowableMaxHeight = screenHeight * 0.6;
+
+            //if image is smaller than both allowable max width and height, just use it as is
+            if(imgWidth < allowableMaxWidth && imgHeight < allowableMaxHeight) {
+                imgBounds = CGRectFromString([imageData objectAtIndex:1]);
+            }
+            else {
+                //try image dimensions using max width...
+                CGFloat maxWidthScale = allowableMaxWidth / imgWidth;
+                CGFloat scaledImgHeight = imgHeight * maxWidthScale;
+                CGFloat scaledImgWidth;
+                if(scaledImgHeight < allowableMaxHeight) {
+                    scaledImgWidth = imgWidth * maxWidthScale; //should be same as columnWidth
+                }
+                //..otherwise, try image dimensions using max height
+                else {
+                    CGFloat maxHeightScale = allowableMaxHeight / imgHeight;
+                    scaledImgWidth = imgWidth * maxHeightScale;
+                    scaledImgHeight = imgHeight * maxHeightScale;
+                    imgXOffset = (columnWidth - scaledImgWidth) / 2; //offset to center image
+                }
+                imgBounds = CGRectMake(0.0, 0.0, scaledImgWidth, scaledImgHeight);
+            }
         }
-        //adjustment for single-column iPhone layout
-        //TODO MarkupParser should account for this...
+        //use local images as-is
         else {
-            imgWidthOffset = ((columnWidth - imgBounds.size.width) / 2) - 20; 
+            imgBounds = CGRectFromString([imageData objectAtIndex:1]);
         }
-        CGContextTranslateCTM(context, imgWidthOffset, 0); //center image
-        CGContextDrawImage(context, imgBounds, img.CGImage);
-        CGRect playButtonLocation;
         
-        if([imageMetadata valueForKey:@"playButtonImage"]) {
-            NSLog(@"Draw PLAY BUTTON for %@", [imageMetadata valueForKey:@"fileName"]);
-            UIImage *playButtonImage = [imageMetadata valueForKey:@"playButtonImage"];
+
+//        CGFloat imgXOffset = 0.0;
+    
+        
+        
+//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+//            imgWidthOffset = (columnWidth - imgBounds.size.width) / 2;
+//        }
+//        //adjustment for single-column iPhone layout
+//        //TODO MarkupParser should account for this...
+//        else {
+//            imgWidthOffset = ((columnWidth - imgBounds.size.width) / 2) - 20; 
+//        }
+        CGContextTranslateCTM(context, imgXOffset, 0); //center image
+        CGContextDrawImage(context, imgBounds, img.CGImage);
+        
+        //play button for movie previews
+        if([imgMetadata valueForKey:@"playButtonImage"]) {
+            NSLog(@"Draw PLAY BUTTON for %@", [imgMetadata valueForKey:@"fileName"]);
+            UIImage *playButtonImage = [imgMetadata valueForKey:@"playButtonImage"];
             CGFloat previewImageHeight = imgBounds.size.height;
             CGFloat previewImageWidth = imgBounds.size.width;
             CGFloat playButtonHeight = playButtonImage.size.height;
@@ -215,14 +264,15 @@
             CGFloat playButtonOriginX = (previewImageWidth / 2) - (30); //scaled width
             CGFloat playButtonOriginY = (previewImageHeight / 2) - (30); //scaled height
             CGRect playButtonBounds = CGRectFromString(@"{{0, 0}, {60, 60}}");
-            CGContextTranslateCTM(context,
-                                  playButtonOriginX - (imgWidthOffset / 2),
-                                  columnHeight - 60 - playButtonOriginY); //center play button image over preview image
+
             //TODO height measurement makes no sense...
+            CGContextTranslateCTM(context,
+                                  playButtonOriginX,//playButtonOriginX - (imgWidthOffset / 2),
+                                  columnHeight - 60 - playButtonOriginY);//columnHeight - 60 - playButtonOriginY); //center play button image over preview image
             CGContextDrawImage(context, playButtonBounds, playButtonImage.CGImage);
             //add location to cache
-            playButtonLocation = CGRectMake(playButtonOriginX, playButtonOriginY, playButtonWidth, playButtonHeight);
-            NSMutableDictionary *newImageMetadata = [NSMutableDictionary dictionaryWithDictionary:imageMetadata];
+            CGRect playButtonLocation = CGRectMake(playButtonOriginX, playButtonOriginY, playButtonWidth, playButtonHeight);
+            NSMutableDictionary *newImageMetadata = [NSMutableDictionary dictionaryWithDictionary:imgMetadata];
             [newImageMetadata setValue:[NSValue valueWithCGRect:playButtonLocation] forKey:@"playButtonLocation"];
             NSMutableArray *newImageData = [NSMutableArray arrayWithArray:imageData];
             [newImageData replaceObjectAtIndex:2 withObject:newImageMetadata];

@@ -18,8 +18,6 @@
     float frameYOffset;
 }
 
-extern NSString *const HTTP_PREFIX;
-
 @property (weak, nonatomic) id<CTEViewDelegate> viewDelegate;
 @property (strong, nonatomic) NSMutableArray *columns;
 @property (strong, nonatomic) NSArray *orderedKeys;

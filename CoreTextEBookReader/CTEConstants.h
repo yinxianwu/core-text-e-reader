@@ -22,4 +22,6 @@ extern CGFloat const PageTurnBoundaryPad;
 
 extern NSString * const NavigationBarTitle;
 
+extern NSString *const HTTP_PREFIX;
+
 @end

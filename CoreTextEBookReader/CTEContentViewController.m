@@ -94,6 +94,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
     //height adjustment for first time view is shown
     //this is an issue when displaying on 3.5-inch displays
+    //FIXME views should handle this
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;

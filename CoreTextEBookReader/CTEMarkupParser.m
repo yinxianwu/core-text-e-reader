@@ -8,20 +8,21 @@
 
 #import "CTEMarkupParser.h"
 
-static CGFloat ascentCallback( void *ref ){
+//used to compute space for image
+static CGFloat ascentCallback(void *ref){
+//    NSDictionary *imgMetadata = (__bridge NSDictionary*)ref;
     NSString *val = (NSString*)[(__bridge NSDictionary*)ref objectForKey:@"height"];
     return [val floatValue];
-//    return [(NSNumber *)[(__bridge NSDictionary*)ref objectForKey:@"height"] floatValue];
 }
-static CGFloat descentCallback( void *ref ){
+//used to compute space for image
+static CGFloat descentCallback(void *ref){
     NSString *val = (NSString*)[(__bridge NSDictionary*)ref objectForKey:@"descent"];
     return [val floatValue];
-//    return [(NSNumber *)[(__bridge NSDictionary*)ref objectForKey:@"descent"] floatValue];
 }
-static CGFloat widthCallback( void* ref ){
+//used to compute space for image
+static CGFloat widthCallback(void* ref){
     NSString *val = (NSString*)[(__bridge NSDictionary*)ref objectForKey:@"width"];
     return [val floatValue];
-//    return [(NSNumber *)[(__bridge NSDictionary*)ref objectForKey:@"width"] floatValue];
 }
 
 @implementation CTEMarkupParser
@@ -55,6 +56,67 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
         [self resetParser];
     }
     return self;
+}
+
+//used in callbacks for making space for images
++ (void)setTextContainerWidth:(CGFloat)width {
+    textContainerWidth = width;
+}
+
+//used in callbacks for making space for images
++ (void)setTextContainerHeight:(CGFloat)height {
+    textContainerHeight = height;
+}
+
+//gets image sizing based on parent container
++ (CGRect)calculateImageBounds:(UIImage *)img containerBounds:(CGRect)bounds metadata:(NSDictionary *)imgMetadata {
+//    CGFloat columnHeight = bounds.size.height;
+    CGFloat columnWidth = bounds.size.width;
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenBounds.size.width;
+    CGFloat screenHeight = screenBounds.size.height;
+    CGFloat imgWidth = img.size.width;
+    CGFloat imgHeight = img.size.height;
+    
+    //RULE: we ignore size tags for remote images and size per column dimensions:
+    //- size proportionately up to column width up to half screen width OR
+    //- size proportionately up to half of column height
+//    NSString *imgFileName = (NSString *)[imgMetadata objectForKey:@"fileName"];
+    CGRect imgBounds;
+    CGFloat imgXOffset = 0.0;
+    //allowable max width: column width up to half of screen width
+    CGFloat allowableMaxWidth = (columnWidth * 2) < screenWidth ?
+    columnWidth :
+    screenWidth / 2;
+    //allowable max height: 3/5 of screen height (columns are always full-height, less insets)
+    CGFloat allowableMaxHeight = screenHeight * 0.6;
+    
+    //if image is smaller than both allowable max width and height, just use it as is
+    if(imgWidth < allowableMaxWidth && imgHeight < allowableMaxHeight) {
+        NSNumber *metaWidth = (NSNumber *)[imgMetadata objectForKey:@"width"];
+        NSNumber *metaHeight = (NSNumber *)[imgMetadata objectForKey:@"height"];
+        imgBounds = CGRectMake(0.0, 0.0, [metaWidth floatValue], [metaHeight floatValue]);
+//        imgBounds = CGRectFromString([imageData objectAtIndex:1]);
+    }
+    else {
+        //try image dimensions using max width...
+        CGFloat maxWidthScale = allowableMaxWidth / imgWidth;
+        CGFloat scaledImgHeight = imgHeight * maxWidthScale;
+        CGFloat scaledImgWidth;
+        if(scaledImgHeight < allowableMaxHeight) {
+            scaledImgWidth = imgWidth * maxWidthScale; //should be same as columnWidth
+        }
+        //..otherwise, try image dimensions using max height
+        else {
+            CGFloat maxHeightScale = allowableMaxHeight / imgHeight;
+            scaledImgWidth = imgWidth * maxHeightScale;
+            scaledImgHeight = imgHeight * maxHeightScale;
+            imgXOffset = (columnWidth - scaledImgWidth) / 2; //offset to center image
+        }
+        imgBounds = CGRectMake(0.0, 0.0, scaledImgWidth, scaledImgHeight);
+    }
+    
+    return imgBounds;
 }
 
 //standard body fonts
@@ -265,7 +327,7 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
     __block NSNumber *height = [NSNumber numberWithInt:0];
     __block NSString *fileName = @"";
     __block NSString *clipFileName = @"";
-    __block NSNumber *scaling = [NSNumber numberWithFloat:1.0]; //if width needs to be adjusted to fit in the column, so does height
+//    __block NSNumber *scaling = [NSNumber numberWithFloat:1.0]; //if width needs to be adjusted to fit in the column, so does height
     
     //width
     NSRegularExpression* widthRegex = [[NSRegularExpression alloc] initWithPattern:@"(?<=width=\")[^\"]+" options:0 error:NULL];
@@ -273,12 +335,13 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
                                  options:0
                                    range:NSMakeRange(0, [tag length])
                               usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-                                  CGFloat screenWidth = size.size.width - 60; //account for insetting TODO might need better computation
-                                  CGFloat imageWidth = [[tag substringWithRange: match.range] floatValue];
-                                  width = imageWidth > screenWidth ?
-                                  [NSNumber numberWithFloat:screenWidth] :
-                                  [NSNumber numberWithFloat:imageWidth];
-                                  scaling = [NSNumber numberWithFloat:[width floatValue] / imageWidth];
+//                                  CGFloat screenWidth = size.size.width - 60; //account for insetting TODO might need better computation
+//                                  CGFloat imageWidth = [[tag substringWithRange: match.range] floatValue];
+//                                  width = imageWidth > screenWidth ?
+//                                  [NSNumber numberWithFloat:screenWidth] :
+//                                  [NSNumber numberWithFloat:imageWidth];
+//                                  scaling = [NSNumber numberWithFloat:[width floatValue] / imageWidth];
+                                  width = [NSNumber numberWithFloat:[[tag substringWithRange: match.range] floatValue]];
                               }];
     
     //height
@@ -287,8 +350,9 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
                                   options:0
                                     range:NSMakeRange(0, [tag length])
                                usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-                                   NSNumber *unscaledHeight = [NSNumber numberWithInt: [[tag substringWithRange:match.range] intValue]];
-                                   height = [NSNumber numberWithFloat:[unscaledHeight floatValue] * [scaling floatValue]];
+//                                   NSNumber *unscaledHeight = [NSNumber numberWithInt: [[tag substringWithRange:match.range] intValue]];
+//                                   height = [NSNumber numberWithFloat:[unscaledHeight floatValue] * [scaling floatValue]];
+                                   height = [NSNumber numberWithFloat:[[tag substringWithRange:match.range] floatValue]];
                                }];
     
     //image URL

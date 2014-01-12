@@ -10,6 +10,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 
+static CGFloat textContainerWidth;
+static CGFloat textContainerHeight;
+
 @interface CTEMarkupParser : NSObject
 
 @property (strong, nonatomic) NSString *font;
@@ -29,9 +32,12 @@ extern NSString * const GeorgiaFontKey;
 extern NSString * const PalatinoFontKey;
 extern NSString * const TimesNewRomanFontKey;
 
-+(NSDictionary *)bodyFontDictionary;
-+(NSDictionary *)bodyFontItalicDictionary;
--(NSAttributedString *)attrStringFromMarkup:(NSString *)html screenSize:(CGRect)size;
--(void)resetParser;
++ (void)setTextContainerWidth:(CGFloat)width;
++ (void)setTextContainerHeight:(CGFloat)height;
++ (CGRect)calculateImageBounds:(UIImage *)img containerBounds:(CGRect)bounds metadata:(NSDictionary *)imgMetadata;
++ (NSDictionary *)bodyFontDictionary;
++ (NSDictionary *)bodyFontItalicDictionary;
+- (NSAttributedString *)attrStringFromMarkup:(NSString *)html screenSize:(CGRect)size;
+- (void)resetParser;
 
 @end

@@ -9,6 +9,7 @@
 #import "CTEView.h"
 #import "CTEColumnView.h"
 #import "CTEConstants.h"
+#import "CTEMarkupParser.h"
 
 @interface CTEView() {
     int imagesLoaded;
@@ -17,8 +18,6 @@
 @end
 
 @implementation CTEView
-
-NSString *const HTTP_PREFIX = @"http://";
 
 @synthesize viewDelegate;
 @synthesize columns;
@@ -90,6 +89,14 @@ NSString *const HTTP_PREFIX = @"http://";
     CGRect textFrame = CGRectInset(scrollBounds, frameXOffset, frameYOffset);
     CGPathAddRect(path, NULL, textFrame);
     
+    //column sizing is standard across all columns
+    CGFloat colRectWidth = [self columnWidthWithLeftMargin:columnWidthLeftMargin
+                                               rightMargin:columnWidthRightMargin
+                                                frameWidth:textFrame.size.width];
+    CGFloat colRectHeight = textFrame.size.height - 40;
+    [CTEMarkupParser setTextContainerWidth:colRectWidth];
+    [CTEMarkupParser setTextContainerHeight:colRectHeight];
+    
     //build for all chapters in order
     int columnIndex = 0;
     for(NSNumber *key in self.orderedKeys) {
@@ -106,10 +113,6 @@ NSString *const HTTP_PREFIX = @"http://";
         //check if column count isn't even; if not, means it's in mid-page and should create an empty column
         //this ensure chapters always begin on a new page
         if(pageCount != floorPageCount) {
-            CGFloat colRectWidth = [self columnWidthWithLeftMargin:columnWidthLeftMargin
-                                                       rightMargin:columnWidthRightMargin
-                                                        frameWidth:textFrame.size.width];
-            CGFloat colRectHeight = textFrame.size.height - 40;
             CGPoint colOffset = CGPointMake([self offsetXForColumn:columnIndex frameWidth:textFrame.size.width], 20);
             CGRect colRect = CGRectMake(0, 0, colRectWidth, colRectHeight);
             CGMutablePathRef path = CGPathCreateMutable();
@@ -126,11 +129,6 @@ NSString *const HTTP_PREFIX = @"http://";
         
         while (textPos < [attString length]) {
             NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
-            
-            CGFloat colRectWidth = [self columnWidthWithLeftMargin:columnWidthLeftMargin
-                                                       rightMargin:columnWidthRightMargin
-                                                        frameWidth:textFrame.size.width];
-            CGFloat colRectHeight = textFrame.size.height - 40;
             CGPoint colOffset = CGPointMake([self offsetXForColumn:columnIndex frameWidth:textFrame.size.width], 20);
             CGRect colRect = CGRectMake(0, 0, colRectWidth, colRectHeight);
             
@@ -169,8 +167,7 @@ NSString *const HTTP_PREFIX = @"http://";
                     
                     //remote image; load in async
                     if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
-                        //placeholder image for now
-                        //TODO images should be dynamically sized based on column width & height
+                        //set placeholder image until image is loaded
                         NSNumber *imageWidth = [imageInfo objectForKey:@"width"];
                         NSNumber *imageHeight = [imageInfo objectForKey:@"height"];
                         
@@ -183,6 +180,7 @@ NSString *const HTTP_PREFIX = @"http://";
                         [self addImage:img forColumn:content frameRef:frameRef imageInfo:imageInfo];
                         
                         //download the image asynchronously
+                        //TODO this should be replaced by a more efficient image manager framework
                         [self downloadImageWithURL:[NSURL URLWithString:imgFileName] completionBlock:^(BOOL succeeded, UIImage *image) {
                             if (succeeded) {
                                 [self replaceImage:image forColumn:content imageInfo:imageInfo];
@@ -271,7 +269,10 @@ NSString *const HTTP_PREFIX = @"http://";
 }
 
 //inserts image and associated info into correct CTColumnView
-- (void)addImage:(UIImage *)img forColumn:(CTEColumnView *)col frameRef:(CTFrameRef)frameRef imageInfo:(NSDictionary *)imageInfo {
+- (void)addImage:(UIImage *)img
+       forColumn:(CTEColumnView *)col
+        frameRef:(CTFrameRef)frameRef
+       imageInfo:(NSDictionary *)imageInfo {
     NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frameRef);
     CGPoint origins[[lines count]];
     CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), origins);
@@ -360,7 +361,7 @@ NSString *const HTTP_PREFIX = @"http://";
     }
 }
 
-//Current page
+//Current page, computed dynamically based on position
 - (int)getCurrentPage {
     CGFloat pageWidth = self.frame.size.width;
     return floor((self.contentOffset.x - pageWidth / 2) / pageWidth) + 1;

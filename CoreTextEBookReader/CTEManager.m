@@ -28,12 +28,12 @@
                         andChapters:(NSArray *)chapters
                         andBarColor:(UIColor *)color
                   andHighlightColor:(UIColor *)highlight {
-    CTEManager *delegate = [[CTEManager alloc] init];
-    if(delegate) {
-        delegate.window = appWindow;
-        delegate.chapters = chapters;
-        delegate.barColor = color;
-        delegate.highlightColor = highlight;
+    CTEManager *manager = [[CTEManager alloc] init];
+    if(manager) {
+        manager.window = appWindow;
+        manager.chapters = chapters;
+        manager.barColor = color;
+        manager.highlightColor = highlight;
         
         // create the content view controller that contains detail content
         CTEContentViewController *contentViewCtrlr = nil;
@@ -43,64 +43,64 @@
         CTEMenuViewController *menuViewCtrlr = nil;
         
         //create att strs for all chapters
-        [CTEManager buildAttStringsForDelegate:delegate chapters:chapters notification:nil];
+        [CTEManager buildAttStringsForDelegate:manager chapters:chapters notification:nil];
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPadView"
                                                                           bundle:nil
-                                                                        chapters:delegate.chapters
-                                                                      attStrings:delegate.attStrings
-                                                                          images:delegate.images
-                                                                           links:delegate.links
-                                                                        barColor:delegate.barColor];
+                                                                        chapters:manager.chapters
+                                                                      attStrings:manager.attStrings
+                                                                          images:manager.images
+                                                                           links:manager.links
+                                                                        barColor:manager.barColor];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPadView"
                                                                     bundle:nil
-                                                            highlightColor:delegate.highlightColor];
+                                                            highlightColor:manager.highlightColor];
         }
         else {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPhoneView"
                                                                           bundle:nil
-                                                                        chapters:delegate.chapters
-                                                                      attStrings:delegate.attStrings
-                                                                          images:delegate.images
-                                                                           links:delegate.links
-                                                                        barColor:delegate.barColor];
+                                                                        chapters:manager.chapters
+                                                                      attStrings:manager.attStrings
+                                                                          images:manager.images
+                                                                           links:manager.links
+                                                                        barColor:manager.barColor];
             menuViewCtrlr = [[CTEMenuViewController alloc] initWithNibName:@"MenuiPhoneView"
                                                                     bundle:nil
-                                                            highlightColor:delegate.highlightColor];
+                                                            highlightColor:manager.highlightColor];
         }
         
-        delegate.contentViewController = contentViewCtrlr;
-        delegate.menuViewController = menuViewCtrlr;
-        delegate.menuViewController.chapterData = chapters;
+        manager.contentViewController = contentViewCtrlr;
+        manager.menuViewController = menuViewCtrlr;
+        manager.menuViewController.chapterData = chapters;
         
-        [[NSNotificationCenter defaultCenter] addObserver:delegate
+        [[NSNotificationCenter defaultCenter] addObserver:manager
                                                  selector:@selector(sideMenuWillBeShown:)
                                                      name:ShowSideMenu
                                                    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:delegate
+        [[NSNotificationCenter defaultCenter] addObserver:manager
                                                  selector:@selector(sideMenuWasHidden:)
                                                      name:HideSideMenu
                                                    object:nil];
         //listen for view option changes
-        [[NSNotificationCenter defaultCenter] addObserver:delegate
+        [[NSNotificationCenter defaultCenter] addObserver:manager
                                                  selector:@selector(contentViewOptionsUpdated:)
                                                      name:ChangeFont
                                                    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:delegate
+        [[NSNotificationCenter defaultCenter] addObserver:manager
                                                  selector:@selector(contentViewOptionsUpdated:)
                                                      name:ChangeFontSize
                                                    object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:delegate
+        [[NSNotificationCenter defaultCenter] addObserver:manager
                                                  selector:@selector(contentViewOptionsUpdated:)
                                                      name:ChangeColumnCount
                                                    object:nil];
         
         //set the rootViewController to the contentViewController
-        delegate.window.rootViewController = delegate.contentViewController;
+        manager.window.rootViewController = manager.contentViewController;
     }
     
-    return delegate;
+    return manager;
 }
 
 //Parses all chapters and builds appropriate att strings using delegate settings

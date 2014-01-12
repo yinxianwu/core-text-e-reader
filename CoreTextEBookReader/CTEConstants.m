@@ -26,4 +26,7 @@ CGFloat const PageTurnBoundaryPad = 100.0;
 //labels
 NSString * const NavigationBarTitle = @"CoreTextEBookReader";
 
+//others
+NSString *const HTTP_PREFIX = @"http://";
+
 @end
