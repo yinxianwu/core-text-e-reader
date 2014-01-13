@@ -1,7 +1,7 @@
 <font color="black" size="24.0" strokeColor="gray" face="GillSans-Bold">Isle to Isle
 <font color="black" size="18.0" strokeColor="gray" face="GillSans-Bold">London & Dublin
 
-<img src="http://www.holisticideas.com/wtrmobile/images/BigBenGoldenSunlight.jpg" width="240" height="320">
+<img src="http://www.holisticideas.com/wtrmobile/images/BigBenGoldenSunlight.jpg"  width="768" height="1024">
 
 <font color="black" size="BODY_FONT_SIZE" strokeColor="gray" face="BODY_FONT">I pour down the jetway into a cloudy London morning filtering through windows of a building under renovation. A mess of exposed ceilings and faded, half-torn-out 1980s décor is my hello to the U.K. Heathrow’s Terminal Four is in use beyond its expected lifespan while kinks are ironed out at the flashy yet troubled new Terminal Five.
 
@@ -55,7 +55,7 @@ Nevertheless, some things resonate: the bored-looking young woman in the Manet p
 
 Joy’s parents, Sidney and Ray, hold mystical import in my family: my sisters and I owe them our very existence. Decades ago they cajoled my then-hesitant mother to call back the fellow with the unpronounceable name when both were here on a visit from opposite sides of the world. To commemorate the occasion I meet the elder pair at Fortnum &amp; Mason, a three-hundred-year-old department store whose top-floor St. James Restaurant has to be the best place to enjoy afternoon “cream tea”: a long, classically done-up chamber in a pastiche of blues and satin-white moldings. A grand piano provides the finishing touch. The tea and melt-in-your-mouth scones deliver the goods—as does the clotted cream, a buttery-looking but impossibly light concoction that lesser establishments try to substitute with the plain old whipped variety.
 
-<img src="http://www.holisticideas.com/wtrmobile/images/SconesCU.jpg" width="320" height="240">
+<img src="http://www.holisticideas.com/wtrmobile/images/SconesCU.jpg"  width="1024" height="768">
 
  Sidney and Ray make me reflect on how people age—something I think about more and more as the sun begins to set on my thirties. Fair-skinned Sidney is as chipper, jovial, and sharp as he was two decades ago: he segues from bad puns to discussions of computer software as effortlessly as I spread cream on my scones. His wife, Ray, a heavyset, olive-skinned woman whose jet-black hair has gone gray, is not so fortunate: her once sharp wit has turned hazy; a diagnosis made not long after my visit reveals she’s in the earliest stages of Alzheimer’s.
 
@@ -83,13 +83,13 @@ Fair enough. I agree. No terms of endearment. Our conversation feels good, somet
 
 London suburbs give way to iridescent rural green. The train tilts and glides north from Euston Station, up through the spine of England and into northern Wales. Fittingly, I see poxy white dots of grazing sheep in the field, and, farther on, hollowed-out ruins of ancient stone castles. I half-expect a gaggle of Monty Pythoners to turn up, on the run from airborne cows or killer bunnies.
 
-<img src="http://www.holisticideas.com/wtrmobile/images/WelshCountrysideSheep.jpg" width="320" height="240">
+<img src="http://www.holisticideas.com/wtrmobile/images/WelshCountrysideSheep.jpg"  width="1024" height="768">
 
 We arrive under slate-gray skies at the ferryport in Holyhead, Wales. It’s pretty quiet; my guess is Tuesday in late September isn’t exactly peak season to cross the Irish Sea.
 
 The term “ferry”—conjuring up in my memory those modest vessels across Lake Champlain in Vermont—almost seems like an insult to this behemoth. At around 600 feet long and over 20,000 tons displacement, this ship is the size of ocean liners of yore. Much of its space is reserved for vehicles, but there’s still ample room in the three or so passenger decks—which include three restaurants, two movie theatres, a deluxe “club lounge,” and a currency-exchange office—to spread out. I explore the vessel’s nooks and crannies and catch a nap on one of the leather sofas. A couple of hours later and we arrive in Dublin. My first-ever passport stamp in the European Union.
 
-<img src="http://www.holisticideas.com/wtrmobile/images/UlyssesFerry.jpg" width="320" height="240">
+<img src="http://www.holisticideas.com/wtrmobile/images/UlyssesFerry.jpg"  width="1024" height="768">
 
 Ireland’s done well in the EU. This is immediately apparent on the taxi ride along the riverbank into the central city: gleaming new office towers, upscale shops, gossamer-light metal footbridges traversing the river. The heavy gloss of prosperity.
 
@@ -127,13 +127,13 @@ As I stop for breakfast the small voice in my head returns: <font face="BODY_FON
 
 Meanwhile, on to daytime activities: sitting in a bagel joint in Temple Bar begins to rev up my curiosity machine. <font face="BODY_FONT_ITALIC">How did it get that way?<font face="BODY_FONT"> The neighborhood, not the bagel place. It’s the question that nags constantly for the curious, history-minded traveler—this one at least—that is, whenever nightlife and tumescent nineteen-year-olds aren’t keeping me otherwise distracted.
 
-<img src="http://www.holisticideas.com/wtrmobile/images/TempleBar.jpg" width="240" height="320">
+<img src="http://www.holisticideas.com/wtrmobile/images/TempleBar.jpg"  width="768" height="1024">
 
 A few plaques on buildings reveal that Temple Bar is not named for its present-day use as sousing central (though of course there is a bar <font face="BODY_FONT_ITALIC">called<font face="BODY_FONT"> the Temple Bar…that turn of phrase was too good to pass up). Wandering its narrow laneways lined with townhomes in the sober light of day, I learn it’s named for the riverbank on which it sits. Nearby is an equally misnamed relic, a sprawl of mismatched structures. Dublin Castle.
 
 <font face="BODY_FONT_ITALIC">English, Irish, whatever<font face="BODY_FONT">: I knew about the I.R.A. and Home Rule and all that, but in North America it’s a blurry distinction, Celt from Briton. Well, not here: the English controlled Ireland for eight hundred years, and the center of their power was this sprawling complex with an Anglo-Norman tower—okay, <font face="BODY_FONT_ITALIC">this<font face="BODY_FONT"> part looks like a castle—at its heart.
 
-<img src="http://www.holisticideas.com/wtrmobile/images/DublinCastleTower1.jpg" width="320" height="240">
+<img src="http://www.holisticideas.com/wtrmobile/images/DublinCastleTower1.jpg"  width="1024" height="768">
 
 Another icon looms not far away. <font face="BODY_FONT_ITALIC">My first church in the Old World<font face="BODY_FONT">, I muse while ambling into soaring St. Patrick’s Cathedral. <font face="BODY_FONT_ITALIC">Probably not the last<font face="BODY_FONT"> is the thought that immediately follows. Still, this place provokes a tremble: it’s <font face="BODY_FONT_ITALIC">the<font face="BODY_FONT"> St. Patrick’s. Built on the spot where the man himself began Christianizing the Irish circa 500 AD.
 
@@ -157,7 +157,7 @@ We pick up speed once out on the Bay. The boats engage in a bit of a splashing a
 
 “See that water,” our guide says, pointing to the surface. A layer of liquid is peeling back like a bedsheet. “That’s the tide going out.” I’m told this is the sunniest day in Dublin in weeks, and we’re all a bit warm out on the water in musty-smelling orange life preservers.
 
-<img src="http://www.holisticideas.com/wtrmobile/images/SeaSafariAIBGuys3.jpg" width="320" height="240">
+<img src="http://www.holisticideas.com/wtrmobile/images/SeaSafariAIBGuys3.jpg"  width="1024" height="768">
 
 We return to the dock exhilarated. Valuable Lesson for me, the diligent planner: stick my nose out of the guidebook or Wikitravel page and just go with the flow sometimes.
 

@@ -22,11 +22,29 @@ NSString * const PageBackward = @"PageBackward";
 //settings
 CGFloat const PageTurnBoundaryPhone = 50.0;
 CGFloat const PageTurnBoundaryPad = 100.0;
+CGFloat const MaxImageColumnHeightRatio = 0.6;
 
 //labels
 NSString * const NavigationBarTitle = @"CoreTextEBookReader";
 
+//fonts
+NSString * const BodyFontKey = @"BODY_FONT";
+NSString * const BodyItalicFontKey = @"BODY_FONT_ITALIC";
+NSString * const BodyFontSizeKey = @"BODY_FONT_SIZE";
+NSString * const BaskervilleFontKey = @"Baskerville";
+NSString * const GeorgiaFontKey = @"Georgia";
+NSString * const PalatinoFontKey = @"Palatino";
+NSString * const TimesNewRomanFontKey = @"Times New Roman";
+NSString * const BaskervilleFont = @"Baskerville";
+NSString * const GeorgiaFont = @"Georgia";
+NSString * const PalatinoFont = @"Palatino-Roman";
+NSString * const TimesNewRomanFont = @"TimesNewRomanPSMT";
+NSString * const BaskervilleFontItalic = @"Baskerville-Italic";
+NSString * const GeorgiaFontItalic = @"Georgia-Italic";
+NSString * const PalatinoFontItalic = @"Palatino-Italic";
+NSString * const TimesNewRomanFontItalic = @"TimesNewRomanPS-ItalicMT";
+
 //others
-NSString *const HTTP_PREFIX = @"http://";
+NSString *const HttpPrefix = @"http://";
 
 @end

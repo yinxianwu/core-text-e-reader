@@ -10,6 +10,7 @@
 #import "CTEUtils.h"
 #import "CTEView.h"
 #import "CTEConstants.h"
+#import "CTEMarkupParser.h"
 
 @interface CTEColumnView()
 @end
@@ -58,7 +59,6 @@
 		CGPoint origin = origins[i];
 		CGPathRef path = CTFrameGetPath((__bridge CTFrameRef)(ctFrame));
 		CGRect rect = CGPathGetBoundingBox(path);
-		
 		CGFloat y = rect.origin.y + rect.size.height - origin.y;
         
 		if ((location.y >= y) && (location.x >= origin.x)) {
@@ -176,7 +176,6 @@
     
     // Flip the coordinate system
     CGFloat columnHeight = self.bounds.size.height;
-    CGFloat columnWidth = self.bounds.size.width;
     CGContextSetTextMatrix(context, CGAffineTransformIdentity);
     CGContextTranslateCTM(context, 0, columnHeight);
     CGContextScaleCTM(context, 1.0, -1.0);
@@ -184,73 +183,16 @@
     //draw text
     CTFrameDraw((__bridge CTFrameRef)ctFrame, context);
     
-    //draw images
+    //draw images using size created in markup parset
     int imageIndex = 0;
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenBounds.size.width;
-    CGFloat screenHeight = screenBounds.size.height;
     for (NSArray *imageData in self.imagesWithMetadata) {
         UIImage *img = [imageData objectAtIndex:0];
-        CGFloat imgWidth = img.size.width;
-        CGFloat imgHeight = img.size.height;
         NSDictionary *imgMetadata = [imageData objectAtIndex:2];
+        CGRect imgBounds = CGRectFromString([imageData objectAtIndex:1]);
         
-        //RULE: we ignore size tags for remote images and size per column dimensions:
-        //- size proportionately up to column width up to half screen width OR
-        //- size proportionately up to half of column height
-        NSString *imgFileName = (NSString *)[imgMetadata objectForKey:@"fileName"];
-        NSString *fileNamePrefix = [imgFileName substringToIndex:[HTTP_PREFIX length]];
-        CGRect imgBounds;
-        CGFloat imgXOffset = 0.0;
-        if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
-            //allowable max width: column width up to half of screen width
-            CGFloat allowableMaxWidth = (columnWidth * 2) < screenWidth ?
-                                        columnWidth :
-                                        screenWidth / 2;
-            //allowable max height: 3/5 of screen height (columns are always full-height, less insets)
-            CGFloat allowableMaxHeight = screenHeight * 0.6;
-
-            //if image is smaller than both allowable max width and height, just use it as is
-            if(imgWidth < allowableMaxWidth && imgHeight < allowableMaxHeight) {
-                imgBounds = CGRectFromString([imageData objectAtIndex:1]);
-            }
-            else {
-                //try image dimensions using max width...
-                CGFloat maxWidthScale = allowableMaxWidth / imgWidth;
-                CGFloat scaledImgHeight = imgHeight * maxWidthScale;
-                CGFloat scaledImgWidth;
-                if(scaledImgHeight < allowableMaxHeight) {
-                    scaledImgWidth = imgWidth * maxWidthScale; //should be same as columnWidth
-                }
-                //..otherwise, try image dimensions using max height
-                else {
-                    CGFloat maxHeightScale = allowableMaxHeight / imgHeight;
-                    scaledImgWidth = imgWidth * maxHeightScale;
-                    scaledImgHeight = imgHeight * maxHeightScale;
-                    imgXOffset = (columnWidth - scaledImgWidth) / 2; //offset to center image
-                }
-                imgBounds = CGRectMake(0.0, 0.0, scaledImgWidth, scaledImgHeight);
-            }
-        }
-        //use local images as-is
-        else {
-            imgBounds = CGRectFromString([imageData objectAtIndex:1]);
-        }
-        
-
-//        CGFloat imgXOffset = 0.0;
-    
-        
-        
-//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//            imgWidthOffset = (columnWidth - imgBounds.size.width) / 2;
-//        }
-//        //adjustment for single-column iPhone layout
-//        //TODO MarkupParser should account for this...
-//        else {
-//            imgWidthOffset = ((columnWidth - imgBounds.size.width) / 2) - 20; 
-//        }
-        CGContextTranslateCTM(context, imgXOffset, 0); //center image
+        //center all images in column
+        CGFloat imgXOffset = (self.bounds.size.width - imgBounds.size.width) / 2;
+        CGContextTranslateCTM(context, imgXOffset, 0);
         CGContextDrawImage(context, imgBounds, img.CGImage);
         
         //play button for movie previews

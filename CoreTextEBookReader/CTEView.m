@@ -90,12 +90,12 @@
     CGPathAddRect(path, NULL, textFrame);
     
     //column sizing is standard across all columns
-    CGFloat colRectWidth = [self columnWidthWithLeftMargin:columnWidthLeftMargin
+    CGFloat colRectWidth = [self columnWidthWithInset:columnWidthLeftMargin
                                                rightMargin:columnWidthRightMargin
                                                 frameWidth:textFrame.size.width];
     CGFloat colRectHeight = textFrame.size.height - 40;
     [CTEMarkupParser setTextContainerWidth:colRectWidth];
-    [CTEMarkupParser setTextContainerHeight:colRectHeight];
+//    [CTEMarkupParser setTextContainerHeight:colRectHeight];
     
     //build for all chapters in order
     int columnIndex = 0;
@@ -159,14 +159,14 @@
                 
                 //local versus online images
                 NSString *imgFileName = [imageInfo objectForKey:@"fileName"];
-                NSString *fileNamePrefix = [imgFileName substringToIndex:[HTTP_PREFIX length]];
+                NSString *fileNamePrefix = [imgFileName substringToIndex:[HttpPrefix length]];
 
                 if(imgLocation >= textPos && imgLocation < textPos + frameRange.length) {
                     NSLog(@"imgFileName %@ exists in column between text post %d and %ld", imgFileName, textPos, (textPos + frameRange.length));
                     UIImage *img = nil;
                     
                     //remote image; load in async
-                    if([fileNamePrefix isEqualToString:HTTP_PREFIX]) {
+                    if([fileNamePrefix isEqualToString:HttpPrefix]) {
                         //set placeholder image until image is loaded
                         NSNumber *imageWidth = [imageInfo objectForKey:@"width"];
                         NSNumber *imageHeight = [imageInfo objectForKey:@"height"];
@@ -219,7 +219,7 @@
 }
 
 //Returns column width with specified laft & right margins
-- (CGFloat)columnWidthWithLeftMargin:(float)leftMargin rightMargin:(float)rightMargin frameWidth:(CGFloat)frameWidth {
+- (CGFloat)columnWidthWithInset:(float)leftMargin rightMargin:(float)rightMargin frameWidth:(CGFloat)frameWidth {
     CGFloat colWidth = (frameWidth / self.pageColumnCount) - leftMargin - rightMargin;
     //iPad adjustments
     if(self.pageColumnCount == 1 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -301,9 +301,9 @@
                 CGPathRef pathRef = CTFrameGetPath(frameRef);
                 CGRect colRect = CGPathGetBoundingBox(pathRef);
                 
-                CGRect imgBounds = CGRectOffset(runBounds,
-                                                colRect.origin.x - frameXOffset - self.contentOffset.x,
-                                                colRect.origin.y - frameYOffset - self.frame.origin.y);
+                CGFloat imgXOffset = -runBounds.origin.x; //left edge; column views will center in drawRect
+                CGFloat imgYOffset = colRect.origin.y - frameYOffset - self.frame.origin.y;
+                CGRect imgBounds = CGRectOffset(runBounds, imgXOffset, imgYOffset);
                 //Add image to the column view; metadata at index 2; img at index 0; TODO REPLACE WITH SOMETHING OBJECT-Y!!!
                 NSMutableArray *imageData = [NSMutableArray arrayWithObjects:img, NSStringFromCGRect(imgBounds), imageInfo, nil];
                 [col.imagesWithMetadata addObject:imageData];

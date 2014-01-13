@@ -5,7 +5,7 @@
 
 That was one friend’s take on the Eurostar trip beneath the English Channel. But nay, I refuse, <font face="BODY_FONT_ITALIC">refuse<font face="BODY_FONT">, to be so blasé about the engineering triumph of the late-twentieth century. When I heard of the completion of the EuroTunnel—the rail tube running between Britain and mainland Europe—I vowed to make it my first Channel crossing. In spite of cost overruns, initially low ridership, and—only a few weeks before I board—a fire in the tunnel that reduces service, nothing stands in my way of crossing this body of water without leaving terra firma—or, for that matter, my seat.
 
-<img src="http://www.holisticideas.com/wtrmobile/images/EurostarCoach.jpg" width="320" height="240">
+<img src="http://www.holisticideas.com/wtrmobile/images/EurostarCoach.jpg"  width="1024" height="768">
 
 The escalator offers a slow-motion reveal of the long, sleek, blue-yellow-and-white tube of wheeled steel. Even though I’m in First Class, my plushy gray seat is a bit worn—a reminder that all this is business-as-usual travel in these parts.
 
@@ -17,7 +17,7 @@ As we glide out of the station on time, a voice comes over the intercom indicati
 
 <font face="BODY_FONT_ITALIC">Tragedy<font face="BODY_FONT">.
 
-<mov src="http://www.holisticideas.com/wtrmobile/movies/Eurostar.jpg" clip="http://www.holisticideas.com/wtrmobile/movies/EurostarSmall.mp4" width="320" height="240">
+<mov src="http://www.holisticideas.com/wtrmobile/movies/Eurostar.jpg" clip="http://www.holisticideas.com/wtrmobile/movies/EurostarSmall.mp4"  width="1024" height="768">
 
 High-speed rail lines are purpose built: their solid welded tracks, curved embankments to handle centrifugal forces, and grade-separated construction (no street-level crossings) facilitate speeds in excess of 150 miles an hour. To enable such velocity, these trainsets—using the same TGV technology as those in France—are known as “EMU.” Not after the animal, but short for “Electric Multiple Unit.” Each train car is a locomotive in and of itself. As we leave suburban London and reach the countryside around Kent, I spot cars on the freeway traveling at half our speed.  
 
@@ -31,7 +31,7 @@ Brussels is boring. Or so they say. I don’t bother finding out as I’m more i
 
 Bruges is perhaps the ideal spot to indulge anyone’s “how did it get that way?” fixation. It was, by my estimation, the New York City of the 1200s: a Middle Ages trading powerhouse equivalent to the London of the day. But times and the city’s fortune changed: West Flanders declined in power and importance, and the city’s river silted in, leaving Bruges cut off from the sea. (A latter-day nearby port, Zeebrugge, retains some importance.)  
 
-<img src="http://www.holisticideas.com/wtrmobile/images/BrugesMarktDusk.jpg" width="320" height="240">
+<img src="http://www.holisticideas.com/wtrmobile/images/BrugesMarktDusk.jpg"  width="1024" height="768">
 
 An early-evening reconnoiter reveals few cars but lots of bicycles speeding along the narrow, curving streets. I’m nearly jingle-belled to death, a fate I suspect the Brugians enjoy inflicting on the hordes of tourists passing through their burg. I reach Markt, the main town square, shrouded in the moody mist. It’s adorably lined with upscale touristy eateries and stairstep-gabled roofs. With lights aglow and horses atrot on the cobbles, it’s hard not to feel overcome with nostalgia and romance and think…
 
@@ -55,15 +55,15 @@ I hold—with what some dismiss as religious fervor, but what do they know?—th
 
 Since I’ve never seen it back home, I try the denser, chewier “Liege-style” variety…drizzled with chocolate syrup, of course. Oh sure, it’s touristy: I’m guessing not one of this vendor’s clientele is local. But really, <font face="BODY_FONT_ITALIC">so what<font face="BODY_FONT">?
 
-<img src="http://www.holisticideas.com/wtrmobile/images/BrugesChocolateBreasts.jpg" width="240" height="320">
+<img src="http://www.holisticideas.com/wtrmobile/images/BrugesChocolateBreasts.jpg"  width="768" height="1024">
 
 More awaits in a nearby shop window: all manner of cacaoy bon bons, including a bunch done up as women’s breasts—ah, Europe! I resist the pull, however, and offer up a pledge to keep my girlish—uhm, boyish—waistline. Looking up at the church tower looming over Markt, I offer up a mantra to the gods of vanity and good health: <font face="BODY_FONT_ITALIC">I shall climb every major church steeple or cathedral tower<font face="BODY_FONT">.  
 
-<img src="http://www.holisticideas.com/wtrmobile/images/BellTowerSteps1.jpg" width="240" height="320">
+<img src="http://www.holisticideas.com/wtrmobile/images/BellTowerSteps1.jpg"  width="768" height="1024">
 
 Here in Bruges, that translates into 353 steps. Hardly a challenge for those in decent shape…well, okay, <font face="BODY_FONT_ITALIC">something<font face="BODY_FONT"> of a challenge: huffing and puffing a bit in the rarified air up top, I take in the sweeping view. Aside from the odd steeple everything’s a couple of stories tall, a prairie of humble roofs. All cities looked like this once, before the advent of structural steel and reinforced concrete
 
-<img src="http://www.holisticideas.com/wtrmobile/images/BrugesViewFromBellTower1.jpg" width="320" height="240">
+<img src="http://www.holisticideas.com/wtrmobile/images/BrugesViewFromBellTower1.jpg"  width="1024" height="768">
 
 To polish off Bruges, I discover—what else?—the town’s Chocolate Museum. More than cutesy displays hosted by cartoon elves, this place edifies: Belgium’s reputation as a confectionary powerhouse emerged through dominance of cacao-producing regions of Southeast Asia—though the bean itself emerged in Mesoamerica, in the New World.
 
@@ -71,7 +71,7 @@ To polish off Bruges, I discover—what else?—the town’s Chocolate Museum. M
 
 A surly ticket agent and two more train rides and I’m in Noord-Holland, in Amsterdam. Ditching the hostel scene for a spell, I find a reasonably priced, stylish, newly opened boutique hotel in a flat-façaded four-story townhome on Amsterdam’s Rodeo Drive, Pieter Cornelius Hoofstraat. Actually, make that five stories: the little top-floor room they give me feels just like an artist’s garret, complete with dormer window. It’s close enough to the Rijksmuseum that I hear its carillon chiming on the quarter-hour.  
 
-<img src="http://www.holisticideas.com/wtrmobile/images/AmsterdamSignCU.jpg" width="320" height="240">
+<img src="http://www.holisticideas.com/wtrmobile/images/AmsterdamSignCU.jpg"  width="1024" height="768">
 
 Like every bud-fiend passing through these parts I beeline it to a coffeeshop. John Travolta’s character from <font face="BODY_FONT_ITALIC">Pulp Fiction<font face="BODY_FONT"> had it right: cannabis is legal but it ain’t a hundred percent legal. The shops cannot advertise what they’re selling, and lighting up on the street is <font face="BODY_FONT_ITALIC">verboten<font face="BODY_FONT">. Interestingly, Dutch use of the stuff actually is lower than in many other countries; the coffeeshop contains mostly foreigners, though this is one time I’m happy to have the brand “tourist” stamped on my forehead. On the recommendation of some friends I stop in at Grey Area, a tiny establishment run by some expat Americans—the mellowest ones I’ve seen. The joint (pun intended) is festooned with colorful signs and bumper stickers; what <font face="BODY_FONT_ITALIC">is<font face="BODY_FONT"> it with cannabis culture and the overuse of goofy signage?  
 
@@ -105,7 +105,7 @@ Or perhaps my disappointment has an ulterior motive. I’d hoped to make this st
 
 Maybe the city’s other reputed vice will do the trick: testing out my Bruges hostel-mates’ theory, I happen upon one of those smartshops—oh, who am I kidding, I looked it up online—where magic mushrooms are clinically displayed in small illuminated acrylic cases.
 
-<img src="http://www.holisticideas.com/wtrmobile/images/MushroomsSign.jpg" width="240" height="320">
+<img src="http://www.holisticideas.com/wtrmobile/images/MushroomsSign.jpg"  width="768" height="1024">
 
 “You probably want to start with something not too strong,” says the elderly lady behind the counter. “Like these.”
 
@@ -121,6 +121,6 @@ Hours pass. As reality begins to reassert itself, I feel the need to wander the 
 
 In my childhood mind’s eye, I remember it resembled one of my grandmother’s nightstands. On a layover to Canada from the Middle East sometime in the seventies my family stayed here overnight. But in this altered state, that otherwise-banal recollection takes on phantasmagorical significance: a marker stone in my nomadic life. I find myself overcome with gratitude at this welcoming, sheltering city that housed my clan of errant travelers, long, long ago.
 
-<img src="http://www.holisticideas.com/wtrmobile/images/RedLightDistrictCanalNite.jpg" width="240" height="320">
+<img src="http://www.holisticideas.com/wtrmobile/images/RedLightDistrictCanalNite.jpg"  width="768" height="1024">
 
 So much for willful debauchery. Here in Europe’s pleasure capital the fates spur me toward deeper experiences. Even—especially—those chemically enhanced.</P>

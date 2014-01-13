@@ -7,33 +7,28 @@
 //
 
 #import "CTEMarkupParser.h"
+#import "CTEConstants.h"
 
 //used to compute space for image
 static CGFloat ascentCallback(void *ref){
-//    NSDictionary *imgMetadata = (__bridge NSDictionary*)ref;
-    NSString *val = (NSString*)[(__bridge NSDictionary*)ref objectForKey:@"height"];
-    return [val floatValue];
+    NSDictionary *imgMetadata = (__bridge NSDictionary*)ref;
+    CGRect imgDimensions = [CTEMarkupParser calculateImageBounds:imgMetadata];
+    return imgDimensions.size.height;
 }
 //used to compute space for image
+//TODO this isn't used
 static CGFloat descentCallback(void *ref){
     NSString *val = (NSString*)[(__bridge NSDictionary*)ref objectForKey:@"descent"];
     return [val floatValue];
 }
 //used to compute space for image
 static CGFloat widthCallback(void* ref){
-    NSString *val = (NSString*)[(__bridge NSDictionary*)ref objectForKey:@"width"];
-    return [val floatValue];
+    NSDictionary *imgMetadata = (__bridge NSDictionary*)ref;
+    CGRect imgDimensions = [CTEMarkupParser calculateImageBounds:imgMetadata];
+    return imgDimensions.size.width;
 }
 
 @implementation CTEMarkupParser
-
-NSString * const BodyFontKey = @"BODY_FONT";
-NSString * const BodyItalicFontKey = @"BODY_FONT_ITALIC";
-NSString * const BodyFontSizeKey = @"BODY_FONT_SIZE";
-NSString * const BaskervilleFontKey = @"Baskerville";
-NSString * const GeorgiaFontKey = @"Georgia";
-NSString * const PalatinoFontKey = @"Palatino";
-NSString * const TimesNewRomanFontKey = @"Times New Roman";
 
 @synthesize font;
 @synthesize fontSize;
@@ -60,43 +55,31 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
 
 //used in callbacks for making space for images
 + (void)setTextContainerWidth:(CGFloat)width {
-    textContainerWidth = width;
-}
-
-//used in callbacks for making space for images
-+ (void)setTextContainerHeight:(CGFloat)height {
-    textContainerHeight = height;
+    _textContainerWidth = width;
 }
 
 //gets image sizing based on parent container
-+ (CGRect)calculateImageBounds:(UIImage *)img containerBounds:(CGRect)bounds metadata:(NSDictionary *)imgMetadata {
-//    CGFloat columnHeight = bounds.size.height;
-    CGFloat columnWidth = bounds.size.width;
++ (CGRect)calculateImageBounds:(NSDictionary *)imgMetadata {
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenBounds.size.width;
     CGFloat screenHeight = screenBounds.size.height;
-    CGFloat imgWidth = img.size.width;
-    CGFloat imgHeight = img.size.height;
+    NSNumber *metaWidth = (NSNumber *)[imgMetadata objectForKey:@"width"];
+    NSNumber *metaHeight = (NSNumber *)[imgMetadata objectForKey:@"height"];
+    CGFloat imgWidth = [metaWidth floatValue];
+    CGFloat imgHeight = [metaHeight floatValue];
     
     //RULE: we ignore size tags for remote images and size per column dimensions:
     //- size proportionately up to column width up to half screen width OR
     //- size proportionately up to half of column height
-//    NSString *imgFileName = (NSString *)[imgMetadata objectForKey:@"fileName"];
     CGRect imgBounds;
-    CGFloat imgXOffset = 0.0;
     //allowable max width: column width up to half of screen width
-    CGFloat allowableMaxWidth = (columnWidth * 2) < screenWidth ?
-    columnWidth :
-    screenWidth / 2;
-    //allowable max height: 3/5 of screen height (columns are always full-height, less insets)
-    CGFloat allowableMaxHeight = screenHeight * 0.6;
+    CGFloat allowableMaxWidth = (_textContainerWidth * 2) < screenWidth ? _textContainerWidth : screenWidth / 2;
+    //allowable max height (columns are always full-height, less insets)
+    CGFloat allowableMaxHeight = screenHeight * MaxImageColumnHeightRatio;
     
     //if image is smaller than both allowable max width and height, just use it as is
     if(imgWidth < allowableMaxWidth && imgHeight < allowableMaxHeight) {
-        NSNumber *metaWidth = (NSNumber *)[imgMetadata objectForKey:@"width"];
-        NSNumber *metaHeight = (NSNumber *)[imgMetadata objectForKey:@"height"];
         imgBounds = CGRectMake(0.0, 0.0, [metaWidth floatValue], [metaHeight floatValue]);
-//        imgBounds = CGRectFromString([imageData objectAtIndex:1]);
     }
     else {
         //try image dimensions using max width...
@@ -111,7 +94,6 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
             CGFloat maxHeightScale = allowableMaxHeight / imgHeight;
             scaledImgWidth = imgWidth * maxHeightScale;
             scaledImgHeight = imgHeight * maxHeightScale;
-            imgXOffset = (columnWidth - scaledImgWidth) / 2; //offset to center image
         }
         imgBounds = CGRectMake(0.0, 0.0, scaledImgWidth, scaledImgHeight);
     }
@@ -120,33 +102,33 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
 }
 
 //standard body fonts
-+(NSDictionary*)bodyFontDictionary {
++ (NSDictionary*)bodyFontDictionary {
     static NSDictionary *BodyFontDictionary = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        BodyFontDictionary = @{BaskervilleFontKey: @"Baskerville",
-                               GeorgiaFontKey: @"Georgia",
-                               PalatinoFontKey: @"Palatino-Roman",
-                               TimesNewRomanFontKey: @"TimesNewRomanPSMT"};
+        BodyFontDictionary = @{BaskervilleFontKey: BaskervilleFont,
+                               GeorgiaFontKey: GeorgiaFont,
+                               PalatinoFontKey: PalatinoFont,
+                               TimesNewRomanFontKey: TimesNewRomanFont};
     });
     return BodyFontDictionary;
 }
 
 //standard italic body fonts
-+(NSDictionary *)bodyFontItalicDictionary {
++ (NSDictionary *)bodyFontItalicDictionary {
     static NSDictionary *BodyFontItalicDictionary = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        BodyFontItalicDictionary = @{BaskervilleFontKey: @"Baskerville-Italic",
-                                     GeorgiaFontKey: @"Georgia-Italic",
-                                     PalatinoFontKey: @"Palatino-Italic",
-                                     TimesNewRomanFontKey: @"TimesNewRomanPS-ItalicMT"};
+        BodyFontItalicDictionary = @{BaskervilleFontKey: BaskervilleFontItalic,
+                                     GeorgiaFontKey: GeorgiaFontItalic,
+                                     PalatinoFontKey: PalatinoFontItalic,
+                                     TimesNewRomanFontKey: TimesNewRomanFont};
     });
     return BodyFontItalicDictionary;
 }
 
 //resets parser and clears image cache
--(void)resetParser {
+- (void)resetParser {
     self.color = [UIColor blackColor];
     self.strokeColor = [UIColor whiteColor];
     self.strokeWidth = 0.0;
@@ -156,7 +138,7 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
 
 //Builds NSAttributedString from markup text
 //takes into account screen size
--(NSAttributedString*)attrStringFromMarkup:(NSString *)markup screenSize:(CGRect)size {
+- (NSAttributedString*)attrStringFromMarkup:(NSString *)markup screenSize:(CGRect)size {
     NSLog(@"MarkupParser: START attrStringFromMarkup");
 
     NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:@""];
@@ -327,7 +309,6 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
     __block NSNumber *height = [NSNumber numberWithInt:0];
     __block NSString *fileName = @"";
     __block NSString *clipFileName = @"";
-//    __block NSNumber *scaling = [NSNumber numberWithFloat:1.0]; //if width needs to be adjusted to fit in the column, so does height
     
     //width
     NSRegularExpression* widthRegex = [[NSRegularExpression alloc] initWithPattern:@"(?<=width=\")[^\"]+" options:0 error:NULL];
@@ -335,12 +316,6 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
                                  options:0
                                    range:NSMakeRange(0, [tag length])
                               usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-//                                  CGFloat screenWidth = size.size.width - 60; //account for insetting TODO might need better computation
-//                                  CGFloat imageWidth = [[tag substringWithRange: match.range] floatValue];
-//                                  width = imageWidth > screenWidth ?
-//                                  [NSNumber numberWithFloat:screenWidth] :
-//                                  [NSNumber numberWithFloat:imageWidth];
-//                                  scaling = [NSNumber numberWithFloat:[width floatValue] / imageWidth];
                                   width = [NSNumber numberWithFloat:[[tag substringWithRange: match.range] floatValue]];
                               }];
     
@@ -350,8 +325,6 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
                                   options:0
                                     range:NSMakeRange(0, [tag length])
                                usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-//                                   NSNumber *unscaledHeight = [NSNumber numberWithInt: [[tag substringWithRange:match.range] intValue]];
-//                                   height = [NSNumber numberWithFloat:[unscaledHeight floatValue] * [scaling floatValue]];
                                    height = [NSNumber numberWithFloat:[[tag substringWithRange:match.range] floatValue]];
                                }];
     
@@ -409,6 +382,7 @@ NSString * const TimesNewRomanFontKey = @"Times New Roman";
     NSDictionary* imgAttr = [NSDictionary dictionaryWithObjectsAndKeys:
                              width, @"width",
                              height, @"height",
+                             fileName, @"fileName",
                              nil];
     
     //set the delegate
