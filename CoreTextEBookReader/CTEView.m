@@ -95,7 +95,6 @@
                                                 frameWidth:textFrame.size.width];
     CGFloat colRectHeight = textFrame.size.height - 40;
     [CTEMarkupParser setTextContainerWidth:colRectWidth];
-//    [CTEMarkupParser setTextContainerHeight:colRectHeight];
     
     //build for all chapters in order
     int columnIndex = 0;

@@ -19,6 +19,7 @@
 @synthesize chapterTableView;
 @synthesize chapterData;
 @synthesize highlightColor;
+@synthesize currentChapterIndex = _currentChapterIndex;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
@@ -26,6 +27,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if(self) {
         self.highlightColor = color;
+        self.currentChapterIndex = 0; //first item selected by default
     }
     return self;
 }
@@ -59,8 +61,9 @@
 
     //always select first row if nothing selected
     if([chapterTableView indexPathForSelectedRow] == nil) {
-        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:0];
-        [chapterTableView selectRowAtIndexPath:indexPath animated:YES
+        long selectedIndex = _currentChapterIndex != nil ? _currentChapterIndex.longValue : 0;
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:selectedIndex inSection:0];
+        [chapterTableView selectRowAtIndexPath:indexPath animated:NO
                                 scrollPosition:UITableViewScrollPositionTop];
     }
 
@@ -112,10 +115,6 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:CellIdentifier];
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-        
-        //75 47 29 -- WTR cover brown
-        //TODO needs to be adjustable
-//        UIColor *cellSelectedColor = [UIColor colorWithRed:(75.0f / 255.0f) green:(47.0 / 255.0f) blue:(29.0f / 255.0f) alpha:1.0f];
         cell.selectedBackgroundView.backgroundColor = self.highlightColor;
         cell.textLabel.highlightedTextColor = [UIColor whiteColor];
         cell.detailTextLabel.highlightedTextColor = [UIColor whiteColor];
@@ -131,11 +130,12 @@
 // table view row selection: selects new chapter
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self slideThenHide];
+    _currentChapterIndex = [NSNumber numberWithLong:indexPath.row];
 }
 
 // this animates the screenshot back to the left before telling the app delegate to swap out the MenuViewController
 // it tells the app delegate using the completion block of the animation
--(void) slideThenHide {
+-(void)slideThenHide {
     NSIndexPath *indexPath = [chapterTableView indexPathForSelectedRow];
     __block id <CTEChapter> chapter = [self.chapterData objectAtIndex:indexPath.row];
     [UIView animateWithDuration:0.15
@@ -151,6 +151,17 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);
+}
+
+- (void)setCurrentChapterIndex:(NSNumber *)index {
+    _currentChapterIndex = index;
+    
+    if(_currentChapterIndex != nil) {
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:_currentChapterIndex.longValue inSection:0];
+        [chapterTableView selectRowAtIndexPath:indexPath
+                                      animated:NO
+                                scrollPosition:UITableViewScrollPositionTop];
+    }
 }
 
 //on a single tap of the screenshot, assume the user is done viewing the menu

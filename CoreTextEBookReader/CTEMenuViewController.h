@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
 @property (strong, nonatomic) NSArray *chapterData;
 @property (strong, nonatomic) UIColor *highlightColor;
+@property (strong, nonatomic) NSNumber *currentChapterIndex;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
