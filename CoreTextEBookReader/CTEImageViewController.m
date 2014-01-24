@@ -56,6 +56,10 @@
     tapGesture.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer:tapGesture];
     
+    UISwipeGestureRecognizer* swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeDown:)];
+    swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.view addGestureRecognizer:swipeGestureRecognizer];
+
     [super viewDidLoad];
 }
 
@@ -69,6 +73,11 @@
     else {
         [imageScrollView setZoomScale:2.0f animated:YES];
     }
+}
+
+//Swipe up closes view
+- (void)handleSwipeDown:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 //zoom handling

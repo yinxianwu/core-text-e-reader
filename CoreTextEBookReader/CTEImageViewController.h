@@ -16,5 +16,6 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil image:(UIImage *)img;
 - (IBAction)respondToCloseButton:(id)sender;
-
+- (void)handleImageDoubleTap:(id)sender;
+- (void)handleSwipeDown:(id)sender;
 @end
