@@ -48,8 +48,8 @@
     }
     
 	UITouch *touch = [touches anyObject];
-	CGPoint location = [touch locationInView:self];
-	location.y += (18.0 / 1.3); //TODO font size now is set in parser
+	CGPoint touchPoint = [touch locationInView:self];
+	touchPoint.y += (18.0 / 1.3); //TODO font size now is set in parser
 	CFArrayRef lines = CTFrameGetLines((__bridge CTFrameRef)(ctFrame));
 	CGPoint origins[CFArrayGetCount(lines)];
 	CTFrameGetLineOrigins((__bridge CTFrameRef)(ctFrame), CFRangeMake(0, 0), origins);
@@ -61,14 +61,14 @@
 		CGRect rect = CGPathGetBoundingBox(path);
 		CGFloat y = rect.origin.y + rect.size.height - origin.y;
         
-		if ((location.y >= y) && (location.x >= origin.x)) {
+		if ((touchPoint.y >= y) && (touchPoint.x >= origin.x)) {
 			line = CFArrayGetValueAtIndex(lines, i);
 			lineOrigin = origin;
 		}
 	}
 	
-	location.x -= lineOrigin.x;
-	CFIndex index = CTLineGetStringIndexForPosition(line, location);
+	touchPoint.x -= lineOrigin.x;
+	CFIndex index = CTLineGetStringIndexForPosition(line, touchPoint);
     
     //check to see if a link has been touched
     NSString *href = nil;
@@ -76,38 +76,51 @@
         NSNumber *linkLocation = [linkData objectForKey:@"location"];
         NSNumber *linkLength = [linkData objectForKey:@"length"];
         
-        long length = [linkLength longValue];
-        long location = [linkLocation longValue];
+        long linkLengthLong = [linkLength longValue];
+        long linkLocationLong = [linkLocation longValue];
         
         //means link was tapped
-        if(index >= location && index <= location + length) {
+        if(index >= linkLocationLong && index <= linkLocationLong + linkLengthLong) {
             href = [linkData objectForKey:@"href"];
             break;
         }
     }
     
     //check to see if an image or movie play button has been touched
+    //check both line location and point location in case image is at top of screen and therefore out of line bounds
     NSString *movieClipPath = nil;
     UIImage *imageTouched = nil;
     NSDictionary *imageTouchedMetadata = nil;
     for (NSArray *imageData in self.imagesWithMetadata) {
+        CGRect imageBounds = CGRectFromString([imageData objectAtIndex:1]);
         NSDictionary *imageMetadata = [imageData objectAtIndex:2];
-        int imgLocation = [[imageMetadata objectForKey:@"location"] intValue];
+        int imageLineLocation = [[imageMetadata objectForKey:@"location"] intValue];
         
-        //means image was touched
-        long indexMin = index - 3;
-        long indexMax = index + 3;
-        if(imgLocation >= indexMin && imgLocation <= indexMax) {
+        //+-2 lines from image means it was touched
+        long indexMin = index - 2;
+        long indexMax = index + 2;
+        BOOL imageTouchedByLine = imageLineLocation >= indexMin && imageLineLocation <= indexMax;
+        
+        //within bounds of image means it was touched
+        //may need to adjust if image bounds claim it's beyond column bounds end
+        CGRect columnBounds = self.bounds;
+        CGFloat imageEndY = imageBounds.origin.y + imageBounds.size.height;
+        CGFloat imageOriginY = imageEndY >= columnBounds.size.height ? 0 : imageBounds.origin.y;
+        BOOL imageTouchedByPoint = touchPoint.x > imageBounds.origin.x &&
+                                   touchPoint.x < (imageBounds.origin.x + imageBounds.size.width) &&
+                                   touchPoint.y > imageOriginY &&
+                                   touchPoint.y < (imageOriginY + imageBounds.size.height);
+        if(imageTouchedByLine || imageTouchedByPoint) {
             imageTouchedMetadata = imageMetadata;
-            imageTouched = (UIImage *)[imageData objectAtIndex:0]; //TODO object would be nicer...
+            imageTouched = (UIImage *)[imageData objectAtIndex:0];
             break;
         }
         //check to see if a play button has been touched
         if([imageMetadata objectForKey:@"playButtonLocation"] && [imageMetadata objectForKey:@"clipFileName"]) {
             NSString *clipPath = [imageMetadata objectForKey:@"clipFileName"];
             CGRect matchRect = [[imageMetadata objectForKey:@"playButtonLocation"] CGRectValue];
-            if(location.x > matchRect.origin.x && location.x < matchRect.origin.x + matchRect.size.width &&
-               location.y > matchRect.origin.y && location.y < matchRect.origin.y + matchRect.size.height) {
+            if(touchPoint.x > matchRect.origin.x && touchPoint.x < matchRect.origin.x + matchRect.size.width &&
+               touchPoint.y > matchRect.origin.y && touchPoint.y < matchRect.origin.y + matchRect.size.height) {
                 NSLog(@"play button touched for movie %@", clipPath);
                 movieClipPath = clipPath;
                 break;
