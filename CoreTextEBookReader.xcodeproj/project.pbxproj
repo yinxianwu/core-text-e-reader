@@ -29,7 +29,6 @@
 		6847F018181E2469003F38B5 /* CTEMarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF92181DCE62009B8527 /* CTEMarkupParser.m */; };
 		6847F019181E2469003F38B5 /* CTEMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF94181DCE62009B8527 /* CTEMenuViewController.m */; };
 		6847F01B181E2469003F38B5 /* CTEImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF9E181DCE62009B8527 /* CTEImageViewController.m */; };
-		68678E7D181E2D2600D8B812 /* CloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 68678E74181E2C0600D8B812 /* CloseButton.png */; };
 		68678E7F181E2D2600D8B812 /* ImageError.png in Resources */ = {isa = PBXBuildFile; fileRef = 68678E76181E2C0600D8B812 /* ImageError.png */; };
 		68678E81181E2D2600D8B812 /* PlayButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 68678E78181E2C0600D8B812 /* PlayButton.png */; };
 		68678E82181E2D2600D8B812 /* SectionDivider169Black.png in Resources */ = {isa = PBXBuildFile; fileRef = 68678E79181E2C0600D8B812 /* SectionDivider169Black.png */; };
@@ -80,6 +79,10 @@
 		68AF284B18257DC700EA632B /* CTEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284918257D8C00EA632B /* CTEUtils.m */; };
 		68AF284E1825A98E00EA632B /* CTEManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEManager.m */; };
 		68AF284F1825B3EC00EA632B /* CTEManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AF284D1825A98E00EA632B /* CTEManager.m */; };
+		68CF1049189327C200A2078B /* CloseBoxPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 68CF10451893251600A2078B /* CloseBoxPad.png */; };
+		68CF104A189327C500A2078B /* CloseBoxPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68CF10461893251600A2078B /* CloseBoxPad@2x.png */; };
+		68CF104B189327C800A2078B /* CloseBoxPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = 68CF10471893251600A2078B /* CloseBoxPhone.png */; };
+		68CF104C189327CA00A2078B /* CloseBoxPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 68CF10481893251600A2078B /* CloseBoxPhone@2x.png */; };
 		68D34997182E823400345F12 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68D34996182E823400345F12 /* NSMutableArray+QueueAdditions.m */; };
 		68FBF140183493BE0057223E /* Placeholder240x320.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68FBF13E183493BE0057223E /* Placeholder240x320.jpg */; };
 		68FBF141183493BE0057223E /* Placeholder320x240.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 68FBF13F183493BE0057223E /* Placeholder320x240.jpg */; };
@@ -135,7 +138,6 @@
 		68425AAF183B1AD40070B670 /* ViewOptionsiPadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewOptionsiPadView.xib; sourceTree = "<group>"; };
 		68425AB3183C628A0070B670 /* DoubleColumn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DoubleColumn.png; sourceTree = "<group>"; };
 		68425AB4183C628A0070B670 /* SingleColumn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SingleColumn.png; sourceTree = "<group>"; };
-		68678E74181E2C0600D8B812 /* CloseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseButton.png; sourceTree = "<group>"; };
 		68678E76181E2C0600D8B812 /* ImageError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageError.png; sourceTree = "<group>"; };
 		68678E78181E2C0600D8B812 /* PlayButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayButton.png; sourceTree = "<group>"; };
 		68678E79181E2C0600D8B812 /* SectionDivider169Black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SectionDivider169Black.png; sourceTree = "<group>"; };
@@ -190,6 +192,10 @@
 		68AF284918257D8C00EA632B /* CTEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEUtils.m; sourceTree = "<group>"; };
 		68AF284C1825A98E00EA632B /* CTEManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEManager.h; sourceTree = "<group>"; };
 		68AF284D1825A98E00EA632B /* CTEManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEManager.m; sourceTree = "<group>"; };
+		68CF10451893251600A2078B /* CloseBoxPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseBoxPad.png; sourceTree = "<group>"; };
+		68CF10461893251600A2078B /* CloseBoxPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloseBoxPad@2x.png"; sourceTree = "<group>"; };
+		68CF10471893251600A2078B /* CloseBoxPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseBoxPhone.png; sourceTree = "<group>"; };
+		68CF10481893251600A2078B /* CloseBoxPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloseBoxPhone@2x.png"; sourceTree = "<group>"; };
 		68D34995182E823400345F12 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
 		68D34996182E823400345F12 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CTEViewDelegate.h; sourceTree = "<group>"; };
@@ -357,11 +363,14 @@
 		68678E72181E2C0600D8B812 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				68CF10451893251600A2078B /* CloseBoxPad.png */,
+				68CF10461893251600A2078B /* CloseBoxPad@2x.png */,
+				68CF10471893251600A2078B /* CloseBoxPhone.png */,
+				68CF10481893251600A2078B /* CloseBoxPhone@2x.png */,
 				68425AB3183C628A0070B670 /* DoubleColumn.png */,
 				68425AB4183C628A0070B670 /* SingleColumn.png */,
 				68FBF13E183493BE0057223E /* Placeholder240x320.jpg */,
 				68FBF13F183493BE0057223E /* Placeholder320x240.jpg */,
-				68678E74181E2C0600D8B812 /* CloseButton.png */,
 				68678E76181E2C0600D8B812 /* ImageError.png */,
 				68678E78181E2C0600D8B812 /* PlayButton.png */,
 				68678E79181E2C0600D8B812 /* SectionDivider169Black.png */,
@@ -567,13 +576,14 @@
 				68678E86181E2D4500D8B812 /* MenuiPhoneView.xib in Resources */,
 				68678E87181E2D4500D8B812 /* ContentiPadView.xib in Resources */,
 				68678E88181E2D4500D8B812 /* ContentiPhoneView.xib in Resources */,
+				68CF1049189327C200A2078B /* CloseBoxPad.png in Resources */,
 				68425AB2183B21E90070B670 /* ViewOptionsiPadView.xib in Resources */,
 				680B814A18430A510027E963 /* ViewOptionsiPhoneView.xib in Resources */,
+				68CF104C189327CA00A2078B /* CloseBoxPhone@2x.png in Resources */,
 				68678E89181E2D4500D8B812 /* ImageiPadView.xib in Resources */,
 				68678E8A181E2D4500D8B812 /* ImageiPhoneView.xib in Resources */,
 				68425AB5183C65EB0070B670 /* DoubleColumn.png in Resources */,
 				68425AB6183C65ED0070B670 /* SingleColumn.png in Resources */,
-				68678E7D181E2D2600D8B812 /* CloseButton.png in Resources */,
 				68678E7F181E2D2600D8B812 /* ImageError.png in Resources */,
 				68FBF141183493BE0057223E /* Placeholder320x240.jpg in Resources */,
 				68678E81181E2D2600D8B812 /* PlayButton.png in Resources */,
@@ -581,7 +591,9 @@
 				68678E83181E2D2600D8B812 /* ThreeLines.png in Resources */,
 				68FBF140183493BE0057223E /* Placeholder240x320.jpg in Resources */,
 				6895EFC0181DF20D009B8527 /* InfoPlist.strings in Resources */,
+				68CF104B189327C800A2078B /* CloseBoxPhone.png in Resources */,
 				6895EFC8181DF20D009B8527 /* Images.xcassets in Resources */,
+				68CF104A189327C500A2078B /* CloseBoxPad@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
