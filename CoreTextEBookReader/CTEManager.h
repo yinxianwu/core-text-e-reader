@@ -28,7 +28,7 @@
                         andChapters:(NSArray *)chapters
                         andBarColor:(UIColor *)color
                   andHighlightColor:(UIColor *)highlight;
-+ (void)buildAttStringsForDelegate:(CTEManager *)delegate
-                          chapters:(NSArray *)chapters
-                      notification:(NSNotification *)notification;
++ (void)buildAttStringsForManager:(CTEManager *)delegate
+                         chapters:(NSArray *)chapters
+                     notification:(NSNotification *)notification;
 @end

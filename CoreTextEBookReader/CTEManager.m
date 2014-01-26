@@ -10,6 +10,7 @@
 #import "CTEChapter.h"
 #import "CTEConstants.h"
 #import "CTEContentViewController.h"
+#import "FormatSelectionInfo.h"
 
 @implementation CTEManager
 
@@ -35,15 +36,15 @@
         manager.barColor = color;
         manager.highlightColor = highlight;
         
-        // create the content view controller that contains detail content
+        //create the content view controller that contains detail content
         CTEContentViewController *contentViewCtrlr = nil;
         
-        // create the menuViewController so we can swap it in as the
-        // windows root view controller whenever required
+        //create the menuViewController so we can swap it in as the
+        //window's root view controller whenever required
         CTEMenuViewController *menuViewCtrlr = nil;
         
         //create att strs for all chapters
-        [CTEManager buildAttStringsForDelegate:manager chapters:chapters notification:nil];
+        [CTEManager buildAttStringsForManager:manager chapters:chapters notification:nil];
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             contentViewCtrlr = [[CTEContentViewController alloc] initWithNibName:@"ContentiPadView"
@@ -105,42 +106,89 @@
 
 //Parses all chapters and builds appropriate att strings using delegate settings
 //if no NSNotification is specified, builds with default view options settings
-+ (void)buildAttStringsForDelegate:(CTEManager *)manager\
-                          chapters:(NSArray *)chapters
-                      notification:(NSNotification *)notification {
++ (void)buildAttStringsForManager:(CTEManager *)manager
+                         chapters:(NSArray *)chapters
+                     notification:(NSNotification *)notification {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if(notification && manager.parser) {
-        if([[notification name] isEqualToString:ChangeFont]) {
-            NSString *fontKey = (NSString *)[notification object];
-            manager.contentViewController.currentFont = fontKey;
-            manager.parser.currentBodyFont = fontKey;
-        }
-        else if([[notification name] isEqualToString:ChangeFontSize]) {
-            NSNumber *fontSize = (NSNumber *)[notification object];
-            manager.contentViewController.currentFontSize = fontSize;
-            manager.parser.currentBodyFontSize = [fontSize floatValue];
-        }
-        else if([[notification name] isEqualToString:ChangeColumnCount]) {
-            NSNumber *columnCount = (NSNumber *)[notification object];
-            manager.contentViewController.currentColumnsInView = columnCount;
-        }
-
-    }
-    else {
+//    NSString *fontName = nil;
+//    float fontSize = 0.0f;
+//    int columnCount = 0;
+    
+    if(!manager.parser) {
         manager.parser = [[CTEMarkupParser alloc] init];
     }
     
-    manager.attStrings = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
-    manager.images = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
-    manager.links = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
-    for(id<CTEChapter>chapter in chapters) {
-        NSAttributedString *contentAttStr = [manager.parser attrStringFromMarkup:[chapter body]
-                                                                       screenSize:screenRect];
-        [manager.attStrings setObject:contentAttStr forKey:[chapter id]];
-        [manager.images setObject:manager.parser.images forKey:[chapter id]];
-        [manager.links setObject:manager.parser.links forKey:[chapter id]];
-        [manager.parser resetParser];
+    if(notification) {
+        if([[notification name] isEqualToString:ChangeFont]) {
+            NSString *fontName = (NSString *)[notification object];
+            manager.contentViewController.currentFont = fontName;
+            manager.parser.currentBodyFont = fontName;
+//            
+//            //...and set current settings
+//            fontSize = [manager.contentViewController.currentFontSize floatValue];
+//            columnCount = [manager.contentViewController.currentColumnsInView intValue];
+        }
+        else if([[notification name] isEqualToString:ChangeFontSize]) {
+            NSNumber *fontSizeObj = (NSNumber *)[notification object];
+//            fontSize = [fontSizeObj floatValue];
+            manager.contentViewController.currentFontSize = fontSizeObj;
+            manager.parser.currentBodyFontSize = [fontSizeObj floatValue];
+//            
+//            fontName = manager.contentViewController.currentFont;
+//            columnCount = [manager.contentViewController.currentColumnsInView intValue];
+        }
+        else if([[notification name] isEqualToString:ChangeColumnCount]) {
+            NSNumber *columnCountObj = (NSNumber *)[notification object];
+            manager.contentViewController.currentColumnsInView = columnCountObj;
+//            columnCount = [columnCountObj intValue];
+//
+//            //...and set current settings
+//            fontName = manager.contentViewController.currentFont;
+//            fontSize = [manager.contentViewController.currentFontSize floatValue];
+        }
     }
+//    else {
+//        fontName = manager.parser.currentBodyFont;
+//        fontSize = manager.parser.currentBodyFontSize;
+//        columnCount = 2; //TODO!!!! NEED TO GET THIS FROM SOMEWHERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//    }
+    
+//    //check if Info already contains this from a previous selection
+//    FormatSelectionInfo *info = [FormatSelectionInfo sharedInstance];
+//    if([info hasAttStringsForFont:fontName
+//                             size:fontSize
+//                      columnCount:columnCount]) {
+//        manager.attStrings = [NSMutableDictionary dictionaryWithDictionary:[info getAttStringsForFont:fontName
+//                                                                                                 size:fontSize
+//                                                                                          columnCount:columnCount]];
+//        manager.images = [NSMutableDictionary dictionaryWithDictionary:[info getImageInfoForFont:fontName
+//                                                                                            size:fontSize
+//                                                                                     columnCount:columnCount]];
+//        manager.links = [NSMutableDictionary dictionaryWithDictionary:[info getLinkInfoForFont:fontName
+//                                                                                          size:fontSize
+//                                                                                   columnCount:columnCount]];
+//    }
+//    else {
+        manager.attStrings = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+        manager.images = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+        manager.links = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+        for(id<CTEChapter>chapter in chapters) {
+            [manager.parser resetParser];
+            NSAttributedString *contentAttStr = [manager.parser attrStringFromMarkup:[chapter body]
+                                                                          screenSize:screenRect];
+            [manager.attStrings setObject:contentAttStr forKey:[chapter id]];
+            [manager.images setObject:manager.parser.images forKey:[chapter id]];
+            [manager.links setObject:manager.parser.links forKey:[chapter id]];
+        }
+        
+//        //cache in Info class
+//        [info addAttStrings:manager.attStrings
+//                  imageInfo:manager.images
+//                   linkInfo:manager.links
+//                       font:fontName
+//                       size:fontSize
+//                columnCount:columnCount];
+//    }
 }
 
 //Selects appropriate chapter then does side menu reveal
@@ -181,7 +229,7 @@
 //Updates attributed Strings for content, then applies them to content view
 - (void)contentViewOptionsUpdated:(NSNotification *)notification {
     int currentTextPosition = [self.contentViewController textPositionForPage:[self.contentViewController getCurrentPage]];
-    [CTEManager buildAttStringsForDelegate:self chapters:self.chapters notification:notification];
+    [CTEManager buildAttStringsForManager:self chapters:self.chapters notification:notification];
     [self.contentViewController rebuildContent:self.attStrings images:self.images links:self.links];
     int newCurrentPage = [self.contentViewController pageForTextPosition:currentTextPosition];
     [self.contentViewController scrollToPage:newCurrentPage animated:NO];

@@ -513,6 +513,10 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     self.cteView.pageColumnCount = [colCount intValue];
 }
 
+- (NSNumber *)currentColumnsInView {
+    return _currentColumnsInView;
+}
+
 //TODO other orientations
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown);

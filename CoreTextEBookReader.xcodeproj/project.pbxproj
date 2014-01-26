@@ -51,6 +51,8 @@
 		686BE8EA183863ED00072E27 /* Chapter2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 686BE8E7183863ED00072E27 /* Chapter2.txt */; };
 		686BE8EB183863ED00072E27 /* Chapter3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 686BE8E8183863ED00072E27 /* Chapter3.txt */; };
 		686BE8EC1839A32500072E27 /* CTEViewDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */; };
+		688D1BF61894DD4A00C94780 /* FormatSelectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */; };
+		688D1BF71894DD4A00C94780 /* FormatSelectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */; };
 		6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8C181DCE62009B8527 /* CTEContentViewController.m */; };
 		6895EFA0181DCE62009B8527 /* CTEColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8E181DCE62009B8527 /* CTEColumnView.m */; };
 		6895EFA1181DCE62009B8527 /* CTEView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF90181DCE62009B8527 /* CTEView.m */; };
@@ -151,6 +153,8 @@
 		686BE8E6183863ED00072E27 /* Chapter1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter1.txt; sourceTree = "<group>"; };
 		686BE8E7183863ED00072E27 /* Chapter2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter2.txt; sourceTree = "<group>"; };
 		686BE8E8183863ED00072E27 /* Chapter3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter3.txt; sourceTree = "<group>"; };
+		688D1BF41894DD4A00C94780 /* FormatSelectionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormatSelectionInfo.h; sourceTree = "<group>"; };
+		688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormatSelectionInfo.m; sourceTree = "<group>"; };
 		6895EF8B181DCE62009B8527 /* CTEContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEContentViewController.h; sourceTree = "<group>"; };
 		6895EF8C181DCE62009B8527 /* CTEContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEContentViewController.m; sourceTree = "<group>"; };
 		6895EF8D181DCE62009B8527 /* CTEColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEColumnView.h; sourceTree = "<group>"; };
@@ -306,6 +310,8 @@
 				6895EF90181DCE62009B8527 /* CTEView.m */,
 				6895EF91181DCE62009B8527 /* CTEMarkupParser.h */,
 				6895EF92181DCE62009B8527 /* CTEMarkupParser.m */,
+				688D1BF41894DD4A00C94780 /* FormatSelectionInfo.h */,
+				688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */,
 				6895EF93181DCE62009B8527 /* CTEMenuViewController.h */,
 				6895EF94181DCE62009B8527 /* CTEMenuViewController.m */,
 				6895EF95181DCE62009B8527 /* MenuiPadView.xib */,
@@ -617,6 +623,7 @@
 				6895EFA3181DCE62009B8527 /* CTEMenuViewController.m in Sources */,
 				68425AB0183B1AD40070B670 /* CTEViewOptionsViewController.m in Sources */,
 				68AF284A18257D8C00EA632B /* CTEUtils.m in Sources */,
+				688D1BF61894DD4A00C94780 /* FormatSelectionInfo.m in Sources */,
 				68AF284E1825A98E00EA632B /* CTEManager.m in Sources */,
 				6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */,
 				68D34997182E823400345F12 /* NSMutableArray+QueueAdditions.m in Sources */,
@@ -650,6 +657,7 @@
 				6895EFC6181DF20D009B8527 /* CTEAppDelegate.m in Sources */,
 				68678E94181F665000D8B812 /* CTESampleChapter.m in Sources */,
 				68425AB1183B21880070B670 /* CTEViewOptionsViewController.m in Sources */,
+				688D1BF71894DD4A00C94780 /* FormatSelectionInfo.m in Sources */,
 				68AF284B18257DC700EA632B /* CTEUtils.m in Sources */,
 				680B8148184308BD0027E963 /* UIViewController+KNSemiModal.m in Sources */,
 				6895EFC2181DF20D009B8527 /* main.m in Sources */,

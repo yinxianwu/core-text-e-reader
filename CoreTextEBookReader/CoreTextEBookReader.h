@@ -17,3 +17,7 @@
 #import "CTEMarkupParser.h"
 #import "CTEMenuViewController.h"
 #import "CTEImageViewController.h"
+#import "CTEViewOptionsViewController.h"
+#import "CTEUtils.h"
+#import "FormatSelectionPageInfo.h"
+#import "UIViewController+KNSemiModal.h"
