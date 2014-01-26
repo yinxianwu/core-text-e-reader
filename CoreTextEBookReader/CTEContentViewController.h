@@ -48,6 +48,9 @@
 - (void)playMovie:(NSString *)clipPath;
 - (void)nextPage;
 - (void)prevPage;
-- (void)scrollToPage:(int)page;
+- (void)scrollToPage:(int)page animated:(BOOL)animated;
+- (int)getCurrentPage;
+- (int)textPositionForPage:(int)page;
+- (int)pageForTextPosition:(int)position;
 
 @end

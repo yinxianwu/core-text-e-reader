@@ -237,7 +237,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
     self.pageSlider.minimumValue = 0.0f;
     self.pageSlider.maximumValue = [self.cteView totalPages];
-    self.pageSlider.value = 0.0f; //TODO this should "sync" to same page
+//    self.pageSlider.value = 0.0f; //TODO this should "sync" to same page
 }
 
 //syncs pages to slider value and performs whatever updating/redrawing needed
@@ -379,28 +379,46 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 - (void)nextPage {
     int pageNb = [cteView getCurrentPage] + 1;
     if(pageNb < cteView.totalPages) {
-        [self scrollToPage:pageNb];
+        [self scrollToPage:pageNb animated:YES];
     }
 }
 
 - (void)prevPage {
     int pageNb = [cteView getCurrentPage] - 1;
     if(pageNb >= 0) {
-        [self scrollToPage:pageNb];
+        [self scrollToPage:pageNb animated:YES];
     }
 }
 
-- (void)scrollToPage:(int)page {
+- (void)scrollToPage:(int)page animated:(BOOL)animated {
     CGRect cteViewFrame = self.cteView.frame;
     cteViewFrame.origin.x = cteViewFrame.size.width * page;
     cteViewFrame.origin.y = 0;
-    [self.cteView scrollRectToVisible:cteViewFrame animated:YES];
+    [self.cteView scrollRectToVisible:cteViewFrame animated:animated];
     [self.cteView currentChapterNeedsUpdate];
     [self.cteView setNeedsDisplay];
     
     //update navbar title to new chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
     item.title = [self.currentChapter title];
+}
+
+//Returns current page index
+//convenience method
+- (int)getCurrentPage {
+    return [self.cteView getCurrentPage];
+}
+
+//Returns text position for specified page
+//convenience method
+- (int)textPositionForPage:(int)page {
+    return [self.cteView textStartForPage:page];
+}
+
+//Returns page number for specified text position
+//convenience method
+- (int)pageForTextPosition:(int)position {
+    return [self.cteView pageNumberForTextPosition:position];
 }
 
 //shows/hides nav & toolbars

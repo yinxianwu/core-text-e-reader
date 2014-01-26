@@ -105,41 +105,41 @@
 
 //Parses all chapters and builds appropriate att strings using delegate settings
 //if no NSNotification is specified, builds with default view options settings
-+ (void)buildAttStringsForDelegate:(CTEManager *)delegate
++ (void)buildAttStringsForDelegate:(CTEManager *)manager\
                           chapters:(NSArray *)chapters
                       notification:(NSNotification *)notification {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if(notification && delegate.parser) {
+    if(notification && manager.parser) {
         if([[notification name] isEqualToString:ChangeFont]) {
             NSString *fontKey = (NSString *)[notification object];
-            delegate.contentViewController.currentFont = fontKey;
-            delegate.parser.currentBodyFont = fontKey;
+            manager.contentViewController.currentFont = fontKey;
+            manager.parser.currentBodyFont = fontKey;
         }
         else if([[notification name] isEqualToString:ChangeFontSize]) {
             NSNumber *fontSize = (NSNumber *)[notification object];
-            delegate.contentViewController.currentFontSize = fontSize;
-            delegate.parser.currentBodyFontSize = [fontSize floatValue];
+            manager.contentViewController.currentFontSize = fontSize;
+            manager.parser.currentBodyFontSize = [fontSize floatValue];
         }
         else if([[notification name] isEqualToString:ChangeColumnCount]) {
             NSNumber *columnCount = (NSNumber *)[notification object];
-            delegate.contentViewController.currentColumnsInView = columnCount;
+            manager.contentViewController.currentColumnsInView = columnCount;
         }
 
     }
     else {
-        delegate.parser = [[CTEMarkupParser alloc] init];
+        manager.parser = [[CTEMarkupParser alloc] init];
     }
     
-    delegate.attStrings = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
-    delegate.images = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
-    delegate.links = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+    manager.attStrings = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+    manager.images = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
+    manager.links = [NSMutableDictionary dictionaryWithCapacity:[chapters count]];
     for(id<CTEChapter>chapter in chapters) {
-        NSAttributedString *contentAttStr = [delegate.parser attrStringFromMarkup:[chapter body]
+        NSAttributedString *contentAttStr = [manager.parser attrStringFromMarkup:[chapter body]
                                                                        screenSize:screenRect];
-        [delegate.attStrings setObject:contentAttStr forKey:[chapter id]];
-        [delegate.images setObject:delegate.parser.images forKey:[chapter id]];
-        [delegate.links setObject:delegate.parser.links forKey:[chapter id]];
-        [delegate.parser resetParser];
+        [manager.attStrings setObject:contentAttStr forKey:[chapter id]];
+        [manager.images setObject:manager.parser.images forKey:[chapter id]];
+        [manager.links setObject:manager.parser.links forKey:[chapter id]];
+        [manager.parser resetParser];
     }
 }
 
@@ -180,8 +180,11 @@
 
 //Updates attributed Strings for content, then applies them to content view
 - (void)contentViewOptionsUpdated:(NSNotification *)notification {
+    int currentTextPosition = [self.contentViewController textPositionForPage:[self.contentViewController getCurrentPage]];
     [CTEManager buildAttStringsForDelegate:self chapters:self.chapters notification:notification];
     [self.contentViewController rebuildContent:self.attStrings images:self.images links:self.links];
+    int newCurrentPage = [self.contentViewController pageForTextPosition:currentTextPosition];
+    [self.contentViewController scrollToPage:newCurrentPage animated:NO];
 }
 
 @end

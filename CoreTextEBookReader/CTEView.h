@@ -36,9 +36,11 @@
 - (void)clearFrames;
 - (void)buildFrames;
 - (int)getCurrentPage;
+- (int)textStartForPage:(int)page;
+- (int)pageNumberForTextPosition:(int)position;
+- (NSNumber *)pageNumberForChapterID:(NSNumber *)chapterID;
 - (int)indexOfColumn:(id)column;
 - (void)currentChapterNeedsUpdate;
-- (NSNumber *)pageNumberForChapterID:(NSNumber *)chapterID;
 - (void)addImage:(UIImage *)img forColumn:(CTEColumnView *)col frameRef:(CTFrameRef)frameRef imageInfo:(NSDictionary *)imageInfo;
 - (void)replaceImage:(UIImage *)img forColumn:(CTEColumnView *)col imageInfo:(NSDictionary *)imageInfo;
 @end

@@ -51,6 +51,8 @@
     self.links = nil;
     self.orderedKeys = nil;
     self.orderedChapterPages = [NSMutableArray arrayWithCapacity:self.orderedKeys.count];
+    
+    [self setNeedsDisplay];
 }
 
 //builds all columns of text & images
@@ -98,6 +100,7 @@
     
     //build for all chapters in order
     int columnIndex = 0;
+    int allChapsTextPos = 0;
     for(NSNumber *key in self.orderedKeys) {
         NSAttributedString *attString = (NSAttributedString *)[self.attStrings objectForKey:key];
         NSArray *chapImages = (NSArray *)[self.imageMetadatas objectForKey:key];
@@ -195,9 +198,10 @@
             }
             
             //prepare for next frame
-            content.textStart = textPos;
-            content.textEnd = textPos + frameRange.length;
+            content.textStart = allChapsTextPos;
+            content.textEnd = allChapsTextPos + frameRange.length;
             textPos+= frameRange.length;
+            allChapsTextPos+= frameRange.length;
             
             CFRelease(frameRef);
             CFRelease(path);
@@ -338,6 +342,7 @@
     }
 }
 
+//respond to touch request, with either a page turn or utility bar toggle
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];
     CGRect viewFrameInWindow = [self convertRect:self.bounds toView:nil];
@@ -363,7 +368,66 @@
 //Current page, computed dynamically based on position
 - (int)getCurrentPage {
     CGFloat pageWidth = self.frame.size.width;
-    return floor((self.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    CGFloat currentPositionX = self.contentOffset.x;
+//    NSNumber *pageNbObj = [NSNumber numberWithDouble:floor((self.contentOffset.x - pageWidth / 2) / pageWidth) + 1];
+    NSNumber *pageNbObj = [NSNumber numberWithDouble:floor(currentPositionX / pageWidth)];
+    return [pageNbObj intValue];
+}
+
+//Returns attributed string start position for specified page
+- (int)textStartForPage:(int)page {
+    int textStart = -1;
+    
+    //get content offset for page
+    CGFloat pageWidth = self.frame.size.width;
+    CGFloat pageXOffsetStart = pageWidth * page;
+    CGFloat pageXOffsetEnd = pageXOffsetStart + pageWidth;
+    NSMutableArray *pageColumns = [NSMutableArray array];
+    
+    //add all subviews in the page
+    for(UIView *subview in self.columns) {
+        if(subview.frame.origin.x > pageXOffsetStart &&
+           (subview.frame.origin.x + subview.frame.size.width) < pageXOffsetEnd) {
+            [pageColumns addObject:subview];
+        }
+    }
+    
+    //only consider CTEColumnViews and find the one with the lowest textPosition
+    for(CTEColumnView *pageColumn in pageColumns) {
+        //init
+        if(textStart == -1) {
+            textStart = pageColumn.textStart;
+        }
+        //find smallest
+        else if(pageColumn.textStart < textStart) {
+            textStart = pageColumn.textStart;
+        }
+    }
+    
+    return textStart;
+}
+
+//Returns page number that contains specified text position
+- (int)pageNumberForTextPosition:(int)position {
+    int pageNb = -1;
+
+    //find column that contains text position...
+    CTEColumnView *matchColumn = nil;
+    for(CTEColumnView *columnView in self.columns) {
+        if(position >= columnView.textStart && position < columnView.textEnd) {
+            matchColumn = columnView;
+            break;
+        }
+    }
+    
+    //...then compute what page it's on
+    if(matchColumn) {
+        CGFloat pageWidth = self.frame.size.width;
+        CGFloat columnXStart = matchColumn.frame.origin.x;
+        NSNumber *pageNbObj = [NSNumber numberWithDouble:floor(columnXStart / pageWidth)];
+        pageNb = [pageNbObj intValue];
+    }
+    return pageNb;
 }
 
 //Page number for selected chapter ID
