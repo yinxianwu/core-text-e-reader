@@ -41,6 +41,7 @@
 @synthesize currentChapter = _currentChapter;
 @synthesize currentFont;
 @synthesize currentFontSize;
+@synthesize currentTextPosition;
 @synthesize currentColumnsInView = _currentColumnsInView;
 @synthesize chapters;
 @synthesize attStrings;
@@ -68,6 +69,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     self.images = allImages;
     self.links = allLinks;
     self.barColor = color;
+    self.currentTextPosition = 0; //initialize
     initialLoad = YES;
     
     //init the set of rendered columns
@@ -125,6 +127,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
                           links:self.links
                           order:orderedSet];
     [self.cteView buildFrames];
+    self.currentTextPosition = 0; //reset
     
     //nav bar init
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
@@ -243,7 +246,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
     self.pageSlider.minimumValue = 0.0f;
     self.pageSlider.maximumValue = [self.cteView totalPages];
-//    self.pageSlider.value = 0.0f; //TODO this should "sync" to same page
+    self.pageSlider.value = [self.cteView pageNumberForTextPosition:self.currentTextPosition];
 }
 
 //syncs pages to slider value and performs whatever updating/redrawing needed
@@ -256,6 +259,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     [self.cteView scrollRectToVisible:cteViewFrame animated:NO];
     [self.cteView currentChapterNeedsUpdate];
     [self.cteView setNeedsDisplay];
+    self.currentTextPosition = [self.cteView getCurrentTextPosition];
     
     //update navbar title to new chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
@@ -336,6 +340,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     item.title = [self.currentChapter title];
 
     [self.cteView setNeedsDisplay];
+    self.currentTextPosition = [self.cteView getCurrentTextPosition];
 }
 
 //post-programmatic animations
@@ -385,25 +390,30 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 - (void)nextPage {
     int pageNb = [cteView getCurrentPage] + 1;
     if(pageNb < cteView.totalPages) {
-        [self scrollToPage:pageNb animated:YES];
+        [self scrollToPage:pageNb animated:YES updateCurrentTextPosition:YES];
     }
 }
 
 - (void)prevPage {
     int pageNb = [cteView getCurrentPage] - 1;
     if(pageNb >= 0) {
-        [self scrollToPage:pageNb animated:YES];
+        [self scrollToPage:pageNb animated:YES updateCurrentTextPosition:YES];
     }
 }
 
-- (void)scrollToPage:(int)page animated:(BOOL)animated {
+- (void)scrollToPage:(int)page animated:(BOOL)animated updateCurrentTextPosition:(BOOL)shouldUpdate {
     CGRect cteViewFrame = self.cteView.frame;
     cteViewFrame.origin.x = cteViewFrame.size.width * page;
     cteViewFrame.origin.y = 0;
     [self.cteView scrollRectToVisible:cteViewFrame animated:animated];
     [self.cteView currentChapterNeedsUpdate];
     [self.cteView setNeedsDisplay];
-    
+
+    //cache for format changes, if applicable
+    if(shouldUpdate) {
+        self.currentTextPosition = [self.cteView getCurrentTextPosition];
+    }
+
     //update navbar title to new chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
     item.title = [self.currentChapter title];
@@ -413,12 +423,6 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 //convenience method
 - (int)getCurrentPage {
     return [self.cteView getCurrentPage];
-}
-
-//Returns text position for specified page
-//convenience method
-- (int)textPositionForPage:(int)page {
-    return [self.cteView textStartForPage:page];
 }
 
 //Returns page number for specified text position
@@ -504,7 +508,8 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     NSNumber *page = [self.cteView pageNumberForChapterID:[chapter id]];
     [self.cteView setContentOffset:CGPointMake(pageWidth * [page intValue], 0.0f) animated:NO];
     [self.cteView setCurrentChapterID:[chapter id]];
-    
+    self.currentTextPosition = [self.cteView getCurrentTextPosition];
+
     //update page slider to selected page
     [self.pageSlider setValue:[page floatValue]];
     

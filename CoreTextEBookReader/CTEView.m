@@ -415,6 +415,11 @@
     return [pageNbObj intValue];
 }
 
+//Convenience method
+- (int)getCurrentTextPosition {
+    return [self textStartForPage:[self getCurrentPage]];
+}
+
 //Returns attributed string start position for specified page
 - (int)textStartForPage:(int)page {
     int textStart = -1;

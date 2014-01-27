@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString *currentFont;
 @property (nonatomic, strong) NSNumber *currentFontSize;
 @property (nonatomic, strong) NSNumber *currentColumnsInView;
+@property (nonatomic) int currentTextPosition;
 @property (nonatomic, strong) NSArray *chapters;
 @property (nonatomic, strong) NSMutableDictionary *attStrings;
 @property (nonatomic, strong) NSDictionary *images;
@@ -48,9 +49,8 @@
 - (void)playMovie:(NSString *)clipPath;
 - (void)nextPage;
 - (void)prevPage;
-- (void)scrollToPage:(int)page animated:(BOOL)animated;
+- (void)scrollToPage:(int)page animated:(BOOL)animated updateCurrentTextPosition:(BOOL)shouldUpdate;
 - (int)getCurrentPage;
-- (int)textPositionForPage:(int)page;
 - (int)pageForTextPosition:(int)position;
 
 @end

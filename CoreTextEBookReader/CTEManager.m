@@ -182,15 +182,18 @@
 
 //Updates attributed Strings for content, then applies them to content view
 - (void)contentViewOptionsUpdated:(NSNotification *)notification {
-    int currentTextPosition = [self.contentViewController textPositionForPage:[self.contentViewController getCurrentPage]];
+    int currentTextPosition = self.contentViewController.currentTextPosition;
     [CTEManager buildAttStringsForManager:self chapters:self.chapters notification:notification];
     [self.contentViewController rebuildContent:self.attStrings images:self.images links:self.links];
     
-    //see if a cached page already exists, and if so navigate to it
     NSString *font = self.contentViewController.currentFont;
     float fontSize = [self.contentViewController.currentFontSize floatValue];
     int columnCount = [self.contentViewController.currentColumnsInView intValue];
     FormatSelectionInfo *info = [FormatSelectionInfo sharedInstance];
+    //get new page from current position, which doesn't change until user changes the page
+    //this prevents pages from "hopping" as users toggle back and forth thru different styles,
+    //which if it reset the currentTextPosition every time would possibly cause pages to misalign
+    //this is more a consistency thing but it makes for a more pleasing flow
     int newCurrentPage = [info getPageForLocation:currentTextPosition
                                              font:font
                                              size:fontSize
@@ -198,9 +201,7 @@
     if(newCurrentPage == -1) {
         newCurrentPage = [self.contentViewController pageForTextPosition:currentTextPosition];
     }
-    
-    //TODO slider!!!!!!!!!!!!!!!!!!!!!!!
-    [self.contentViewController scrollToPage:newCurrentPage animated:NO];
+    [self.contentViewController scrollToPage:newCurrentPage animated:NO updateCurrentTextPosition:NO];
 }
 
 @end

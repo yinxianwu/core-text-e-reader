@@ -38,6 +38,7 @@
 - (void)clearFrames;
 - (void)buildFrames;
 - (int)getCurrentPage;
+- (int)getCurrentTextPosition;
 - (int)textStartForPage:(int)page;
 - (int)pageNumberForTextPosition:(int)position;
 - (NSNumber *)pageNumberForChapterID:(NSNumber *)chapterID;
