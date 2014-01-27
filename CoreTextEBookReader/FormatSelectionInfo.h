@@ -23,9 +23,9 @@
                       size:(float)size
                columnCount:(int)colCount;
 
-- (NSArray *)getPageForLocation:(int)location
-                           font:(NSString *)font
-                           size:(float)size
-                    columnCount:(int)colCount;
+- (int)getPageForLocation:(int)location
+                     font:(NSString *)font
+                     size:(float)size
+              columnCount:(int)colCount;
 
 @end

@@ -10,6 +10,7 @@
 #import "CTEChapter.h"
 #import "CTEConstants.h"
 #import "CTEContentViewController.h"
+#import "FormatSelectionInfo.h"
 
 @implementation CTEManager
 
@@ -184,7 +185,21 @@
     int currentTextPosition = [self.contentViewController textPositionForPage:[self.contentViewController getCurrentPage]];
     [CTEManager buildAttStringsForManager:self chapters:self.chapters notification:notification];
     [self.contentViewController rebuildContent:self.attStrings images:self.images links:self.links];
-    int newCurrentPage = [self.contentViewController pageForTextPosition:currentTextPosition];
+    
+    //see if a cached page already exists, and if so navigate to it
+    NSString *font = self.contentViewController.currentFont;
+    float fontSize = [self.contentViewController.currentFontSize floatValue];
+    int columnCount = [self.contentViewController.currentColumnsInView intValue];
+    FormatSelectionInfo *info = [FormatSelectionInfo sharedInstance];
+    int newCurrentPage = [info getPageForLocation:currentTextPosition
+                                             font:font
+                                             size:fontSize
+                                      columnCount:columnCount];
+    if(newCurrentPage == -1) {
+        newCurrentPage = [self.contentViewController pageForTextPosition:currentTextPosition];
+    }
+    
+    //TODO slider!!!!!!!!!!!!!!!!!!!!!!!
     [self.contentViewController scrollToPage:newCurrentPage animated:NO];
 }
 

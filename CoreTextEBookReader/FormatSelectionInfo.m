@@ -65,7 +65,6 @@
         columnCount:(int)colCount {
     NSMutableArray *pageInfoForKey = nil;
     NSString *key = [self keyFromFont:font size:size columnCount:colCount];
-    
     pageInfoForKey = (NSMutableArray *)[_allPageInfo objectForKey:key];
     
     if(!pageInfoForKey) {
@@ -84,12 +83,27 @@
     return [_allPageInfo objectForKey:key] != nil;
 }
 
-- (NSArray *)getPageForLocation:(int)location
-                           font:(NSString *)font
-                           size:(float)size
-                    columnCount:(int)colCount {
-    //TODO
-    return nil;
+//returns page for specified location and format selection info
+//if no such information has been cached, returns -1
+- (int)getPageForLocation:(int)location
+                     font:(NSString *)font
+                     size:(float)size
+              columnCount:(int)colCount {
+    int page = -1;
+    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
+    NSMutableArray *pageInfoForKey = (NSMutableArray *)[_allPageInfo objectForKey:key];
+    
+    //if exists, go thru all pages to find a match
+    if(pageInfoForKey) {
+        for(__PageInfo *pageInfo in pageInfoForKey) {
+            if(location >= pageInfo.textStart && location < pageInfo.textEnd) {
+                page = pageInfo.page;
+                break;
+            }
+        }
+    }
+    
+    return page;
 }
 
 //key is String concatenation of font-size-column combo, which is
