@@ -12,14 +12,9 @@
 
 + (id)sharedInstance;
 
-//- (void)addAttStrings:(NSDictionary *)attStrings
-//            imageInfo:(NSDictionary *)imageInfo
-//             linkInfo:(NSDictionary *)linkInfo
-//                 font:(NSString *)font
-//                 size:(float)size
-//          columnCount:(int)colCount;
-
-- (void)addPageInfo:(NSArray *)pageInfo
+- (void)addPageInfo:(int)pageNb
+          textStart:(int)pageTextStart
+            textEnd:(int)pageTextEnd
                font:(NSString *)font
                size:(float)size
         columnCount:(int)colCount;
@@ -27,26 +22,6 @@
 - (BOOL)hasPageInfoForFont:(NSString *)font
                       size:(float)size
                columnCount:(int)colCount;
-
-- (NSArray *)getPageInfoForFont:(NSString *)font
-                           size:(float)size
-                    columnCount:(int)colCount;
-
-//- (BOOL)hasAttStringsForFont:(NSString *)font
-//                        size:(float)size
-//                 columnCount:(int)colCount;
-//
-//- (NSDictionary *)getAttStringsForFont:(NSString *)font
-//                                  size:(float)size
-//                           columnCount:(int)colCount;
-//
-//- (NSDictionary *)getImageInfoForFont:(NSString *)font
-//                                 size:(float)size
-//                          columnCount:(int)colCount;
-//
-//- (NSDictionary *)getLinkInfoForFont:(NSString *)font
-//                                size:(float)size
-//                         columnCount:(int)colCount;
 
 - (NSArray *)getPageForLocation:(int)location
                            font:(NSString *)font

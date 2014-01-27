@@ -10,12 +10,7 @@
 #import "CTEColumnView.h"
 #import "CTEConstants.h"
 #import "CTEMarkupParser.h"
-
-@interface CTEView() {
-    int imagesLoaded;
-}
-
-@end
+#import "FormatSelectionInfo.h"
 
 @implementation CTEView
 
@@ -25,7 +20,9 @@
 @synthesize imageMetadatas;
 @synthesize links;
 @synthesize totalPages;
-@synthesize pageColumnCount;
+@synthesize currentFont;
+@synthesize currentFontSize;
+@synthesize currentColumnCount;
 @synthesize orderedChapterPages;
 @synthesize currentChapterID;
 
@@ -64,7 +61,7 @@
     float columnWidthLeftMargin;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         frameYOffset = 20.0f;
-        if(self.pageColumnCount == 2) {
+        if(self.currentColumnCount == 2) {
             frameXOffset = 20.0f;
             columnWidthLeftMargin = 10.0f;
             columnWidthRightMargin = 10.0f;
@@ -97,17 +94,23 @@
                                                 frameWidth:textFrame.size.width];
     CGFloat colRectHeight = textFrame.size.height - 40;
     [CTEMarkupParser setTextContainerWidth:colRectWidth];
+    FormatSelectionInfo *info = [FormatSelectionInfo sharedInstance];
+    BOOL shouldCachePageInfo = ![info hasPageInfoForFont:self.currentFont
+                                                    size:self.currentFontSize
+                                             columnCount:self.currentColumnCount];
     
     //build for all chapters in order
     int columnIndex = 0;
     int allChapsTextPos = 0;
+    int pageTextStart = 0;
+    int pageTextEnd = 0;
+    float pageCount = ((float)columnIndex) / self.currentColumnCount;
+    float floorPageCount = floorf(pageCount);
+    float ceilPageCount = ceilf(pageCount);
     for(NSNumber *key in self.orderedKeys) {
         NSAttributedString *attString = (NSAttributedString *)[self.attStrings objectForKey:key];
         NSArray *chapImages = (NSArray *)[self.imageMetadatas objectForKey:key];
         NSArray *chapLinks = (NSArray *)[self.links objectForKey:key];
-        float pageCount = ((float)columnIndex) / self.pageColumnCount;
-        float floorPageCount = floorf(pageCount);
-        float ceilPageCount = ceilf(pageCount);
     
         CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attString);
         int textPos = 0;
@@ -125,11 +128,31 @@
             [self.columns addObject:content];
             [self addSubview: content];
             columnIndex++;
+            
+            float prevPage = floorPageCount;
+            pageCount = ((float)columnIndex) / self.currentColumnCount;
+            floorPageCount = floorf(pageCount);
+            ceilPageCount = ceilf(pageCount);
+            
+            //end of page reached, cache page info if not yet already cached
+            pageTextEnd = allChapsTextPos;
+            if(shouldCachePageInfo) {
+                [info addPageInfo:[[NSNumber numberWithFloat:prevPage] intValue]
+                        textStart:pageTextStart
+                          textEnd:pageTextEnd
+                             font:self.currentFont
+                             size:self.currentFontSize
+                      columnCount:self.currentColumnCount];
+            }
         }
         //chapter always starts at the next page
         [self.orderedChapterPages addObject:[NSNumber numberWithFloat:ceilPageCount]];
         
         while (textPos < [attString length]) {
+            //if page and floorPage are equal, it's the start of a new page
+            if(pageCount == floorPageCount) {
+                pageTextStart = allChapsTextPos;
+            }
             NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
             CGPoint colOffset = CGPointMake([self offsetXForColumn:columnIndex frameWidth:textFrame.size.width], 20);
             CGRect colRect = CGRectMake(0, 0, colRectWidth, colRectHeight);
@@ -207,12 +230,30 @@
             CFRelease(path);
             
             columnIndex++;
+            float prevPage = floorPageCount;
+            pageCount = ((float)columnIndex) / self.currentColumnCount;
+            floorPageCount = floorf(pageCount);
+            ceilPageCount = ceilf(pageCount);
+            
+            //end of page reached, cache page info if not yet already cached
+            if(floorPageCount > prevPage) {
+                pageTextEnd = allChapsTextPos;
+                FormatSelectionInfo *info = [FormatSelectionInfo sharedInstance];
+                if(shouldCachePageInfo) {
+                    [info addPageInfo:[[NSNumber numberWithFloat:prevPage] intValue]
+                            textStart:pageTextStart
+                              textEnd:pageTextEnd
+                                 font:self.currentFont
+                                 size:self.currentFontSize
+                          columnCount:self.currentColumnCount];
+                }
+            }
         }
     }
     
     
     //set the total width of the scroll view
-    self.totalPages = (columnIndex+1) / pageColumnCount;
+    self.totalPages = (columnIndex+1) / self.currentColumnCount;
     self.contentSize = CGSizeMake(self.totalPages * self.bounds.size.width, textFrame.size.height);
     
     //set current chapter to beginning
@@ -223,9 +264,9 @@
 
 //Returns column width with specified laft & right margins
 - (CGFloat)columnWidthWithInset:(float)leftMargin rightMargin:(float)rightMargin frameWidth:(CGFloat)frameWidth {
-    CGFloat colWidth = (frameWidth / self.pageColumnCount) - leftMargin - rightMargin;
+    CGFloat colWidth = (frameWidth / self.currentColumnCount) - leftMargin - rightMargin;
     //iPad adjustments
-    if(self.pageColumnCount == 1 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if(self.currentColumnCount == 1 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         colWidth -= 50.0f;
     }
     return colWidth;
@@ -233,9 +274,9 @@
 
 //Returns offset for specified frame column
 - (CGFloat)offsetXForColumn:(int)columnIndex frameWidth:(CGFloat)frameWidth {
-    CGFloat offsetX = (columnIndex + 1) * frameXOffset + columnIndex * (frameWidth / self.pageColumnCount);
+    CGFloat offsetX = (columnIndex + 1) * frameXOffset + columnIndex * (frameWidth / self.currentColumnCount);
     //iPad adjustments
-    if(self.pageColumnCount == 1 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if(self.currentColumnCount == 1 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         offsetX += 20.0f;
     }
     return offsetX;

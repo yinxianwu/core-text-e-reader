@@ -8,40 +8,35 @@
 
 #import "FormatSelectionInfo.h"
 
-//private container class for single formatselection
-//@interface __SingleFormatSelectionInfo : NSObject
-//@property NSDictionary *attStrings;
-//@property NSDictionary *imageInfo;
-//@property NSDictionary *linkInfo;
-//@property NSArray *pageInfo;
-//@end
-//
-//@implementation __SingleFormatSelectionInfo
-//@synthesize attStrings;
-//@synthesize imageInfo;
-//@synthesize linkInfo;
-////- (id)init {
-////    self = [super init];
-////    if(self) {
-////        self.attStrings = [NSMutableDictionary dictionary];
-////        self.imageInfo = [NSMutableDictionary dictionary];
-////        self.linkInfo = [NSMutableDictionary dictionary];
-////    }
-////    
-////    return self;
-////}
-//@end
-
-@interface FormatSelectionInfo()
-
-//contains all format selections
-@property NSMutableDictionary *info;
-
+//private container class for single page
+@interface __PageInfo : NSObject
+@property (nonatomic) int page;
+@property (nonatomic) int textStart;
+@property (nonatomic) int textEnd;
 @end
 
-@implementation FormatSelectionInfo
+@implementation __PageInfo
+@synthesize page;
+@synthesize textStart;
+@synthesize textEnd;
 
-@synthesize info;
+- (id)initWithPage:(int)pageNb
+         textStart:(int)pageTextStart
+           textEnd:(int)pageTextEnd {
+    self = [super init];
+    if(self) {
+        self.page = pageNb;
+        self.textStart = pageTextStart;
+        self.textEnd = pageTextEnd;
+    }
+
+    return self;
+}
+@end
+
+@implementation FormatSelectionInfo {
+    NSMutableDictionary *_allPageInfo;
+}
 
 //singleton impl
 + (id)sharedInstance {
@@ -56,126 +51,38 @@
 - (id)init {
     self = [super init];
     if(self) {
-        info = [NSMutableDictionary dictionary];
+        _allPageInfo = [NSMutableDictionary dictionary];
     }
     
     return self;
 }
 
-//- (void)addAttStrings:(NSDictionary *)attStrings
-//            imageInfo:(NSDictionary *)imageInfo
-//             linkInfo:(NSDictionary *)linkInfo
-//                 font:(NSString *)font
-//                 size:(float)size
-//          columnCount:(int)colCount {
-//    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
-//    __SingleFormatSelectionInfo *selectionInfo = (__SingleFormatSelectionInfo *)[info objectForKey:key];
-//    if(selectionInfo == nil) {
-//        selectionInfo = [[__SingleFormatSelectionInfo alloc] init];
-//        [info setObject:selectionInfo forKey:key];
-//    }
-//    selectionInfo.attStrings = attStrings;
-//    selectionInfo.imageInfo = imageInfo;
-//    selectionInfo.linkInfo = linkInfo;
-//}
-
-- (void)addPageInfo:(NSArray *)pageInfo
+- (void)addPageInfo:(int)pageNb
+          textStart:(int)pageTextStart
+            textEnd:(int)pageTextEnd
                font:(NSString *)font
                size:(float)size
         columnCount:(int)colCount {
-//    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
-//    __SingleFormatSelectionInfo *selectionInfo = (__SingleFormatSelectionInfo *)[info objectForKey:key];
-//    if(selectionInfo == nil) {
-//        selectionInfo = [[__SingleFormatSelectionInfo alloc] init];
-//        [info setObject:selectionInfo forKey:key];
-//    }
-//
-//    selectionInfo.pageInfo = pageInfo;
+    NSMutableArray *pageInfoForKey = nil;
+    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
+    
+    pageInfoForKey = (NSMutableArray *)[_allPageInfo objectForKey:key];
+    
+    if(!pageInfoForKey) {
+        pageInfoForKey = [NSMutableArray array];
+        [_allPageInfo setObject:pageInfoForKey forKey:key];
+    }
+    __PageInfo *pageInfo = [[__PageInfo alloc] initWithPage:pageNb textStart:pageTextStart textEnd:pageTextEnd];
+    [pageInfoForKey addObject:pageInfo];
+    
 }
 
 - (BOOL)hasPageInfoForFont:(NSString *)font
                       size:(float)size
                columnCount:(int)colCount {
-//    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
-//    __SingleFormatSelectionInfo *selectionInfo = (__SingleFormatSelectionInfo *)[info objectForKey:key];
-//    if(selectionInfo == nil) {
-//        return NO;
-//    }
-//    else if(selectionInfo.pageInfo) {
-//        return YES;
-//    }
-//    else {
-        return NO;
-//    }
+    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
+    return [_allPageInfo objectForKey:key] != nil;
 }
-
-- (NSArray *)getPageInfoForFont:(NSString *)font
-                           size:(float)size
-                    columnCount:(int)colCount {
-//    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
-//    __SingleFormatSelectionInfo *selectionInfo = (__SingleFormatSelectionInfo *)[info objectForKey:key];
-//    if(selectionInfo == nil) {
-        return nil;
-//    }
-//    else {
-//        return selectionInfo.pageInfo;
-//    }
-}
-
-//- (BOOL)hasAttStringsForFont:(NSString *)font
-//                        size:(float)size
-//                 columnCount:(int)colCount {
-//    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
-//    __SingleFormatSelectionInfo *selectionInfo = (__SingleFormatSelectionInfo *)[info objectForKey:key];
-//    if(selectionInfo == nil) {
-//        return NO;
-//    }
-//    else if(selectionInfo.attStrings) {
-//        return YES;
-//    }
-//    else {
-//        return NO;
-//    }
-//}
-
-//- (NSDictionary *)getAttStringsForFont:(NSString *)font
-//                                  size:(float)size
-//                           columnCount:(int)colCount {
-//    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
-//    __SingleFormatSelectionInfo *selectionInfo = (__SingleFormatSelectionInfo *)[info objectForKey:key];
-//    if(selectionInfo == nil) {
-//        return nil;
-//    }
-//    else {
-//        return selectionInfo.attStrings;
-//    }
-//}
-
-//- (NSDictionary *)getImageInfoForFont:(NSString *)font
-//                                 size:(float)size
-//                          columnCount:(int)colCount {
-//    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
-//    __SingleFormatSelectionInfo *selectionInfo = (__SingleFormatSelectionInfo *)[info objectForKey:key];
-//    if(selectionInfo == nil) {
-//        return nil;
-//    }
-//    else {
-//        return selectionInfo.imageInfo;
-//    }
-//}
-
-//- (NSDictionary *)getLinkInfoForFont:(NSString *)font
-//                                size:(float)size
-//                         columnCount:(int)colCount {
-//    NSString *key = [self keyFromFont:font size:size columnCount:colCount];
-//    __SingleFormatSelectionInfo *selectionInfo = (__SingleFormatSelectionInfo *)[info objectForKey:key];
-//    if(selectionInfo == nil) {
-//        return nil;
-//    }
-//    else {
-//        return selectionInfo.linkInfo;
-//    }
-//}
 
 - (NSArray *)getPageForLocation:(int)location
                            font:(NSString *)font
@@ -185,8 +92,8 @@
     return nil;
 }
 
-//key is String concatenation of font-size-column combo, which is guaranteed to be unique as all
-//font names are distinctive
+//key is String concatenation of font-size-column combo, which is
+//guaranteed to be unique as all font names are distinctive
 - (NSString *)keyFromFont:(NSString *)font
                      size:(float)size
               columnCount:(int)colCount {

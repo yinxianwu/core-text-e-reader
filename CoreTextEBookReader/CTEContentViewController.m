@@ -115,8 +115,10 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         [orderedSet addObject:[chapter id]];
     }
 
+    self.cteView.currentFont = self.currentFont;
+    self.cteView.currentFontSize = [self.currentFontSize floatValue];
     int colCount = [self.currentColumnsInView intValue];
-    self.cteView.pageColumnCount = colCount;
+    self.cteView.currentColumnCount = colCount;
     self.cteView.viewDelegate = self;
     [self.cteView setAttStrings:self.attStrings
                          images:self.images
@@ -229,6 +231,10 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         [orderedSet addObject:[chapter id]];
     }
     
+    self.cteView.currentFont = self.currentFont;
+    self.cteView.currentFontSize = [self.currentFontSize floatValue];
+    int colCount = [self.currentColumnsInView intValue];
+    self.cteView.currentColumnCount = colCount;
     [self.cteView setAttStrings:self.attStrings
                          images:self.images
                           links:self.links
@@ -510,7 +516,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 //sets in CTEView
 - (void)setCurrentColumnsInView:(NSNumber *)colCount {
     _currentColumnsInView = colCount;
-    self.cteView.pageColumnCount = [colCount intValue];
+    self.cteView.currentColumnCount = [colCount intValue];
 }
 
 - (NSNumber *)currentColumnsInView {

@@ -27,7 +27,9 @@
 @property (strong, nonatomic) NSMutableArray *orderedChapterPages;
 @property (nonatomic, strong) NSNumber *currentChapterID;
 @property (nonatomic) int totalPages;
-@property (nonatomic) int pageColumnCount;
+@property (nonatomic, strong) NSString *currentFont;
+@property (nonatomic) float currentFontSize;
+@property (nonatomic) int currentColumnCount;
 
 - (void)setAttStrings:(NSDictionary *)allAttStrings
                images:(NSDictionary *)allImages
