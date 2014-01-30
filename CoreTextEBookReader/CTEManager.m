@@ -96,6 +96,10 @@
                                                  selector:@selector(contentViewOptionsUpdated:)
                                                      name:ChangeColumnCount
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:manager
+                                                 selector:@selector(contentViewOptionsUpdated:)
+                                                     name:ChangeFormat
+                                                   object:nil];
         
         //set the rootViewController to the contentViewController
         manager.window.rootViewController = manager.contentViewController;
@@ -129,6 +133,22 @@
         else if([[notification name] isEqualToString:ChangeColumnCount]) {
             NSNumber *columnCountObj = (NSNumber *)[notification object];
             manager.contentViewController.currentColumnsInView = columnCountObj;
+        }
+        //iPhone only -- all-in-one format changes
+        else if([[notification name] isEqualToString:ChangeFormat]) {
+            NSDictionary *formatInfo = (NSDictionary *)[notification object];
+            for(id key in formatInfo) {
+                if([key isEqualToString:ChangeFont]) {
+                    NSString *fontName = (NSString *)[formatInfo objectForKey:key];
+                    manager.contentViewController.currentFont = fontName;
+                    manager.parser.currentBodyFont = fontName;
+                }
+                if([key isEqualToString:ChangeFontSize]) {
+                    NSNumber *fontSizeObj = (NSNumber *)[formatInfo objectForKey:key];
+                    manager.contentViewController.currentFontSize = fontSizeObj;
+                    manager.parser.currentBodyFontSize = [fontSizeObj floatValue];
+                }
+            }
         }
     }
 
@@ -201,7 +221,7 @@
     if(newCurrentPage == -1) {
         newCurrentPage = [self.contentViewController pageForTextPosition:currentTextPosition];
     }
-    [self.contentViewController scrollToPage:newCurrentPage animated:NO updateCurrentTextPosition:NO];
+//    [self.contentViewController scrollToPage:newCurrentPage animated:NO updateCurrentTextPosition:NO];
 }
 
 @end

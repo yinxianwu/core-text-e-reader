@@ -15,6 +15,7 @@ extern NSString * const HideSideMenu;
 extern NSString * const ChangeFont;
 extern NSString * const ChangeFontSize;
 extern NSString * const ChangeColumnCount;
+extern NSString * const ChangeFormat;
 extern NSString * const PageForward;
 extern NSString * const PageBackward;
 

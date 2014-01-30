@@ -16,6 +16,7 @@ NSString * const HideSideMenu = @"HideSideMenu";
 NSString * const ChangeFont = @"ChangeFont";
 NSString * const ChangeFontSize = @"ChangeFontSize";
 NSString * const ChangeColumnCount = @"ChangeColumnCount";
+NSString * const ChangeFormat = @"ChangeFormat";
 NSString * const PageForward = @"PageForward";
 NSString * const PageBackward = @"PageBackward";
 

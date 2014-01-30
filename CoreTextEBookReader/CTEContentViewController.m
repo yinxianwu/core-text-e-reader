@@ -273,6 +273,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
 //brings up settings popover
 - (void)configButtonTouched:(id)sender {
+    //TODO if button is pushed when a popover is alreasdy visible, app crashes!
     CTEViewOptionsViewController *popoverView;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPhoneView"

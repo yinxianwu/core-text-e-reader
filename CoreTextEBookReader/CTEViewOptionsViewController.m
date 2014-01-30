@@ -13,6 +13,8 @@
 
 @interface CTEViewOptionsViewController () {
     NSNumberFormatter *formatter;
+    NSString *prevSelectedFont;
+    NSNumber *prevSelectedFontSize;
 }
 
 @end
@@ -42,6 +44,11 @@ selectedColumnsInView:(NSNumber *)columnsInView
         self.selectedFont = fontKey;
         self.selectedFontSize = fontSize;
         self.selectedColumnsInView = columnsInView;
+        
+        //cache prev values
+        prevSelectedFont = self.selectedFont;
+        prevSelectedFontSize = self.selectedFontSize;
+        
         self.fontSizes = @[@"16", @"18", @"20", @"24", @"28"];
         self.columns = @[@"One Column", @"Two Columns"];
         self.barColor = color;
@@ -77,12 +84,32 @@ selectedColumnsInView:(NSNumber *)columnsInView
     [self.pickerView setShowsSelectionIndicator:YES];
     long selectedFontIndex = [self.fonts indexOfObject:self.selectedFont];
     long selectedFontSizeIndex = [self.fontSizes indexOfObject:fontSizeStr];
-    int selectedColumnsIndex = 1; //TODO mapping//[self.fonts indexOfObject:@"Two Columns"];
+    long selectedColumnsIndex = [self.selectedColumnsInView longValue] - 1;
     [self.pickerView selectRow:selectedFontIndex inComponent:0 animated:NO];
     [self.pickerView selectRow:selectedFontSizeIndex inComponent:1 animated:NO];
 
+    //column selection only applicable for iPads
     if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPhone) {
         [self.pickerView selectRow:selectedColumnsIndex inComponent:2 animated:NO];
+    }
+}
+
+//Handles format changes for iPhone
+//Due to memory and performance considerations, iPhone format changes
+//are done "all in one" after user closes this view
+- (void)viewDidDisappear:(BOOL)animated {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        NSMutableDictionary *changeDict = [NSMutableDictionary dictionaryWithCapacity:2];
+        if(![self.selectedFont isEqualToString:prevSelectedFont]) {
+            [changeDict setValue:self.selectedFont forKey:ChangeFont];
+        }
+        if(![self.selectedFontSize isEqualToNumber:prevSelectedFontSize]) {
+            [changeDict setValue:self.selectedFont forKey:ChangeFont];
+        }
+        
+        if([changeDict count] > 0) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:ChangeFormat object:changeDict];
+        }
     }
 }
 
@@ -140,7 +167,7 @@ selectedColumnsInView:(NSNumber *)columnsInView
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     CGFloat width = 0.0;
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if(component == 0) {
             width = 240.0;
         }
@@ -179,19 +206,29 @@ selectedColumnsInView:(NSNumber *)columnsInView
 }
 
 //select option and post notification
+//on iPhone, only do this when view disappears
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if(component == 0) {
         self.selectedFont = (NSString *)[fonts objectAtIndex:row];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ChangeFont object:self.selectedFont];
+        //only fire events on iPad; on iPhone they happen after view is closed
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:ChangeFont object:self.selectedFont];
+        }
     }
     else if(component == 1) {
         NSNumber *fontSizeNb = [formatter numberFromString:(NSString *)[fontSizes objectAtIndex:row]];
         self.selectedFontSize = fontSizeNb;
-        [[NSNotificationCenter defaultCenter] postNotificationName:ChangeFontSize object:self.selectedFontSize];
+        //only fire events on iPad; on iPhone they happen after view is closed
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:ChangeFontSize object:self.selectedFontSize];
+        }
     }
-    else if(component == 2) {
-        self.selectedColumnsInView = [NSNumber numberWithInt:(row + 1)];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ChangeColumnCount object:self.selectedColumnsInView];
+    //columns can only be set on iPad
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if(component == 2) {
+            self.selectedColumnsInView = [NSNumber numberWithInt:(row + 1)];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ChangeColumnCount object:self.selectedColumnsInView];
+        }
     }
 }
 
