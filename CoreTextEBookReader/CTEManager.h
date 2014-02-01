@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSArray *chapters;
 @property (strong, nonatomic) UIColor *barColor;
 @property (strong, nonatomic) UIColor *highlightColor;
+@property (strong, nonatomic) NSArray *spinnerInfo;
 
 + (CTEManager *)managerWithWindow:(UIWindow *)window
                       andChapters:(NSArray *)chapters
