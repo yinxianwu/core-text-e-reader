@@ -37,10 +37,6 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-             chapters:(NSArray *)allChapters
-           attStrings:(NSDictionary *)allAttStrings
-               images:(NSDictionary *)allImages
-                links:(NSDictionary *)allLinks
              barColor:(UIColor *)color;
 - (void)rebuildContent:(NSMutableDictionary *)allAttStrings
                 images:(NSDictionary *)allImages

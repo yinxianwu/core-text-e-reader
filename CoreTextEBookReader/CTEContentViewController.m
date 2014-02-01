@@ -19,7 +19,7 @@
 
 @interface CTEContentViewController () {
     NSMutableSet *columnsRendered;
-    BOOL initialLoad;
+    BOOL isFirstLoad;
 }
 @property (nonatomic, strong) NSArray *spinnerViews;
 
@@ -58,19 +58,11 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 //Constructor
 - (id)initWithNibName:(NSString *)nibNameOrNil
                bundle:(NSBundle *)nibBundleOrNil
-             chapters:(NSArray *)allChapters
-           attStrings:(NSMutableDictionary *)allAttStrings
-               images:(NSDictionary *)allImages
-                links:(NSDictionary *)allLinks
              barColor:(UIColor *)color {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    self.chapters = allChapters;
-    self.attStrings = allAttStrings;
-    self.images = allImages;
-    self.links = allLinks;
     self.barColor = color;
     self.currentTextPosition = 0; //initialize
-    initialLoad = YES;
+    isFirstLoad = YES;
     
     //init the set of rendered columns
     columnsRendered = [NSMutableSet set];
@@ -83,7 +75,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         self.currentColumnsInView = [NSNumber numberWithInt:1];
     }
 
-    //TODO this will probably come from a stored cache
+    //TODO get from user settings, if any
     self.currentFont = PalatinoFontKey;
     self.currentFontSize = [NSNumber numberWithInt:18];
     
@@ -112,22 +104,11 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         }
     }
 
-    NSMutableArray *orderedSet = [NSMutableArray arrayWithCapacity:[self.chapters count]];
-    for(id<CTEChapter> chapter in self.chapters) {
-        [orderedSet addObject:[chapter id]];
-    }
-
     self.cteView.currentFont = self.currentFont;
     self.cteView.currentFontSize = [self.currentFontSize floatValue];
     int colCount = [self.currentColumnsInView intValue];
     self.cteView.currentColumnCount = colCount;
     self.cteView.viewDelegate = self;
-    [self.cteView setAttStrings:self.attStrings
-                         images:self.images
-                          links:self.links
-                          order:orderedSet];
-    [self.cteView buildFrames];
-    self.currentTextPosition = 0; //reset
     
     //nav bar init
     BOOL isIOS7 = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1);
@@ -159,10 +140,6 @@ CGFloat const toolBarLegacyHeight = 80.0f;
                                   target:self
                                   action:@selector(slideMenuButtonTouched:)];
     NSString *navBarInitialTitle = NavigationBarTitle;
-    if([self.chapters count] > 0) {
-        id<CTEChapter> firstChapter = (id<CTEChapter>)[self.chapters firstObject];
-        navBarInitialTitle = [firstChapter title];
-    }
     UINavigationItem *item = [[UINavigationItem alloc] initWithTitle:navBarInitialTitle];
     item.leftBarButtonItem = addButton;
     [self.navBar pushNavigationItem:item animated:false];
@@ -178,8 +155,6 @@ CGFloat const toolBarLegacyHeight = 80.0f;
                                 forState:UIControlStateNormal];
     
     self.pageSlider = [[UISlider alloc] init];
-    self.pageSlider.minimumValue = 0.0f;
-    self.pageSlider.maximumValue = [self.cteView totalPages];
     self.pageSlider.continuous = NO;
     [self.pageSlider addTarget:self
                         action:@selector(pageSliderValueChanged:)
@@ -205,15 +180,17 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 //some component sizing on initial load
 //per http://stackoverflow.com/questions/5066847/get-the-width-of-a-uibarbuttonitem
 - (void)viewWillAppear:(BOOL)animated {
-    if(initialLoad) {
+    if(isFirstLoad) {
         UIBarButtonItem *item = self.configButton;
         UIView *view = [item valueForKey:@"view"];
         CGFloat width = view ? [view frame].size.width : (CGFloat)0.0;
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         CGFloat screenWidth = screenRect.size.width;
         [self.sliderAsToolbarItem setWidth:screenWidth - width - 40]; //adjust for borders and such
-        initialLoad = NO;
+        isFirstLoad = NO;
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ContentViewLoaded object:self];
 }
 
 //tell subview to determine initial columns to draw
@@ -229,7 +206,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     self.images = allImages;
     self.links = allLinks;
     [self.cteView clearFrames];
-    NSMutableArray *orderedSet = [NSMutableArray arrayWithCapacity:[self.chapters count]];
+    NSMutableArray *orderedSet = [NSMutableArray array];
     for(id<CTEChapter> chapter in self.chapters) {
         [orderedSet addObject:[chapter id]];
     }
@@ -273,7 +250,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
 //brings up settings popover
 - (void)configButtonTouched:(id)sender {
-    //TODO if button is pushed when a popover is alreasdy visible, app crashes!
+    //TODO if button is pushed when a popover is already visible, app crashes!
     CTEViewOptionsViewController *popoverView;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPhoneView"

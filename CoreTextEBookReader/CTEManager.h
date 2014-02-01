@@ -17,18 +17,15 @@
 @property (strong, nonatomic) CTEMenuViewController *menuViewController;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CTEMarkupParser *parser;
-@property (strong, nonatomic) NSMutableDictionary *attStrings;
-@property (strong, nonatomic) NSMutableDictionary *images;
-@property (strong, nonatomic) NSMutableDictionary *links;
 @property (strong, nonatomic) NSArray *chapters;
 @property (strong, nonatomic) UIColor *barColor;
 @property (strong, nonatomic) UIColor *highlightColor;
 
 + (CTEManager *)managerWithWindow:(UIWindow *)window
-                        andChapters:(NSArray *)chapters
-                        andBarColor:(UIColor *)color
-                  andHighlightColor:(UIColor *)highlight;
-+ (void)buildAttStringsForManager:(CTEManager *)delegate
-                         chapters:(NSArray *)chapters
-                     notification:(NSNotification *)notification;
+                      andChapters:(NSArray *)chapters
+                      andBarColor:(UIColor *)color
+                    andHighlightColor:(UIColor *)highlight;
+- (void)buildAttStrings:(NSNotification *)notification;
+- (void)rebuildContentView:(NSArray *)contentData;
+
 @end

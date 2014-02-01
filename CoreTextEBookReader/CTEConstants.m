@@ -13,6 +13,7 @@
 //events
 NSString * const ShowSideMenu = @"ShowSideMenu";
 NSString * const HideSideMenu = @"HideSideMenu";
+NSString * const ContentViewLoaded = @"ContentViewLoaded";
 NSString * const ChangeFont = @"ChangeFont";
 NSString * const ChangeFontSize = @"ChangeFontSize";
 NSString * const ChangeColumnCount = @"ChangeColumnCount";

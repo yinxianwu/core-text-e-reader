@@ -16,15 +16,16 @@
 
 @synthesize viewDelegate;
 @synthesize columns;
+@synthesize orderedKeys;
 @synthesize attStrings;
 @synthesize imageMetadatas;
 @synthesize links;
+@synthesize orderedChapterPages;
+@synthesize currentChapterID;
 @synthesize totalPages;
 @synthesize currentFont;
 @synthesize currentFontSize;
 @synthesize currentColumnCount;
-@synthesize orderedChapterPages;
-@synthesize currentChapterID;
 
 //sets text & image properties
 - (void)setAttStrings:(NSDictionary *)allAttStrings
@@ -47,9 +48,9 @@
     self.imageMetadatas = nil;
     self.links = nil;
     self.orderedKeys = nil;
-    self.orderedChapterPages = [NSMutableArray arrayWithCapacity:self.orderedKeys.count];
+    self.orderedChapterPages = [NSMutableArray array];
     
-    [self setNeedsDisplay];
+//    [self setNeedsDisplay];
 }
 
 //builds all columns of text & images
