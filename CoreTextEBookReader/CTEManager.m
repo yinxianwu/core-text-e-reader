@@ -22,7 +22,6 @@
 @synthesize chapters;
 @synthesize barColor;
 @synthesize highlightColor;
-@synthesize spinnerInfo;
 
 + (CTEManager *)managerWithWindow:(UIWindow *)appWindow
                         andChapters:(NSArray *)chapters
@@ -132,7 +131,8 @@
             }
         }
     }
-    self.spinnerInfo = [CTEUtils startSpinnerOnView:self.contentViewController.view];
+    
+    [self.contentViewController showWaitSpinner];
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
         CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -194,7 +194,8 @@
         }
         [self.contentViewController scrollToPage:newCurrentPage animated:NO updateCurrentTextPosition:NO];
     }
-    [CTEUtils stopSpinnerOnView:self.contentViewController.view withSpinner:self.spinnerInfo];
+    
+    [self.contentViewController hideWaitSpinner];
 }
 
 //Selects appropriate chapter then does side menu reveal
@@ -227,6 +228,7 @@
 - (void)sideMenuWasHidden:(NSNotification *)notification {
     //all animation takes place elsewhere. When this gets called just swap the contentViewController
     //if a new chapter is chosen, display that one
+    [self.contentViewController showWaitSpinner];
     id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
     [self.contentViewController setCurrentChapter:chapter];
     self.window.rootViewController = self.contentViewController;

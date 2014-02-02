@@ -176,12 +176,6 @@ CGFloat const toolBarLegacyHeight = 80.0f;
                                              selector:@selector(handlePageBackward:)
                                                  name:PageBackward
                                                object:nil];
-    
-    //listen for app-restore events
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(handleAppRestored:)
-//                                                 name:UIApplicationDidBecomeActiveNotification
-//                                               object:nil];
 }
 
 //some component sizing on initial load
@@ -220,29 +214,21 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     [[NSNotificationCenter defaultCenter] postNotificationName:ContentViewLoaded object:self];
 }
 
-//tell subview to determine initial columns to draw
-//- (void)viewDidAppear:(BOOL)animated {
-//    [self.cteView setNeedsDisplay];
-//}
+//Shows wait spinner; if one is already up, does nothing
+- (void)showWaitSpinner {
+    if(!self.spinnerViews) {
+        self.spinnerViews = [CTEUtils startSpinnerOnView:self.view];
+    }
+}
 
-//when app is restored from background, go to last position
-//- (void)handleAppRestored:(id)sender {
-//    [self loadSettings];
-//}
+//Hides wait spinner; if none are displaying, does nothing
+- (void)hideWaitSpinner {
+    if(self.spinnerViews) {
+        [CTEUtils stopSpinnerOnView:self.view withSpinner:self.spinnerViews];
+        self.spinnerViews = nil;
+    }
+}
 
-//Loads settings and sets in the view; ASSUMES a file exists (though if one doesn't simply does nothing)
-//Forces a redraw of the view if anything's different
-//- (void)loadSettings {
-//    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//    NSString *filePath = [rootPath stringByAppendingPathComponent:SettingsFileName];
-//    NSMutableDictionary *plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-//    
-//    if(plistDict) {
-//        //TODO compare and redraw if changed
-////        self.currentFont = PalatinoFontKey;
-////        self.currentFontSize = [NSNumber numberWithInt:18];
-//    }
-//}
 
 - (void)saveSettings {
     NSString *error = nil;
@@ -436,7 +422,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
 //plays specified movie
 - (void)playMovie:(NSString *)clipPath {
-    self.spinnerViews = [CTEUtils startSpinnerOnView:self.view];
+    [self showWaitSpinner];
     self.moviePlayerController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:clipPath]];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(moviePlayerLoadStateChanged:)
@@ -451,7 +437,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     MPMovieLoadState loadState = self.moviePlayerController.moviePlayer.loadState;
     if(loadState == MPMovieLoadStatePlayable) {
         NSLog(@"MPMovieLoadStatePlaythroughOK; loading player...");
-        [CTEUtils stopSpinnerOnView:self.view withSpinner:self.spinnerViews];
+        [self hideWaitSpinner];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
         [self presentMoviePlayerViewControllerAnimated:self.moviePlayerController];
     }
@@ -497,9 +483,9 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     programmaticScroll = YES;
     
     CGRect cteViewFrame = self.cteView.frame;
-    cteViewFrame.origin.x = cteViewFrame.size.width * page;
-    cteViewFrame.origin.y = 0;
-    [self.cteView scrollRectToVisible:cteViewFrame animated:animated];
+    CGFloat newOriginX = cteViewFrame.size.width * page;
+    CGRect scrollToFrame = CGRectMake(newOriginX, cteViewFrame.origin.y, cteViewFrame.size.width, cteViewFrame.size.height);
+    [self.cteView scrollRectToVisible:scrollToFrame animated:animated];
 }
 
 //Returns current page index
@@ -587,18 +573,8 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     if(chapter == self.currentChapter) {
         return;
     }
-    CGFloat pageWidth = self.cteView.frame.size.width;
     NSNumber *page = [self.cteView pageNumberForChapterID:[chapter id]];
-    [self.cteView setContentOffset:CGPointMake(pageWidth * [page intValue], 0.0f) animated:NO];
-    [self.cteView setCurrentChapterID:[chapter id]];
-    self.currentTextPosition = [self.cteView getCurrentTextPosition];
-
-    //update page slider to selected page
-    [self.pageSlider setValue:[page floatValue]];
-    
-    //update navbar title to chapter title
-    UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
-    item.title = [chapter title];
+    [self scrollToPage:[page intValue] animated:NO updateCurrentTextPosition:YES];
 }
 
 //sets in CTEView
@@ -607,6 +583,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     self.cteView.currentColumnCount = [colCount intValue];
 }
 
+//current column count
 - (NSNumber *)currentColumnsInView {
     return _currentColumnsInView;
 }

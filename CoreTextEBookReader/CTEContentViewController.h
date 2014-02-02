@@ -42,14 +42,14 @@
                 images:(NSDictionary *)allImages
                  links:(NSDictionary *)allLinks;
 - (void)slideMenuButtonTouched:(id)sender;
-//- (void)handleAppRestored:(id)sender;
+- (void)showWaitSpinner;
+- (void)hideWaitSpinner;
 - (void)playMovie:(NSString *)clipPath;
 - (void)nextPage;
 - (void)prevPage;
 - (void)scrollToPage:(int)page animated:(BOOL)animated updateCurrentTextPosition:(BOOL)shouldUpdate;
 - (int)getCurrentPage;
 - (int)pageForTextPosition:(int)position;
-//- (void)loa-dSettings;
 - (void)saveSettings;
 
 @end
