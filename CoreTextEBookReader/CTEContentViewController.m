@@ -18,13 +18,13 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface CTEContentViewController () {
-    NSMutableSet *columnsRendered;
-    BOOL isFirstLoad;
-    BOOL programmaticScroll;
-    BOOL updateTextPosition;
-    NSNumber *initialPageNum;
+    NSMutableSet *_columnsRendered;
+    NSNumber *_initialPageNum;
+    NSArray *_spinnerViews;
+    BOOL _isFirstLoad;
+    BOOL _isProgrammaticScroll;
+    BOOL _shouldUpdateTextPosition;
 }
-@property (nonatomic, strong) NSArray *spinnerViews;
 
 @end
 
@@ -33,7 +33,6 @@
 @synthesize cteView;
 @synthesize navBar;
 @synthesize toolBar;
-@synthesize spinnerViews;
 @synthesize moviePlayerController;
 @synthesize pageSlider;
 @synthesize configButton;
@@ -65,12 +64,12 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     self.barColor = color;
     self.currentTextPosition = 0; //initialize
-    isFirstLoad = YES;
-    programmaticScroll = NO;
-    updateTextPosition = YES;
+    _isFirstLoad = YES;
+    _isProgrammaticScroll = NO;
+    _shouldUpdateTextPosition = YES;
     
     //init the set of rendered columns
-    columnsRendered = [NSMutableSet set];
+    _columnsRendered = [NSMutableSet set];
     
     //default column counts depend on device
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -181,14 +180,14 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 //some component sizing on initial load
 //per http://stackoverflow.com/questions/5066847/get-the-width-of-a-uibarbuttonitem
 - (void)viewWillAppear:(BOOL)animated {
-    if(isFirstLoad) {
+    if(_isFirstLoad) {
         UIBarButtonItem *item = self.configButton;
         UIView *view = [item valueForKey:@"view"];
         CGFloat width = view ? [view frame].size.width : (CGFloat)0.0;
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         CGFloat screenWidth = screenRect.size.width;
         [self.sliderAsToolbarItem setWidth:screenWidth - width - 40]; //adjust for borders and such
-        isFirstLoad = NO;
+        _isFirstLoad = NO;
     }
     
     //get user settings, if any
@@ -207,7 +206,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         self.currentFont = (NSString *)[plistDict objectForKey:BodyFontKey];
         self.currentFontSize = (NSNumber *)[plistDict objectForKey:BodyFontSizeKey];
         self.currentColumnsInView = (NSNumber *)[plistDict objectForKey:ColumnCountKey];
-        initialPageNum = (NSNumber *)[plistDict objectForKey:PageNumKey];
+        _initialPageNum = (NSNumber *)[plistDict objectForKey:PageNumKey];
     }
     
     //notifies receivers to provide content
@@ -216,20 +215,20 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
 //Shows wait spinner; if one is already up, does nothing
 - (void)showWaitSpinner {
-    if(!self.spinnerViews) {
-        self.spinnerViews = [CTEUtils startSpinnerOnView:self.view];
+    if(!_spinnerViews) {
+        _spinnerViews = [CTEUtils startSpinnerOnView:self.view];
     }
 }
 
 //Hides wait spinner; if none are displaying, does nothing
 - (void)hideWaitSpinner {
-    if(self.spinnerViews) {
-        [CTEUtils stopSpinnerOnView:self.view withSpinner:self.spinnerViews];
-        self.spinnerViews = nil;
+    if(_spinnerViews) {
+        [CTEUtils stopSpinnerOnView:self.view withSpinner:_spinnerViews];
+        _spinnerViews = nil;
     }
 }
 
-
+//Persists current page and format info to settings file
 - (void)saveSettings {
     NSString *error = nil;
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -273,10 +272,10 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     self.pageSlider.maximumValue = [self.cteView totalPages];
     
     //if an initial page number was loaded in from settings, use that then nil it out
-    if(initialPageNum) {
-        self.pageSlider.value = [initialPageNum floatValue];
-        [self scrollToPage:[initialPageNum intValue] animated:NO updateCurrentTextPosition:YES];
-        initialPageNum = nil;
+    if(_initialPageNum) {
+        self.pageSlider.value = [_initialPageNum floatValue];
+        [self scrollToPage:[_initialPageNum intValue] animated:NO updateCurrentTextPosition:YES];
+        _initialPageNum = nil;
     }
     else {
         self.pageSlider.value = [self.cteView pageNumberForTextPosition:self.currentTextPosition];
@@ -287,20 +286,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 - (void)pageSliderValueChanged:(id)sender {
     float sliderValue = self.pageSlider.value;
     float sliderPageValue = floorf(sliderValue);
-    CGRect cteViewFrame = self.cteView.frame;
-    cteViewFrame.origin.x = cteViewFrame.size.width * sliderPageValue;
-    cteViewFrame.origin.y = 0;
-    [self.cteView scrollRectToVisible:cteViewFrame animated:NO];
-    [self.cteView currentChapterNeedsUpdate];
-    [self.cteView setNeedsDisplay];
-    self.currentTextPosition = [self.cteView getCurrentTextPosition];
-    
-    //update navbar title to new chapter title
-    UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
-    item.title = [self.currentChapter title];
-    
-    //update settings file
-    [self saveSettings];
+    [self scrollToPage:(int)sliderPageValue animated:NO updateCurrentTextPosition:YES];
 }
 
 //side menu action
@@ -398,13 +384,13 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
 //Updates the view in response to a programmatic scroll
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(programmaticScroll) {
-        programmaticScroll = NO;
+    if(_isProgrammaticScroll) {
+        _isProgrammaticScroll = NO;
         [self.cteView currentChapterNeedsUpdate];
         [self.cteView setNeedsDisplay];
         
         //cache for format changes, if applicable
-        if(updateTextPosition) {
+        if(_shouldUpdateTextPosition) {
             self.currentTextPosition = [self.cteView getCurrentTextPosition];
         }
         
@@ -479,8 +465,8 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     }
     
     //flip flags
-    updateTextPosition = shouldUpdate;
-    programmaticScroll = YES;
+    _shouldUpdateTextPosition = shouldUpdate;
+    _isProgrammaticScroll = YES;
     
     CGRect cteViewFrame = self.cteView.frame;
     CGFloat newOriginX = cteViewFrame.size.width * page;
@@ -519,7 +505,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
 //returns the current set of columns rendered
 - (NSMutableSet *)columnsRendered {
-    return columnsRendered;
+    return _columnsRendered;
 }
 
 //returns columns that should be rendered immediately based on current position
@@ -541,7 +527,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         CGFloat subviewStartX = subviewFrame.origin.x;
         CGFloat subviewEndX = subviewStartX + subviewFrame.size.width;
         if([subview isKindOfClass:[CTEColumnView class]] &&
-           ![columnsRendered member:subview] &&
+           ![_columnsRendered member:subview] &&
            (subviewStartX >= prevPageStartX) &&
            (subviewEndX < nextPageEndX)) {
             [columnsToRender addObject:subview];

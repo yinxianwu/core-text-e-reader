@@ -493,14 +493,24 @@
     int page = [self getCurrentPage];
     //need this check as -1 iteration will always be performed at least once otherwise
     if(self.orderedChapterPages.count > 0) {
-        for(int i = 0; i < self.orderedChapterPages.count - 1; i++) {
+        for(int i = 0; i < self.orderedChapterPages.count; i++) {
             NSNumber *pageNb = (NSNumber *)[self.orderedChapterPages objectAtIndex:i];
-            NSNumber *nextPageNB = (NSNumber *)[self.orderedChapterPages objectAtIndex:i+1];
-            if(page >= [pageNb intValue] && page < [nextPageNB intValue]) {
-                //grab current chapter ID from corresponding array
+            
+            //if it's the final chapter and no match found yet and page number is >
+            //that chapter's start, then that chapter is "it"
+            if(i+1 == self.orderedChapterPages.count && page >= [pageNb intValue]) {
                 self.currentChapterID = (NSNumber *)[self.orderedKeys objectAtIndex:i];
                 NSLog(@"SET currentChapterID: %@", self.currentChapterID);
                 break;
+            }
+            else {
+                NSNumber *nextPageNB = (NSNumber *)[self.orderedChapterPages objectAtIndex:i+1];
+                if(page >= [pageNb intValue] && page < [nextPageNB intValue]) {
+                    //grab current chapter ID from corresponding array
+                    self.currentChapterID = (NSNumber *)[self.orderedKeys objectAtIndex:i];
+                    NSLog(@"SET currentChapterID: %@", self.currentChapterID);
+                    break;
+                }
             }
         }
     }
