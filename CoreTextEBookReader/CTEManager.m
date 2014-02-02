@@ -152,8 +152,8 @@
         //wrap all layout data in an NSArray
         //TODO might be better as an object?
         NSArray *contentData = notification ?
-                               [NSArray arrayWithObjects:allAttStrings, allImages, allLinks, nil] :
-                               [NSArray arrayWithObjects:allAttStrings, allImages, allLinks, notification, nil];
+                               [NSArray arrayWithObjects:allAttStrings, allImages, allLinks, notification, nil] :
+                               [NSArray arrayWithObjects:allAttStrings, allImages, allLinks, nil];
         [self performSelectorOnMainThread:@selector(rebuildContentView:) withObject:contentData waitUntilDone:YES];
     }];
     [queue addOperation:operation];
@@ -166,11 +166,17 @@
     NSMutableDictionary *allAttStrings = (NSMutableDictionary *)[contentData objectAtIndex:0];
     NSMutableDictionary *allImages = (NSMutableDictionary *)[contentData objectAtIndex:1];
     NSMutableDictionary *allLinks = (NSMutableDictionary *)[contentData objectAtIndex:2];
+    BOOL shouldChangeFormat = NO;
     [self.contentViewController rebuildContent:allAttStrings images:allImages links:allLinks];
     
-    //if notification exists, means user changed settings
+    //if notification is not of type COntentViewLoaded, means user changed settings
     //in this case, programmatically go to page derived from previous text location
     if([contentData count] > 3 && [[contentData objectAtIndex:3] isKindOfClass:[NSNotification class]]) {
+        NSNotification *notification = (NSNotification *)[contentData objectAtIndex:3];
+        shouldChangeFormat = !([[notification name] isEqualToString:ContentViewLoaded]);
+    }
+    
+    if(shouldChangeFormat) {
         //get new page from current position, which doesn't change until user changes the page
         //this prevents pages from "hopping" as users toggle back and forth thru different styles,
         //which if it reset the currentTextPosition every time would possibly cause pages to misalign
