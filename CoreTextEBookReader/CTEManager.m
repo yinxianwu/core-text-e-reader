@@ -77,13 +77,13 @@
         }
         
         manager.contentViewController = [[CTEContentViewController alloc] initWithNibName:contentNibName
-                                                                      bundle:nil
-                                                                    barColor:manager.barColor];
-        manager.menuViewController = [[CTEMenuViewController alloc] initWithNibName:menuNibName
-                                                                bundle:nil
-                                                        highlightColor:manager.highlightColor];
-        manager.menuViewController.chapterData = chapters;
+                                                                                   bundle:nil
+                                                                                 barColor:manager.barColor];
         manager.contentViewController.chapters = chapters;
+        manager.menuViewController = [[CTEMenuViewController alloc] initWithNibName:menuNibName
+                                                                             bundle:nil
+                                                                     highlightColor:manager.highlightColor];
+        manager.menuViewController.chapterData = chapters;
         
         //set the rootViewController to the contentViewController
         manager.window.rootViewController = manager.contentViewController;
@@ -93,8 +93,11 @@
 }
 
 - (void)buildAttStrings:(NSNotification *)notification {
+    //for initial load, have parser get font info from content view
     if(!self.parser) {
-        self.parser = [[CTEMarkupParser alloc] init];
+        self.parser = [[CTEMarkupParser alloc] initWithFontKey:self.contentViewController.currentFont
+                                                      fontSize:self.contentViewController.currentFontSize];
+        
     }
     
     if(notification) {
@@ -148,7 +151,9 @@
         //all done -- notify main thread it's OK to redraw
         //wrap all layout data in an NSArray
         //TODO might be better as an object?
-        NSArray *contentData = [NSArray arrayWithObjects:allAttStrings, allImages, allLinks, nil];
+        NSArray *contentData = notification ?
+                               [NSArray arrayWithObjects:allAttStrings, allImages, allLinks, nil] :
+                               [NSArray arrayWithObjects:allAttStrings, allImages, allLinks, notification, nil];
         [self performSelectorOnMainThread:@selector(rebuildContentView:) withObject:contentData waitUntilDone:YES];
     }];
     [queue addOperation:operation];
@@ -163,22 +168,26 @@
     NSMutableDictionary *allLinks = (NSMutableDictionary *)[contentData objectAtIndex:2];
     [self.contentViewController rebuildContent:allAttStrings images:allImages links:allLinks];
     
-    //get new page from current position, which doesn't change until user changes the page
-    //this prevents pages from "hopping" as users toggle back and forth thru different styles,
-    //which if it reset the currentTextPosition every time would possibly cause pages to misalign
-    //this is more a consistency thing but it makes for a more pleasing flow
-    NSString *font = self.contentViewController.currentFont;
-    float fontSize = [self.contentViewController.currentFontSize floatValue];
-    int columnCount = [self.contentViewController.currentColumnsInView intValue];
-    FormatSelectionInfo *info = [FormatSelectionInfo sharedInstance];
-    int newCurrentPage = [info getPageForLocation:currentTextPosition
-                                             font:font
-                                             size:fontSize
-                                      columnCount:columnCount];
-    if(newCurrentPage == -1) {
-        newCurrentPage = [self.contentViewController pageForTextPosition:currentTextPosition];
+    //if notification exists, means user changed settings
+    //in this case, programmatically go to page derived from previous text location
+    if([contentData count] > 3 && [[contentData objectAtIndex:3] isKindOfClass:[NSNotification class]]) {
+        //get new page from current position, which doesn't change until user changes the page
+        //this prevents pages from "hopping" as users toggle back and forth thru different styles,
+        //which if it reset the currentTextPosition every time would possibly cause pages to misalign
+        //this is more a consistency thing but it makes for a more pleasing flow
+        NSString *font = self.contentViewController.currentFont;
+        float fontSize = [self.contentViewController.currentFontSize floatValue];
+        int columnCount = [self.contentViewController.currentColumnsInView intValue];
+        FormatSelectionInfo *info = [FormatSelectionInfo sharedInstance];
+        int newCurrentPage = [info getPageForLocation:currentTextPosition
+                                                 font:font
+                                                 size:fontSize
+                                          columnCount:columnCount];
+        if(newCurrentPage == -1) {
+            newCurrentPage = [self.contentViewController pageForTextPosition:currentTextPosition];
+        }
+        [self.contentViewController scrollToPage:newCurrentPage animated:NO updateCurrentTextPosition:NO];
     }
-    [self.contentViewController scrollToPage:newCurrentPage animated:NO updateCurrentTextPosition:NO];
     [CTEUtils stopSpinnerOnView:self.contentViewController.view withSpinner:self.spinnerInfo];
 }
 

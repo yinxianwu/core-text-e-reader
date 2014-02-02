@@ -20,6 +20,9 @@
 @interface CTEContentViewController () {
     NSMutableSet *columnsRendered;
     BOOL isFirstLoad;
+    BOOL programmaticScroll;
+    BOOL updateTextPosition;
+    NSNumber *initialPageNum;
 }
 @property (nonatomic, strong) NSArray *spinnerViews;
 
@@ -63,6 +66,8 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     self.barColor = color;
     self.currentTextPosition = 0; //initialize
     isFirstLoad = YES;
+    programmaticScroll = NO;
+    updateTextPosition = YES;
     
     //init the set of rendered columns
     columnsRendered = [NSMutableSet set];
@@ -74,10 +79,6 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     else {
         self.currentColumnsInView = [NSNumber numberWithInt:1];
     }
-
-    //TODO get from user settings, if any
-    self.currentFont = PalatinoFontKey;
-    self.currentFontSize = [NSNumber numberWithInt:18];
     
     return self;
 }
@@ -175,6 +176,12 @@ CGFloat const toolBarLegacyHeight = 80.0f;
                                              selector:@selector(handlePageBackward:)
                                                  name:PageBackward
                                                object:nil];
+    
+    //listen for app-restore events
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(handleAppRestored:)
+//                                                 name:UIApplicationDidBecomeActiveNotification
+//                                               object:nil];
 }
 
 //some component sizing on initial load
@@ -190,12 +197,67 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         isFirstLoad = NO;
     }
     
+    //get user settings, if any
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [rootPath stringByAppendingPathComponent:SettingsFileName];
+    NSMutableDictionary *plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+
+    //no file -- create one and use initial defaults
+    if(!plistDict) {
+        self.currentFont = PalatinoFontKey;
+        self.currentFontSize = [NSNumber numberWithInt:18];
+        [self saveSettings];
+    }
+    //update with contents of file
+    else {
+        self.currentFont = (NSString *)[plistDict objectForKey:BodyFontKey];
+        self.currentFontSize = (NSNumber *)[plistDict objectForKey:BodyFontSizeKey];
+        self.currentColumnsInView = (NSNumber *)[plistDict objectForKey:ColumnCountKey];
+        initialPageNum = (NSNumber *)[plistDict objectForKey:PageNumKey];
+    }
+    
+    //notifies receivers to provide content
     [[NSNotificationCenter defaultCenter] postNotificationName:ContentViewLoaded object:self];
 }
 
 //tell subview to determine initial columns to draw
-- (void)viewDidAppear:(BOOL)animated {
-    [self.cteView setNeedsDisplay];
+//- (void)viewDidAppear:(BOOL)animated {
+//    [self.cteView setNeedsDisplay];
+//}
+
+//when app is restored from background, go to last position
+//- (void)handleAppRestored:(id)sender {
+//    [self loadSettings];
+//}
+
+//Loads settings and sets in the view; ASSUMES a file exists (though if one doesn't simply does nothing)
+//Forces a redraw of the view if anything's different
+//- (void)loadSettings {
+//    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSString *filePath = [rootPath stringByAppendingPathComponent:SettingsFileName];
+//    NSMutableDictionary *plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+//    
+//    if(plistDict) {
+//        //TODO compare and redraw if changed
+////        self.currentFont = PalatinoFontKey;
+////        self.currentFontSize = [NSNumber numberWithInt:18];
+//    }
+//}
+
+- (void)saveSettings {
+    NSString *error = nil;
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [rootPath stringByAppendingPathComponent:SettingsFileName];
+    NSMutableDictionary *newPlistDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                         self.currentFont,BodyFontKey,
+                                         self.currentFontSize,BodyFontSizeKey,
+                                         self.currentColumnsInView,ColumnCountKey,
+                                         [NSNumber numberWithInt:[self getCurrentPage]],PageNumKey,
+                                         nil];
+    NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:(id)newPlistDict
+                                                                   format:NSPropertyListXMLFormat_v1_0
+                                                         errorDescription:&error];
+    [plistData writeToFile:filePath atomically:YES];
 }
 
 //rebuilds content with current data
@@ -223,7 +285,16 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
     self.pageSlider.minimumValue = 0.0f;
     self.pageSlider.maximumValue = [self.cteView totalPages];
-    self.pageSlider.value = [self.cteView pageNumberForTextPosition:self.currentTextPosition];
+    
+    //if an initial page number was loaded in from settings, use that then nil it out
+    if(initialPageNum) {
+        self.pageSlider.value = [initialPageNum floatValue];
+        [self scrollToPage:[initialPageNum intValue] animated:NO updateCurrentTextPosition:YES];
+        initialPageNum = nil;
+    }
+    else {
+        self.pageSlider.value = [self.cteView pageNumberForTextPosition:self.currentTextPosition];
+    }
 }
 
 //syncs pages to slider value and performs whatever updating/redrawing needed
@@ -241,6 +312,9 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     //update navbar title to new chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
     item.title = [self.currentChapter title];
+    
+    //update settings file
+    [self saveSettings];
 }
 
 //side menu action
@@ -319,6 +393,9 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
     [self.cteView setNeedsDisplay];
     self.currentTextPosition = [self.cteView getCurrentTextPosition];
+    
+    //update settings file
+    [self saveSettings];
 }
 
 //post-programmatic animations
@@ -328,6 +405,33 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     //update navbar title to new chapter title
     UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
     item.title = [self.currentChapter title];
+    
+    //update settings file
+    [self saveSettings];
+}
+
+//Updates the view in response to a programmatic scroll
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(programmaticScroll) {
+        programmaticScroll = NO;
+        [self.cteView currentChapterNeedsUpdate];
+        [self.cteView setNeedsDisplay];
+        
+        //cache for format changes, if applicable
+        if(updateTextPosition) {
+            self.currentTextPosition = [self.cteView getCurrentTextPosition];
+        }
+        
+        //update navbar title to new chapter title
+        UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
+        item.title = [self.currentChapter title];
+        
+        //update settings file
+        [self saveSettings];
+        
+        //repaint
+        [self.cteView setNeedsDisplay];
+    }
 }
 
 //plays specified movie
@@ -379,22 +483,23 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     }
 }
 
+//Programmatically scrolls to specified page, animating and updating as specified
 - (void)scrollToPage:(int)page animated:(BOOL)animated updateCurrentTextPosition:(BOOL)shouldUpdate {
+    //if it's same page, simply redraw
+    int prevPage = [self getCurrentPage];
+    if(prevPage == page) {
+        [self.cteView setNeedsDisplay];
+        return;
+    }
+    
+    //flip flags
+    updateTextPosition = shouldUpdate;
+    programmaticScroll = YES;
+    
     CGRect cteViewFrame = self.cteView.frame;
     cteViewFrame.origin.x = cteViewFrame.size.width * page;
     cteViewFrame.origin.y = 0;
     [self.cteView scrollRectToVisible:cteViewFrame animated:animated];
-    [self.cteView currentChapterNeedsUpdate];
-    [self.cteView setNeedsDisplay];
-
-    //cache for format changes, if applicable
-    if(shouldUpdate) {
-        self.currentTextPosition = [self.cteView getCurrentTextPosition];
-    }
-
-    //update navbar title to new chapter title
-    UINavigationItem *item = (UINavigationItem *)[self.navBar.items objectAtIndex:0];
-    item.title = [self.currentChapter title];
 }
 
 //Returns current page index

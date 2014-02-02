@@ -49,8 +49,6 @@
     self.links = nil;
     self.orderedKeys = nil;
     self.orderedChapterPages = [NSMutableArray array];
-    
-//    [self setNeedsDisplay];
 }
 
 //builds all columns of text & images
@@ -411,7 +409,6 @@
 - (int)getCurrentPage {
     CGFloat pageWidth = self.frame.size.width;
     CGFloat currentPositionX = self.contentOffset.x;
-//    NSNumber *pageNbObj = [NSNumber numberWithDouble:floor((self.contentOffset.x - pageWidth / 2) / pageWidth) + 1];
     NSNumber *pageNbObj = [NSNumber numberWithDouble:floor(currentPositionX / pageWidth)];
     return [pageNbObj intValue];
 }
@@ -513,12 +510,14 @@
 - (void)setNeedsDisplay {
     CGPoint scrollOffset = self.contentOffset;
     NSArray *columnsToRender = [viewDelegate columnsToRenderBasedOnPosition:scrollOffset];
-    for(UIView *subview in columnsToRender) {
-        if([subview isKindOfClass:[CTEColumnView class]]) {
-            CTEColumnView *column = (CTEColumnView *)subview;
-            column.shouldDrawRect =YES;
+    if(columnsToRender) {
+        for(UIView *subview in columnsToRender) {
+            if([subview isKindOfClass:[CTEColumnView class]]) {
+                CTEColumnView *column = (CTEColumnView *)subview;
+                column.shouldDrawRect =YES;
+            }
+            [subview setNeedsDisplay];
         }
-        [subview setNeedsDisplay];
     }
     
     [super setNeedsDisplay];

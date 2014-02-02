@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 
-static CGFloat _textContainerWidth;
+//static CGFloat _textContainerWidth;
 
 @interface CTEMarkupParser : NSObject
 
@@ -24,6 +24,7 @@ static CGFloat _textContainerWidth;
 @property (strong, nonatomic) NSString *currentBodyFont;
 @property (nonatomic) float currentBodyFontSize;
 
+-(id)initWithFontKey:(NSString *)fontKey fontSize:(NSNumber *)size;
 + (void)setTextContainerWidth:(CGFloat)width;
 + (CGRect)calculateImageBounds:(NSDictionary *)imgMetadata;
 + (NSDictionary *)bodyFontDictionary;

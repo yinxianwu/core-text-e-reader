@@ -19,9 +19,9 @@
     UIColor *highlightColor = [UIColor colorWithRed:(75.0f/255.0f) green:(47.0/255.0f) blue:(29.0f/255.0f) alpha:1.0f];
     NSArray *chapters = [self getChapterData];
     self.manager = [CTEManager managerWithWindow:self.window
-                                        andChapters:chapters
-                                        andBarColor:barTintColor
-                                  andHighlightColor:highlightColor];
+                                     andChapters:chapters
+                                     andBarColor:barTintColor
+                               andHighlightColor:highlightColor];
     [self.window makeKeyAndVisible];
     
     return YES;

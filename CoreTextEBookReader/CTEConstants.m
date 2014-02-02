@@ -25,6 +25,7 @@ NSString * const PageBackward = @"PageBackward";
 CGFloat const PageTurnBoundaryPhone = 50.0;
 CGFloat const PageTurnBoundaryPad = 100.0;
 CGFloat const MaxImageColumnHeightRatio = 0.6;
+NSString * const SettingsFileName = @"EBookReaderSettings";
 
 //labels
 NSString * const NavigationBarTitle = @"CoreTextEBookReader";
@@ -33,6 +34,8 @@ NSString * const NavigationBarTitle = @"CoreTextEBookReader";
 NSString * const BodyFontKey = @"BODY_FONT";
 NSString * const BodyItalicFontKey = @"BODY_FONT_ITALIC";
 NSString * const BodyFontSizeKey = @"BODY_FONT_SIZE";
+NSString * const PageNumKey = @"PAGE_NUM";
+NSString * const ColumnCountKey = @"COL_COUNT";
 NSString * const BaskervilleFontKey = @"Baskerville";
 NSString * const GeorgiaFontKey = @"Georgia";
 NSString * const PalatinoFontKey = @"Palatino";

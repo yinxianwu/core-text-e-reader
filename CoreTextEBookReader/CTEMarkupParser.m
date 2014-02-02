@@ -9,6 +9,8 @@
 #import "CTEMarkupParser.h"
 #import "CTEConstants.h"
 
+static CGFloat _textContainerWidth;
+
 //used to compute space for image
 static CGFloat ascentCallback(void *ref){
     NSDictionary *imgMetadata = (__bridge NSDictionary*)ref;
@@ -41,11 +43,11 @@ static CGFloat widthCallback(void* ref){
 @synthesize currentBodyFontSize;
 
 //constructor; resets parser
--(id)init {
+-(id)initWithFontKey:(NSString *)fontKey fontSize:(NSNumber *)size {
     self = [super init];
     if (self) {
-        self.font = PalatinoFontKey;
-        self.fontSize = 18.0f;
+        self.font = fontKey;
+        self.fontSize = [size floatValue];
         self.currentBodyFont = self.font;
         self.currentBodyFontSize = self.fontSize;
         [self resetParser];

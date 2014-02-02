@@ -24,11 +24,15 @@ extern CGFloat const PageTurnBoundaryPhone;
 extern CGFloat const PageTurnBoundaryPad;
 extern CGFloat const MaxImageColumnHeightRatio;
 extern NSString * const NavigationBarTitle;
-extern NSString *const HttpPrefix;
+extern NSString * const HttpPrefix;
+extern NSString * const SettingsFileName;
 
 extern NSString * const BodyFontKey;
 extern NSString * const BodyFontSizeKey;
 extern NSString * const BodyItalicFontKey;
+extern NSString * const PageNumKey;
+extern NSString * const ColumnCountKey;
+
 extern NSString * const BaskervilleFontKey;
 extern NSString * const GeorgiaFontKey;
 extern NSString * const PalatinoFontKey;
