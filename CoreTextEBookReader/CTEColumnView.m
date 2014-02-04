@@ -220,10 +220,9 @@
             CGFloat playButtonOriginY = (previewImageHeight / 2) - (30); //scaled height
             CGRect playButtonBounds = CGRectFromString(@"{{0, 0}, {60, 60}}");
 
-            //TODO height measurement makes no sense...
             CGContextTranslateCTM(context,
-                                  playButtonOriginX,//playButtonOriginX - (imgWidthOffset / 2),
-                                  columnHeight - 60 - playButtonOriginY);//columnHeight - 60 - playButtonOriginY); //center play button image over preview image
+                                  playButtonOriginX,
+                                  imgBounds.origin.y + playButtonOriginY);
             CGContextDrawImage(context, playButtonBounds, playButtonImage.CGImage);
             //add location to cache
             CGRect playButtonLocation = CGRectMake(playButtonOriginX, playButtonOriginY, playButtonWidth, playButtonHeight);
