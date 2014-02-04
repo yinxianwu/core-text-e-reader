@@ -17,7 +17,7 @@ As we glide out of the station on time, a voice comes over the intercom indicati
 
 <font face="BODY_FONT_ITALIC">Tragedy<font face="BODY_FONT">.
 
-<mov src="http://www.holisticideas.com/wtrmobile/movies/Eurostar.jpg" clip="http://www.holisticideas.com/wtrmobile/movies/EurostarSmall.mp4"  width="1024" height="768">
+<mov src="http://www.holisticideas.com/wtrmobile/movies/Eurostar.jpg" clip="http://www.holisticideas.com/wtrmobile/movies/Eurostar.mp4" width="640" height="480">
 
 High-speed rail lines are purpose built: their solid welded tracks, curved embankments to handle centrifugal forces, and grade-separated construction (no street-level crossings) facilitate speeds in excess of 150 miles an hour. To enable such velocity, these trainsets—using the same TGV technology as those in France—are known as “EMU.” Not after the animal, but short for “Electric Multiple Unit.” Each train car is a locomotive in and of itself. As we leave suburban London and reach the countryside around Kent, I spot cars on the freeway traveling at half our speed.  
 
@@ -31,7 +31,7 @@ Brussels is boring. Or so they say. I don’t bother finding out as I’m more i
 
 Bruges is perhaps the ideal spot to indulge anyone’s “how did it get that way?” fixation. It was, by my estimation, the New York City of the 1200s: a Middle Ages trading powerhouse equivalent to the London of the day. But times and the city’s fortune changed: West Flanders declined in power and importance, and the city’s river silted in, leaving Bruges cut off from the sea. (A latter-day nearby port, Zeebrugge, retains some importance.)  
 
-<img src="http://www.holisticideas.com/wtrmobile/images/BrugesMarktDusk.jpg"  width="1024" height="768">
+<img src="http://www.holisticideas.com/wtrmobile/images/BrugesMarktDusk.jpg" width="1024" height="768">
 
 An early-evening reconnoiter reveals few cars but lots of bicycles speeding along the narrow, curving streets. I’m nearly jingle-belled to death, a fate I suspect the Brugians enjoy inflicting on the hordes of tourists passing through their burg. I reach Markt, the main town square, shrouded in the moody mist. It’s adorably lined with upscale touristy eateries and stairstep-gabled roofs. With lights aglow and horses atrot on the cobbles, it’s hard not to feel overcome with nostalgia and romance and think…
 

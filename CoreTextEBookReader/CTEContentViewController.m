@@ -180,16 +180,6 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 //some component sizing on initial load
 //per http://stackoverflow.com/questions/5066847/get-the-width-of-a-uibarbuttonitem
 - (void)viewWillAppear:(BOOL)animated {
-    if(_isFirstLoad) {
-        UIBarButtonItem *item = self.configButton;
-        UIView *view = [item valueForKey:@"view"];
-        CGFloat width = view ? [view frame].size.width : (CGFloat)0.0;
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGFloat screenWidth = screenRect.size.width;
-        [self.sliderAsToolbarItem setWidth:screenWidth - width - 40]; //adjust for borders and such
-        _isFirstLoad = NO;
-    }
-    
     //get user settings, if any
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *filePath = [rootPath stringByAppendingPathComponent:SettingsFileName];
@@ -208,9 +198,19 @@ CGFloat const toolBarLegacyHeight = 80.0f;
         self.currentColumnsInView = (NSNumber *)[plistDict objectForKey:ColumnCountKey];
         _initialPageNum = (NSNumber *)[plistDict objectForKey:PageNumKey];
     }
-    
-    //notifies receivers to provide content
-    [[NSNotificationCenter defaultCenter] postNotificationName:ContentViewLoaded object:self];
+
+    if(_isFirstLoad) {
+        UIBarButtonItem *item = self.configButton;
+        UIView *view = [item valueForKey:@"view"];
+        CGFloat width = view ? [view frame].size.width : (CGFloat)0.0;
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        [self.sliderAsToolbarItem setWidth:screenWidth - width - 40]; //adjust for borders and such
+        _isFirstLoad = NO;
+        
+        //notifies receivers to provide content
+        [[NSNotificationCenter defaultCenter] postNotificationName:ContentViewLoaded object:self];
+    }
 }
 
 //Shows wait spinner; if one is already up, does nothing
