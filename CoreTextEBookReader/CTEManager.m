@@ -232,6 +232,7 @@
     id<CTEChapter> chapter = (id<CTEChapter>)[notification object];
     [self.contentViewController setCurrentChapter:chapter];
     self.window.rootViewController = self.contentViewController;
+    [self.contentViewController hideWaitSpinner];
 }
 
 //Updates attributed Strings for content, then applies them to content view
