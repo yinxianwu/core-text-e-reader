@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6807FDBA18A61275003D5A65 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6807FDB918A61275003D5A65 /* SDWebImage.framework */; };
+		6807FDBB18A61275003D5A65 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6807FDB918A61275003D5A65 /* SDWebImage.framework */; };
 		680AE8171818C778006ABAE4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680AE8161818C778006ABAE4 /* Foundation.framework */; };
 		680AE81C1818C778006ABAE4 /* CoreTextEBookReader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 680AE81B1818C778006ABAE4 /* CoreTextEBookReader.h */; };
 		680AE8251818C778006ABAE4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680AE8241818C778006ABAE4 /* XCTest.framework */; };
@@ -53,6 +55,7 @@
 		686BE8EC1839A32500072E27 /* CTEViewDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */; };
 		688D1BF61894DD4A00C94780 /* FormatSelectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */; };
 		688D1BF71894DD4A00C94780 /* FormatSelectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */; };
+		689390E618A86648005B7AE2 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 689390E518A86648005B7AE2 /* UIImage+Color.m */; };
 		6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8C181DCE62009B8527 /* CTEContentViewController.m */; };
 		6895EFA0181DCE62009B8527 /* CTEColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8E181DCE62009B8527 /* CTEColumnView.m */; };
 		6895EFA1181DCE62009B8527 /* CTEView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF90181DCE62009B8527 /* CTEView.m */; };
@@ -123,6 +126,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6807FDB918A61275003D5A65 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
 		680AE8131818C778006ABAE4 /* libCoreTextEBookReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCoreTextEBookReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		680AE8161818C778006ABAE4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		680AE81A1818C778006ABAE4 /* CoreTextEBookReader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoreTextEBookReader-Prefix.pch"; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 		686BE8E8183863ED00072E27 /* Chapter3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter3.txt; sourceTree = "<group>"; };
 		688D1BF41894DD4A00C94780 /* FormatSelectionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormatSelectionInfo.h; sourceTree = "<group>"; };
 		688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormatSelectionInfo.m; sourceTree = "<group>"; };
+		689390E418A86648005B7AE2 /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
+		689390E518A86648005B7AE2 /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		6895EF8B181DCE62009B8527 /* CTEContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEContentViewController.h; sourceTree = "<group>"; };
 		6895EF8C181DCE62009B8527 /* CTEContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTEContentViewController.m; sourceTree = "<group>"; };
 		6895EF8D181DCE62009B8527 /* CTEColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEColumnView.h; sourceTree = "<group>"; };
@@ -216,6 +222,7 @@
 				6895EFAD181DCEB4009B8527 /* QuartzCore.framework in Frameworks */,
 				6895EFAB181DCEAB009B8527 /* MediaPlayer.framework in Frameworks */,
 				6895EFA9181DCEA3009B8527 /* CoreGraphics.framework in Frameworks */,
+				6807FDBA18A61275003D5A65 /* SDWebImage.framework in Frameworks */,
 				6895EFA7181DCE9A009B8527 /* CoreText.framework in Frameworks */,
 				680AE8171818C778006ABAE4 /* Foundation.framework in Frameworks */,
 			);
@@ -239,6 +246,7 @@
 				68678E8D181F654500D8B812 /* CoreText.framework in Frameworks */,
 				68678E8C181F653700D8B812 /* QuartzCore.framework in Frameworks */,
 				6895EFB9181DF20C009B8527 /* CoreGraphics.framework in Frameworks */,
+				6807FDBB18A61275003D5A65 /* SDWebImage.framework in Frameworks */,
 				6895EFBA181DF20C009B8527 /* UIKit.framework in Frameworks */,
 				6895EFB8181DF20C009B8527 /* Foundation.framework in Frameworks */,
 			);
@@ -283,6 +291,7 @@
 		680AE8151818C778006ABAE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6807FDB918A61275003D5A65 /* SDWebImage.framework */,
 				6895EFAE181DCEC7009B8527 /* UIKit.framework */,
 				6895EFAC181DCEB4009B8527 /* QuartzCore.framework */,
 				6895EFAA181DCEAB009B8527 /* MediaPlayer.framework */,
@@ -332,6 +341,8 @@
 				68AF284918257D8C00EA632B /* CTEUtils.m */,
 				68D34995182E823400345F12 /* NSMutableArray+QueueAdditions.h */,
 				68D34996182E823400345F12 /* NSMutableArray+QueueAdditions.m */,
+				689390E418A86648005B7AE2 /* UIImage+Color.h */,
+				689390E518A86648005B7AE2 /* UIImage+Color.m */,
 				680B8145184308040027E963 /* UIViewController+KNSemiModal.h */,
 				680B8146184308040027E963 /* UIViewController+KNSemiModal.m */,
 				68678E72181E2C0600D8B812 /* Images */,
@@ -627,6 +638,7 @@
 				68AF284E1825A98E00EA632B /* CTEManager.m in Sources */,
 				6895EFA5181DCE62009B8527 /* CTEImageViewController.m in Sources */,
 				68D34997182E823400345F12 /* NSMutableArray+QueueAdditions.m in Sources */,
+				689390E618A86648005B7AE2 /* UIImage+Color.m in Sources */,
 				6895EFA1181DCE62009B8527 /* CTEView.m in Sources */,
 				6895EFA2181DCE62009B8527 /* CTEMarkupParser.m in Sources */,
 				6895EFA0181DCE62009B8527 /* CTEColumnView.m in Sources */,
@@ -789,6 +801,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/CoreTextEBookReader.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/davidjed/git/core-text-e-reader",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CoreTextEBookReader/CoreTextEBookReader-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -801,6 +817,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/CoreTextEBookReader.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/davidjed/git/core-text-e-reader",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CoreTextEBookReader/CoreTextEBookReader-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -858,6 +878,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/davidjed/git/core-text-e-reader",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleApp/SampleApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -879,6 +903,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/davidjed/git/core-text-e-reader",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleApp/SampleApp-Prefix.pch";
 				INFOPLIST_FILE = "SampleApp/SampleApp-Info.plist";

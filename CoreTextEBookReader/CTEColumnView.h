@@ -16,8 +16,6 @@
     id ctFrame;
 }
 
-//@property (weak, nonatomic) UIViewController *modalTarget; //TODO should really make controller this view's delegate
-
 @property (weak, nonatomic) id<CTEViewDelegate> viewDelegate;
 @property (nonatomic) int textStart;
 @property (nonatomic) int textEnd;
@@ -27,5 +25,11 @@
 @property (nonatomic) BOOL shouldDrawRect;
 
 - (void)setCTFrame:(id)f;
+- (void)addImage:(UIImage *)img
+       imageInfo:(NSDictionary *)imageInfo
+    frameXOffset:(float)frameXOffset
+    frameYOffset:(float)frameYOffset;
+
+- (void)replaceImage:(UIImage *)img imageInfo:(NSDictionary *)imageInfo;
 
 @end

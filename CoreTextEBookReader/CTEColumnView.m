@@ -36,8 +36,80 @@
 }
 
 //frame that column view will be drawn in
--(void)setCTFrame: (id) f {
+-(void)setCTFrame:(id)f {
     ctFrame = f;
+}
+
+//inserts image and associated info
+- (void)addImage:(UIImage *)img
+       imageInfo:(NSDictionary *)imageInfo
+    frameXOffset:(float)frameXOffset
+    frameYOffset:(float)frameYOffset {
+    CTFrameRef frameRef = (__bridge CTFrameRef)ctFrame;
+    NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frameRef);
+    CGPoint origins[[lines count]];
+    CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), origins);
+    NSUInteger lineIndex = 0;
+    int imgLocation = [[imageInfo objectForKey:@"location"] intValue];
+    for (id lineObj in lines) {
+        CTLineRef line = (__bridge CTLineRef)lineObj;
+        
+        for (id runObj in (__bridge NSArray *)CTLineGetGlyphRuns(line)) {
+            CTRunRef run = (__bridge CTRunRef)runObj;
+            CFRange runRange = CTRunGetStringRange(run);
+            
+            if (runRange.location <= imgLocation && runRange.location+runRange.length > imgLocation) {
+                CGRect runBounds;
+                CGFloat ascent;//height above the baseline
+                CGFloat descent;//height below the baseline
+                runBounds.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL);
+                runBounds.size.height = ascent + descent;
+                
+                CGFloat xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL);
+                runBounds.origin.x = origins[lineIndex].x + self.frame.origin.x + xOffset + frameXOffset;
+                runBounds.origin.y = origins[lineIndex].y + self.frame.origin.y + frameYOffset;
+                runBounds.origin.y -= descent;
+                
+                //set image properties and add to view
+                CGPathRef pathRef = CTFrameGetPath(frameRef);
+                CGRect colRect = CGPathGetBoundingBox(pathRef);
+                
+                CGFloat imgXOffset = -runBounds.origin.x; //left edge; column views will center in drawRect
+                CGFloat imgYOffset = colRect.origin.y - frameYOffset - self.frame.origin.y;
+                CGRect imgBounds = CGRectOffset(runBounds, imgXOffset, imgYOffset);
+                //Add image to the column view; metadata at index 2; img at index 0; TODO REPLACE WITH SOMETHING OBJECT-Y!!!
+                NSMutableArray *imageData = [NSMutableArray arrayWithObjects:img, NSStringFromCGRect(imgBounds), imageInfo, nil];
+                [self.imagesWithMetadata addObject:imageData];
+            }
+        }
+        lineIndex++;
+    }
+}
+
+//Replaces image with specified info
+- (void)replaceImage:(UIImage *)img imageInfo:(NSDictionary *)imageInfo {
+    NSMutableArray *matchData = nil;
+    for(NSMutableArray *imageData in self.imagesWithMetadata) {
+        NSDictionary *matchMetadata = (NSDictionary *)[imageData objectAtIndex:2];
+        BOOL match = [imageInfo isEqualToDictionary:matchMetadata];
+        
+        //check clip file name, as movies are handled a bit differently
+        if(!match) {
+            NSString *clipFileName = [(NSString *)imageInfo valueForKey:@"clipFileName"];
+            NSString *matchClipFileName = [(NSString *)matchMetadata valueForKey:@"clipFileName"];
+            match = clipFileName != nil && matchClipFileName != nil && [matchClipFileName isEqualToString:clipFileName];
+        }
+        
+        if(match) {
+            matchData = imageData;
+            break;
+        }
+    }
+    
+    if(matchData) {
+        [matchData replaceObjectAtIndex:0 withObject:img];
+        [self setNeedsDisplay];
+    }
 }
 
 //End touch; determine location and if it's a link or image or other event
@@ -216,8 +288,8 @@
             CGFloat previewImageWidth = imgBounds.size.width;
             CGFloat playButtonHeight = playButtonImage.size.height;
             CGFloat playButtonWidth = playButtonImage.size.width;
-            CGFloat playButtonOriginX = (previewImageWidth / 2) - (30); //scaled width
-            CGFloat playButtonOriginY = (previewImageHeight / 2) - (30); //scaled height
+            CGFloat playButtonOriginX = (previewImageWidth / 2) - 30; //scaled width
+            CGFloat playButtonOriginY = (previewImageHeight / 2) - 30; //scaled height
             CGRect playButtonBounds = CGRectFromString(@"{{0, 0}, {60, 60}}");
 
             CGContextTranslateCTM(context,
