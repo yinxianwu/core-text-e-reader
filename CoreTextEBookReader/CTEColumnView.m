@@ -268,7 +268,7 @@
     //draw text
     CTFrameDraw((__bridge CTFrameRef)ctFrame, context);
     
-    //draw images using size created in markup parset
+    //draw images using size created in markup parser
     int imageIndex = 0;
     for (NSArray *imageData in self.imagesWithMetadata) {
         UIImage *img = [imageData objectAtIndex:0];
