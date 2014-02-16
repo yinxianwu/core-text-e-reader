@@ -56,6 +56,8 @@
 		688D1BF61894DD4A00C94780 /* FormatSelectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */; };
 		688D1BF71894DD4A00C94780 /* FormatSelectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */; };
 		6892AF5E18B05C4000AACE6F /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 689390E518A86648005B7AE2 /* UIImage+Color.m */; };
+		6892AF6118B064FA00AACE6F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6892AF6018B064FA00AACE6F /* MapKit.framework */; };
+		6892AF6318B064FF00AACE6F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6892AF6218B064FF00AACE6F /* ImageIO.framework */; };
 		689390E618A86648005B7AE2 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 689390E518A86648005B7AE2 /* UIImage+Color.m */; };
 		6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8C181DCE62009B8527 /* CTEContentViewController.m */; };
 		6895EFA0181DCE62009B8527 /* CTEColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8E181DCE62009B8527 /* CTEColumnView.m */; };
@@ -160,6 +162,8 @@
 		686BE8E8183863ED00072E27 /* Chapter3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Chapter3.txt; sourceTree = "<group>"; };
 		688D1BF41894DD4A00C94780 /* FormatSelectionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormatSelectionInfo.h; sourceTree = "<group>"; };
 		688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormatSelectionInfo.m; sourceTree = "<group>"; };
+		6892AF6018B064FA00AACE6F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6892AF6218B064FF00AACE6F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		689390E418A86648005B7AE2 /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
 		689390E518A86648005B7AE2 /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		6895EF8B181DCE62009B8527 /* CTEContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTEContentViewController.h; sourceTree = "<group>"; };
@@ -243,13 +247,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6892AF6318B064FF00AACE6F /* ImageIO.framework in Frameworks */,
+				6892AF6118B064FA00AACE6F /* MapKit.framework in Frameworks */,
 				68678E8E181F655000D8B812 /* MediaPlayer.framework in Frameworks */,
 				68678E8D181F654500D8B812 /* CoreText.framework in Frameworks */,
 				68678E8C181F653700D8B812 /* QuartzCore.framework in Frameworks */,
 				6895EFB9181DF20C009B8527 /* CoreGraphics.framework in Frameworks */,
-				6807FDBB18A61275003D5A65 /* SDWebImage.framework in Frameworks */,
 				6895EFBA181DF20C009B8527 /* UIKit.framework in Frameworks */,
 				6895EFB8181DF20C009B8527 /* Foundation.framework in Frameworks */,
+				6807FDBB18A61275003D5A65 /* SDWebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +298,8 @@
 		680AE8151818C778006ABAE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6892AF6218B064FF00AACE6F /* ImageIO.framework */,
+				6892AF6018B064FA00AACE6F /* MapKit.framework */,
 				6807FDB918A61275003D5A65 /* SDWebImage.framework */,
 				6895EFAE181DCEC7009B8527 /* UIKit.framework */,
 				6895EFAC181DCEB4009B8527 /* QuartzCore.framework */,
@@ -311,8 +319,6 @@
 				68AF284C1825A98E00EA632B /* CTEManager.h */,
 				68AF284D1825A98E00EA632B /* CTEManager.m */,
 				68678E8B181F62EE00D8B812 /* CTEChapter.h */,
-				6895EFB0181DD2B5009B8527 /* CTEConstants.h */,
-				6895EFB1181DD2B5009B8527 /* CTEConstants.m */,
 				6895EF8D181DCE62009B8527 /* CTEColumnView.h */,
 				6895EF8E181DCE62009B8527 /* CTEColumnView.m */,
 				68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */,
@@ -404,10 +410,12 @@
 		6892AF5F18B05E5400AACE6F /* Utils+Categories */ = {
 			isa = PBXGroup;
 			children = (
-				688D1BF41894DD4A00C94780 /* FormatSelectionInfo.h */,
-				688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */,
+				6895EFB0181DD2B5009B8527 /* CTEConstants.h */,
+				6895EFB1181DD2B5009B8527 /* CTEConstants.m */,
 				68AF284818257D8C00EA632B /* CTEUtils.h */,
 				68AF284918257D8C00EA632B /* CTEUtils.m */,
+				688D1BF41894DD4A00C94780 /* FormatSelectionInfo.h */,
+				688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */,
 				68D34995182E823400345F12 /* NSMutableArray+QueueAdditions.h */,
 				68D34996182E823400345F12 /* NSMutableArray+QueueAdditions.m */,
 				689390E418A86648005B7AE2 /* UIImage+Color.h */,
@@ -884,7 +892,7 @@
 		6895EFDC181DF20D009B8527 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -900,6 +908,7 @@
 				);
 				INFOPLIST_FILE = "SampleApp/SampleApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -909,7 +918,7 @@
 		6895EFDD181DF20D009B8527 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -921,6 +930,7 @@
 				GCC_PREFIX_HEADER = "SampleApp/SampleApp-Prefix.pch";
 				INFOPLIST_FILE = "SampleApp/SampleApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

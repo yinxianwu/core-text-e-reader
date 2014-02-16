@@ -12,6 +12,7 @@
 #import "CTEMarkupParser.h"
 #import "FormatSelectionInfo.h"
 #import "UIImage+Color.h"
+#import <SDWebImage/SDWebImageManager.h>
 
 @implementation CTEView
 
@@ -198,12 +199,15 @@
                         [columnView addImage:img imageInfo:imageInfo frameXOffset:frameXOffset frameYOffset:frameYOffset];
                         
                         //download the image asynchronously
-                        //TODO this should be replaced by a more efficient image manager framework
-//                        [self downloadImageWithURL:[NSURL URLWithString:imgFileName] completionBlock:^(BOOL succeeded, UIImage *image) {
-//                            if (succeeded) {
-//                                [columnView replaceImage:image imageInfo:imageInfo];
-//                            }
-//                        }];
+                        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                        [manager downloadWithURL:[NSURL URLWithString:imgFileName]
+                                         options:0
+                                        progress:^(NSUInteger receivedSize, long long expectedSize) { }
+                                       completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                                           if (image) {
+                                               [columnView replaceImage:image imageInfo:imageInfo];
+                                           }
+                                       }];
                     }
                     else {
                         img = [UIImage imageNamed:imgFileName];
@@ -273,23 +277,6 @@
     }
     return offsetX;
 }
-
-//async image download
-//- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
-//{
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [NSURLConnection sendAsynchronousRequest:request
-//                                       queue:[NSOperationQueue mainQueue]
-//                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-//                               if (!error) {
-//                                   UIImage *image = [[UIImage alloc] initWithData:data];
-//                                   completionBlock(YES,image);
-//                               }
-//                               else {
-//                                   completionBlock(NO,nil);
-//                               }
-//                           }];
-//}
 
 //Returns index of specified column
 - (int)indexOfColumn:(id)column {

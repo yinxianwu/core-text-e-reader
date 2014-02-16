@@ -10,7 +10,7 @@
 
 @interface CTEUtils : NSObject
 
-+ (NSArray *) startSpinnerOnView:(UIView *)view;
-+ (void) stopSpinnerOnView:(UIView *)view withSpinner:(NSArray *)spinnerObj;
++ (NSArray *)startSpinnerOnView:(UIView *)view;
++ (void)stopSpinnerOnView:(UIView *)view withSpinner:(NSArray *)spinnerObj;
 
 @end

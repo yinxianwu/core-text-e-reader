@@ -13,7 +13,7 @@
 //Starts spinner on specified View
 //Returns an Array of views used
 //Class method
-+ (NSArray *) startSpinnerOnView:(UIView *)view {
++ (NSArray *)startSpinnerOnView:(UIView *)view {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGPoint viewOrigin =[view.superview convertPoint:view.frame.origin toView:nil];
     CGFloat originOffsetY = viewOrigin.y > 0 ? viewOrigin.y : 64;//AN AWFUL HORRIBLE HACK!!! Adjusts for when status bar isn't yet realized
@@ -41,7 +41,7 @@
 //Stops spinner on specified view using specified Array of views used
 //Array returned MUST have two elements, the first the spinner, second the rect background
 //Class method
-+ (void) stopSpinnerOnView:(UIView *)view withSpinner:(NSArray *)spinnerObj {
++ (void)stopSpinnerOnView:(UIView *)view withSpinner:(NSArray *)spinnerObj {
     UIActivityIndicatorView *spinner = (UIActivityIndicatorView *)[spinnerObj objectAtIndex:0];
     UIView *rectView = (UIActivityIndicatorView *)[spinnerObj objectAtIndex:1];
     UIView *superview = spinner.superview;

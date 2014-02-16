@@ -12,9 +12,6 @@
 #import "CTEConstants.h"
 #import "CTEMarkupParser.h"
 
-@interface CTEColumnView()
-@end
-
 @implementation CTEColumnView
 
 @synthesize viewDelegate;
@@ -87,6 +84,8 @@
 }
 
 //Replaces image with specified info
+//TODO this need to be made more memory-efficient by discarding images from the column cache once drawn
+//all storage of images should come from the image cache
 - (void)replaceImage:(UIImage *)img imageInfo:(NSDictionary *)imageInfo {
     NSMutableArray *matchData = nil;
     for(NSMutableArray *imageData in self.imagesWithMetadata) {
