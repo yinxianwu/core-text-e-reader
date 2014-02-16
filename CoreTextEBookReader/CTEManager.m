@@ -64,22 +64,11 @@
                                                      name:ChangeFormat
                                                    object:nil];
         
-        NSString *contentNibName = nil;
-        NSString *menuNibName = nil;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            contentNibName = @"ContentiPadView";
-            menuNibName = @"MenuiPadView";
-        }
-        else {
-            contentNibName = @"ContentiPhoneView";
-            menuNibName = @"MenuiPhoneView";
-        }
-        
-        manager.contentViewController = [[CTEContentViewController alloc] initWithNibName:contentNibName
+        manager.contentViewController = [[CTEContentViewController alloc] initWithNibName:@"ContentView"
                                                                                    bundle:nil
                                                                                  barColor:manager.barColor];
         manager.contentViewController.chapters = chapters;
-        manager.menuViewController = [[CTEMenuViewController alloc] initWithNibName:menuNibName
+        manager.menuViewController = [[CTEMenuViewController alloc] initWithNibName:@"MenuView"
                                                                              bundle:nil
                                                                      highlightColor:manager.highlightColor];
         manager.menuViewController.chapterData = chapters;
@@ -96,7 +85,6 @@
     if(!self.parser) {
         self.parser = [[CTEMarkupParser alloc] initWithFontKey:self.contentViewController.currentFont
                                                       fontSize:self.contentViewController.currentFontSize];
-        
     }
     
     if(notification) {
@@ -193,9 +181,13 @@
             newCurrentPage = [self.contentViewController pageForTextPosition:currentTextPosition];
         }
         [self.contentViewController scrollToPage:newCurrentPage animated:NO updateCurrentTextPosition:NO];
+        [self.contentViewController hideWaitSpinner];
     }
-    
-    [self.contentViewController hideWaitSpinner];
+    //redraw if no format change -- for initial load first time app is launched
+    else {
+        [self.contentViewController.cteView setNeedsDisplay];
+        [self.contentViewController hideWaitSpinner];
+    }
 }
 
 //Selects appropriate chapter then does side menu reveal

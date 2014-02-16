@@ -299,7 +299,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
     //TODO if button is pushed when a popover is already visible, app crashes!
     CTEViewOptionsViewController *popoverView;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPhoneView"
+        popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsView"
                                                                     bundle:nil
                                                               selectedFont:self.currentFont
                                                           selectedFontSize:self.currentFontSize
@@ -311,7 +311,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
                                                               }];
     }
     else {
-        popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsiPadView"
+        popoverView = [[CTEViewOptionsViewController alloc]initWithNibName:@"ViewOptionsView"
                                                                     bundle:nil
                                                               selectedFont:self.currentFont
                                                           selectedFontSize:self.currentFontSize
@@ -431,13 +431,7 @@ CGFloat const toolBarLegacyHeight = 80.0f;
 
 //displays specified image in full-screen image view
 - (void)showImage:(UIImage *)image {
-    CTEImageViewController *imageView;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPhoneView" bundle:nil image:image];
-    }
-    else {
-        imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageiPadView" bundle:nil image:image];
-    }
+    CTEImageViewController *imageView = [[CTEImageViewController alloc]initWithNibName:@"ImageView" bundle:nil image:image];
     [self presentViewController:imageView animated:YES completion:nil];
 }
 
