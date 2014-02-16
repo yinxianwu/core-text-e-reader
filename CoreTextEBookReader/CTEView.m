@@ -11,6 +11,7 @@
 #import "CTEConstants.h"
 #import "CTEMarkupParser.h"
 #import "FormatSelectionInfo.h"
+#import "UIImage+Color.h"
 
 @implementation CTEView
 
@@ -191,25 +192,18 @@
                     
                     //remote image; load in async
                     if([fileNamePrefix isEqualToString:HttpPrefix]) {
-                        //set placeholder image until image is loaded
-                        NSNumber *imageWidth = [imageInfo objectForKey:@"width"];
-                        NSNumber *imageHeight = [imageInfo objectForKey:@"height"];
-                        
-                        if([imageWidth floatValue] == 240.0f || [imageHeight floatValue] == 320.0f) {
-                            img = [UIImage imageNamed:@"Placeholder240x320.jpg"];
-                        }
-                        else {
-                            img = [UIImage imageNamed:@"Placeholder320x240.jpg"];
-                        }
+                        //placeholder image -- fill with color
+                        UIColor *color = [UIColor lightGrayColor];
+                        img = [UIImage imageWithColor:color];
                         [columnView addImage:img imageInfo:imageInfo frameXOffset:frameXOffset frameYOffset:frameYOffset];
                         
                         //download the image asynchronously
                         //TODO this should be replaced by a more efficient image manager framework
-                        [self downloadImageWithURL:[NSURL URLWithString:imgFileName] completionBlock:^(BOOL succeeded, UIImage *image) {
-                            if (succeeded) {
-                                [columnView replaceImage:image imageInfo:imageInfo];
-                            }
-                        }];
+//                        [self downloadImageWithURL:[NSURL URLWithString:imgFileName] completionBlock:^(BOOL succeeded, UIImage *image) {
+//                            if (succeeded) {
+//                                [columnView replaceImage:image imageInfo:imageInfo];
+//                            }
+//                        }];
                     }
                     else {
                         img = [UIImage imageNamed:imgFileName];
@@ -281,21 +275,21 @@
 }
 
 //async image download
-- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
-{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if (!error) {
-                                   UIImage *image = [[UIImage alloc] initWithData:data];
-                                   completionBlock(YES,image);
-                               }
-                               else {
-                                   completionBlock(NO,nil);
-                               }
-                           }];
-}
+//- (void)downloadImageWithURL:(NSURL *)url completionBlock:(void (^)(BOOL succeeded, UIImage *image))completionBlock
+//{
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+//    [NSURLConnection sendAsynchronousRequest:request
+//                                       queue:[NSOperationQueue mainQueue]
+//                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//                               if (!error) {
+//                                   UIImage *image = [[UIImage alloc] initWithData:data];
+//                                   completionBlock(YES,image);
+//                               }
+//                               else {
+//                                   completionBlock(NO,nil);
+//                               }
+//                           }];
+//}
 
 //Returns index of specified column
 - (int)indexOfColumn:(id)column {

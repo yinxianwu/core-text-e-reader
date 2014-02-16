@@ -55,6 +55,7 @@
 		686BE8EC1839A32500072E27 /* CTEViewDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 68E4E3C4182C870100F7D239 /* CTEViewDelegate.h */; };
 		688D1BF61894DD4A00C94780 /* FormatSelectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */; };
 		688D1BF71894DD4A00C94780 /* FormatSelectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 688D1BF51894DD4A00C94780 /* FormatSelectionInfo.m */; };
+		6892AF5E18B05C4000AACE6F /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 689390E518A86648005B7AE2 /* UIImage+Color.m */; };
 		689390E618A86648005B7AE2 /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 689390E518A86648005B7AE2 /* UIImage+Color.m */; };
 		6895EF9F181DCE62009B8527 /* CTEContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8C181DCE62009B8527 /* CTEContentViewController.m */; };
 		6895EFA0181DCE62009B8527 /* CTEColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6895EF8E181DCE62009B8527 /* CTEColumnView.m */; };
@@ -672,6 +673,7 @@
 				688D1BF71894DD4A00C94780 /* FormatSelectionInfo.m in Sources */,
 				68AF284B18257DC700EA632B /* CTEUtils.m in Sources */,
 				680B8148184308BD0027E963 /* UIViewController+KNSemiModal.m in Sources */,
+				6892AF5E18B05C4000AACE6F /* UIImage+Color.m in Sources */,
 				6895EFC2181DF20D009B8527 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
