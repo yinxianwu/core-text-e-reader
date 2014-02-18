@@ -58,26 +58,26 @@
     NSLog(@"CTView: START buildFrames");
     
     //determine device type and size of text frame
-    float columnWidthRightMargin;
-    float columnWidthLeftMargin;
+    float columnRightMargin;
+    float columnInset;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         frameYOffset = 20.0f;
         if(self.currentColumnCount == 2) {
             frameXOffset = 20.0f;
-            columnWidthLeftMargin = 10.0f;
-            columnWidthRightMargin = 10.0f;
+            columnInset = 10.0f;
+            columnRightMargin = 10.0f;
         }
         else {
             frameXOffset = 0.0f;
-            columnWidthLeftMargin = 0.0f;
-            columnWidthRightMargin = 0.0f;
+            columnInset = 0.0f;
+            columnRightMargin = 0.0f;
         }
     }
     else {
         frameXOffset = 0.0f;
         frameYOffset = 0.0f;
-        columnWidthLeftMargin = 0.0f;
-        columnWidthRightMargin = 20.0f;
+        columnInset = 0.0f;
+        columnRightMargin = 20.0f;
     }
     
     [self setContentOffset:CGPointZero animated:NO]; //reset view to top
@@ -90,9 +90,9 @@
     CGPathAddRect(path, NULL, textFrame);
     
     //column sizing is standard across all columns
-    CGFloat colRectWidth = [self columnWidthWithInset:columnWidthLeftMargin
-                                               rightMargin:columnWidthRightMargin
-                                                frameWidth:textFrame.size.width];
+    CGFloat colRectWidth = [self columnWidthWithInset:columnInset
+                                          rightMargin:columnRightMargin
+                                           frameWidth:textFrame.size.width];
     CGFloat colRectHeight = textFrame.size.height - 40;
     [CTEMarkupParser setTextContainerWidth:colRectWidth];
     FormatSelectionInfo *info = [FormatSelectionInfo sharedInstance];
