@@ -246,6 +246,8 @@
                 }
             }
         }
+    
+        CFRelease(framesetter);
     }
     
     //set the total width of the scroll view
