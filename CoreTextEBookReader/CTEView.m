@@ -90,11 +90,11 @@
     CGPathAddRect(path, NULL, textFrame);
     
     //column sizing is standard across all columns
-    CGFloat colRectWidth = [self columnWidthWithInset:columnInset
+    CGFloat columnWidth = [self columnWidthWithInset:columnInset
                                           rightMargin:columnRightMargin
                                            frameWidth:textFrame.size.width];
-    CGFloat colRectHeight = textFrame.size.height - 40;
-    [CTEMarkupParser setTextContainerWidth:colRectWidth];
+    CGFloat columnHeight = textFrame.size.height - 40.0f;
+    [CTEMarkupParser setTextContainerWidth:columnWidth];
     FormatSelectionInfo *info = [FormatSelectionInfo sharedInstance];
     BOOL shouldCachePageInfo = ![info hasPageInfoForFont:self.currentFont
                                                     size:self.currentFontSize
@@ -120,12 +120,12 @@
         //this ensure chapters always begin on a new page
         if(pageCount != floorPageCount) {
             CGPoint colOffset = CGPointMake([self offsetXForColumn:columnIndex frameWidth:textFrame.size.width], 20);
-            CGRect colRect = CGRectMake(0, 0, colRectWidth, colRectHeight);
+            CGRect colRect = CGRectMake(0, 0, columnWidth, columnHeight);
             CGMutablePathRef path = CGPathCreateMutable();
             CGPathAddRect(path, NULL, colRect);
             CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
             content.backgroundColor = [UIColor clearColor];
-            content.frame = CGRectMake(colOffset.x, colOffset.y, colRectWidth, colRectHeight);
+            content.frame = CGRectMake(colOffset.x, colOffset.y, columnWidth, columnHeight);
             [self.columns addObject:content];
             [self addSubview: content];
             columnIndex++;
@@ -156,7 +156,7 @@
             }
             NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
             CGPoint colOffset = CGPointMake([self offsetXForColumn:columnIndex frameWidth:textFrame.size.width], 20);
-            CGRect colRect = CGRectMake(0, 0, colRectWidth, colRectHeight);
+            CGRect colRect = CGRectMake(0, 0, columnWidth, columnHeight);
             
             CGMutablePathRef path = CGPathCreateMutable();
             CGPathAddRect(path, NULL, colRect);
@@ -168,7 +168,7 @@
             //create an empty column view
             CTEColumnView *columnView = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
             columnView.backgroundColor = [UIColor clearColor];
-            columnView.frame = CGRectMake(colOffset.x, colOffset.y, colRectWidth, colRectHeight);
+            columnView.frame = CGRectMake(colOffset.x, colOffset.y, columnWidth, columnHeight);
             columnView.attString = attString; //for link and image touches
             columnView.links = chapLinks;
             columnView.viewDelegate = self.viewDelegate;
