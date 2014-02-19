@@ -11,6 +11,7 @@
 #import "CTEView.h"
 #import "CTEConstants.h"
 #import "CTEMarkupParser.h"
+#import "UIImage+Color.h"
 
 @implementation CTEColumnView
 
@@ -21,6 +22,88 @@
 @synthesize links;
 @synthesize attString;
 @synthesize shouldDrawRect;
+
++(CTEColumnView *)columnWithDelegate:(id<CTEViewDelegate>)viewDelegate
+                           attString:(NSAttributedString *)attString
+                              images:(NSArray *)chapImages
+                               links:(NSArray *)chapLinks
+                                size:(CGSize)contentSize
+                               frame:(CGRect)columnViewFrame
+                         framesetter:(CTFramesetterRef)framesetter
+                              insetX:(float)frameXInset
+                              insetY:(float)frameYInset
+                           colOffset:(CGPoint)colOffset
+                         columnWidth:(CGFloat)columnWidth
+                        columnHeight:(CGFloat)columnHeight
+                        textPosition:(int)textPos
+                absoluteTextPosition:(int)allChapsTextPos {
+    CGRect colRect = CGRectMake(0, 0, columnViewFrame.size.width, columnViewFrame.size.height);
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, NULL, colRect);
+    
+    //use the column path
+    CTFrameRef frameRef = CTFramesetterCreateFrame(framesetter, CFRangeMake(textPos, 0), path, NULL);
+    CFRange frameRange = CTFrameGetVisibleStringRange(frameRef);
+    
+    //create an empty column view
+    CTEColumnView *columnView = [[CTEColumnView alloc] initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
+    columnView.backgroundColor = [UIColor clearColor];
+    columnView.frame = CGRectMake(colOffset.x, colOffset.y, columnWidth, columnHeight);
+    columnView.attString = attString; //for link and image touches
+    columnView.links = chapLinks;
+    columnView.viewDelegate = viewDelegate;
+    
+    //set the column view contents and add it as subview
+    [columnView setCTFrame:(__bridge id)frameRef];
+    
+    //see if any images exist in the column and load them in as well
+    for(int imgIndex = 0; imgIndex < [chapImages count]; imgIndex++) {
+        NSDictionary *imageInfo = [chapImages objectAtIndex:imgIndex];
+        int imgLocation = [[imageInfo objectForKey:@"location"] intValue];
+        
+        //local versus online images
+        NSString *imgFileName = [imageInfo objectForKey:@"fileName"];
+        NSString *fileNamePrefix = [imgFileName substringToIndex:[HttpPrefix length]];
+        
+        if(imgLocation >= textPos && imgLocation < textPos + frameRange.length) {
+            NSLog(@"imgFileName %@ exists in column between text post %d and %ld", imgFileName, textPos, (textPos + frameRange.length));
+            UIImage *img = nil;
+            
+            //remote image; load in async
+            if([fileNamePrefix isEqualToString:HttpPrefix]) {
+                //placeholder image -- fill with color
+                UIColor *color = [UIColor lightGrayColor];
+                img = [UIImage imageWithColor:color];
+                [columnView addImage:img imageInfo:imageInfo frameXOffset:frameXInset frameYOffset:frameYInset];
+                
+                //download the image asynchronously
+                SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                [manager downloadWithURL:[NSURL URLWithString:imgFileName]
+                                 options:0
+                                progress:^(NSUInteger receivedSize, long long expectedSize) { }
+                               completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                                   if (image) {
+                                       [columnView replaceImage:image imageInfo:imageInfo];
+                                   }
+                               }];
+            }
+            else {
+                img = [UIImage imageNamed:imgFileName];
+                NSLog(@"LOCAL image %@ loaded in; updating column", imgFileName);
+                [columnView addImage:img imageInfo:imageInfo frameXOffset:frameXInset frameYOffset:frameYInset];
+            }
+        }
+    }
+    
+    //prepare for next frame
+    columnView.textStart = allChapsTextPos;
+    columnView.textEnd = allChapsTextPos + frameRange.length;
+    
+    CFRelease(frameRef);
+    CFRelease(path);
+    
+    return columnView;
+}
 
 //inits image array
 -(id)initWithFrame:(CGRect)frame {

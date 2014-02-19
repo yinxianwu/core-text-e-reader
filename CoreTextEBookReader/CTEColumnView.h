@@ -9,6 +9,7 @@
 #import "CTEViewDelegate.h"
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
+#import <SDWebImage/SDWebImageManager.h>
 
 @class CTEView;
 
@@ -24,6 +25,20 @@
 @property (strong, nonatomic) NSAttributedString *attString;
 @property (nonatomic) BOOL shouldDrawRect;
 
++(CTEColumnView *)columnWithDelegate:(id<CTEViewDelegate>)viewDelegate
+                           attString:(NSAttributedString *)attString
+                              images:(NSArray *)chapImages
+                               links:(NSArray *)chapLinks
+                                size:(CGSize)contentSize
+                               frame:(CGRect)frame
+                         framesetter:(CTFramesetterRef)framesetter
+                             insetX:(float)frameXInset
+                             insetY:(float)frameYInset
+                           colOffset:(CGPoint)colOffset
+                         columnWidth:(CGFloat)columnWidth
+                        columnHeight:(CGFloat)columnHeight
+                        textPosition:(int)textPos
+                absoluteTextPosition:(int)allChapsTextPos;
 - (void)setCTFrame:(id)f;
 - (void)addImage:(UIImage *)img
        imageInfo:(NSDictionary *)imageInfo

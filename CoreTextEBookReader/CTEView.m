@@ -61,21 +61,21 @@
     float columnRightMargin;
     float columnInset;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        frameYOffset = 20.0f;
+        frameYInset = 20.0f;
         if(self.currentColumnCount == 2) {
-            frameXOffset = 20.0f;
+            frameXInset = 20.0f;
             columnInset = 10.0f;
             columnRightMargin = 10.0f;
         }
         else {
-            frameXOffset = 0.0f;
+            frameXInset = 0.0f;
             columnInset = 0.0f;
             columnRightMargin = 0.0f;
         }
     }
     else {
-        frameXOffset = 0.0f;
-        frameYOffset = 0.0f;
+        frameXInset = 0.0f;
+        frameYInset = 0.0f;
         columnInset = 0.0f;
         columnRightMargin = 20.0f;
     }
@@ -86,7 +86,7 @@
     
     CGMutablePathRef path = CGPathCreateMutable();
     CGRect scrollBounds = self.bounds;
-    CGRect textFrame = CGRectInset(scrollBounds, frameXOffset, frameYOffset);
+    CGRect textFrame = CGRectInset(scrollBounds, frameXInset, frameYInset);
     CGPathAddRect(path, NULL, textFrame);
     
     //column sizing is standard across all columns
@@ -123,11 +123,11 @@
             CGRect colRect = CGRectMake(0, 0, columnWidth, columnHeight);
             CGMutablePathRef path = CGPathCreateMutable();
             CGPathAddRect(path, NULL, colRect);
-            CTEColumnView *content = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
-            content.backgroundColor = [UIColor clearColor];
-            content.frame = CGRectMake(colOffset.x, colOffset.y, columnWidth, columnHeight);
-            [self.columns addObject:content];
-            [self addSubview: content];
+            CTEColumnView *emptyColumnView = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
+            emptyColumnView.backgroundColor = [UIColor clearColor];
+            emptyColumnView.frame = CGRectMake(colOffset.x, colOffset.y, columnWidth, columnHeight);
+            [self.columns addObject:emptyColumnView];
+            [self addSubview: emptyColumnView];
             columnIndex++;
             
             float prevPage = floorPageCount;
@@ -156,75 +156,27 @@
             }
             NSLog(@"CTView: build CTColumnView %d at textPos %d", columnIndex, textPos);
             CGPoint colOffset = CGPointMake([self offsetXForColumn:columnIndex frameWidth:textFrame.size.width], 20);
-            CGRect colRect = CGRectMake(0, 0, columnWidth, columnHeight);
+            CGRect columnViewFrame = CGRectMake(colOffset.x, colOffset.y, columnWidth, columnHeight);
             
-            CGMutablePathRef path = CGPathCreateMutable();
-            CGPathAddRect(path, NULL, colRect);
-            
-            //use the column path
-            CTFrameRef frameRef = CTFramesetterCreateFrame(framesetter, CFRangeMake(textPos, 0), path, NULL);
-            CFRange frameRange = CTFrameGetVisibleStringRange(frameRef);
-            
-            //create an empty column view
-            CTEColumnView *columnView = [[CTEColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
-            columnView.backgroundColor = [UIColor clearColor];
-            columnView.frame = CGRectMake(colOffset.x, colOffset.y, columnWidth, columnHeight);
-            columnView.attString = attString; //for link and image touches
-            columnView.links = chapLinks;
-            columnView.viewDelegate = self.viewDelegate;
-            [self.columns addObject:columnView];
-            
-            //set the column view contents and add it as subview
-            [columnView setCTFrame:(__bridge id)frameRef];
+            CTEColumnView *columnView = [CTEColumnView columnWithDelegate:viewDelegate
+                                                                attString:attString
+                                                                   images:chapImages
+                                                                    links:chapLinks
+                                                                     size:self.contentSize
+                                                                    frame:columnViewFrame
+                                                              framesetter:framesetter
+                                                                  insetX:frameXInset
+                                                                  insetY:frameXInset
+                                                                colOffset:colOffset
+                                                              columnWidth:columnWidth
+                                                             columnHeight:columnHeight
+                                                             textPosition:textPos
+                                                     absoluteTextPosition:allChapsTextPos];
             [self addSubview: columnView];
-                
-            //see if any images exist in the column and load them in as well
-            for(int imgIndex = 0; imgIndex < [chapImages count]; imgIndex++) {
-                NSDictionary *imageInfo = [chapImages objectAtIndex:imgIndex];
-                int imgLocation = [[imageInfo objectForKey:@"location"] intValue];
-                
-                //local versus online images
-                NSString *imgFileName = [imageInfo objectForKey:@"fileName"];
-                NSString *fileNamePrefix = [imgFileName substringToIndex:[HttpPrefix length]];
-
-                if(imgLocation >= textPos && imgLocation < textPos + frameRange.length) {
-                    NSLog(@"imgFileName %@ exists in column between text post %d and %ld", imgFileName, textPos, (textPos + frameRange.length));
-                    UIImage *img = nil;
-                    
-                    //remote image; load in async
-                    if([fileNamePrefix isEqualToString:HttpPrefix]) {
-                        //placeholder image -- fill with color
-                        UIColor *color = [UIColor lightGrayColor];
-                        img = [UIImage imageWithColor:color];
-                        [columnView addImage:img imageInfo:imageInfo frameXOffset:frameXOffset frameYOffset:frameYOffset];
-                        
-                        //download the image asynchronously
-                        SDWebImageManager *manager = [SDWebImageManager sharedManager];
-                        [manager downloadWithURL:[NSURL URLWithString:imgFileName]
-                                         options:0
-                                        progress:^(NSUInteger receivedSize, long long expectedSize) { }
-                                       completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                                           if (image) {
-                                               [columnView replaceImage:image imageInfo:imageInfo];
-                                           }
-                                       }];
-                    }
-                    else {
-                        img = [UIImage imageNamed:imgFileName];
-                        NSLog(@"LOCAL image %@ loaded in; updating column", imgFileName);
-                        [columnView addImage:img imageInfo:imageInfo frameXOffset:frameXOffset frameYOffset:frameYOffset];
-                    }
-                }
-            }
-            
-            //prepare for next frame
-            columnView.textStart = allChapsTextPos;
-            columnView.textEnd = allChapsTextPos + frameRange.length;
-            textPos+= frameRange.length;
-            allChapsTextPos+= frameRange.length;
-            
-            CFRelease(frameRef);
-            CFRelease(path);
+            [self.columns addObject:columnView];
+            int columnTextSize = columnView.textEnd - columnView.textStart;
+            textPos+= columnTextSize;
+            allChapsTextPos+= columnTextSize;
             
             columnIndex++;
             float prevPage = floorPageCount;
@@ -272,7 +224,7 @@
 
 //Returns offset for specified frame column
 - (CGFloat)offsetXForColumn:(int)columnIndex frameWidth:(CGFloat)frameWidth {
-    CGFloat offsetX = (columnIndex + 1) * frameXOffset + columnIndex * (frameWidth / self.currentColumnCount);
+    CGFloat offsetX = (columnIndex + 1) * frameXInset + columnIndex * (frameWidth / self.currentColumnCount);
     //iPad adjustments
     if(self.currentColumnCount == 1 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         offsetX += 20.0f;

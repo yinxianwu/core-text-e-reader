@@ -14,8 +14,8 @@
 @class CTEColumnView;
 
 @interface CTEView : UIScrollView {
-    float frameXOffset;
-    float frameYOffset;
+    float frameXInset;
+    float frameYInset;
 }
 
 @property (weak, nonatomic) id<CTEViewDelegate> viewDelegate;
