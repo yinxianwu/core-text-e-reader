@@ -13,9 +13,9 @@
 
 @class CTEView;
 
-@interface CTEColumnView : UIView {
-    id ctFrame;
-}
+@interface CTEColumnView : UIView// {
+//    id ctFrame;
+//}
 
 @property (weak, nonatomic) id<CTEViewDelegate> viewDelegate;
 @property (nonatomic) int textStart;
@@ -39,7 +39,7 @@
                         columnHeight:(CGFloat)columnHeight
                         textPosition:(int)textPos
                 absoluteTextPosition:(int)allChapsTextPos;
-- (void)setCTFrame:(id)f;
+//- (void)setCTFrame:(id)f;
 - (void)addImage:(UIImage *)img
        imageInfo:(NSDictionary *)imageInfo
     frameXOffset:(float)frameXOffset

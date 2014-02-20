@@ -13,6 +13,10 @@
 #import "CTEMarkupParser.h"
 #import "UIImage+Color.h"
 
+@interface CTEColumnView() {
+    CTFrameRef frameRef;
+}
+@end
 @implementation CTEColumnView
 
 @synthesize viewDelegate;
@@ -22,6 +26,86 @@
 @synthesize links;
 @synthesize attString;
 @synthesize shouldDrawRect;
+
+-(id)initWithDelegate:(id<CTEViewDelegate>)viewDeleg
+            attString:(NSAttributedString *)attStr
+               images:(NSArray *)chapImages
+                links:(NSArray *)chapLinks
+                 size:(CGSize)contentSize
+                frame:(CGRect)columnViewFrame
+          framesetter:(CTFramesetterRef)framesetter
+               insetX:(float)frameXInset
+               insetY:(float)frameYInset
+            colOffset:(CGPoint)colOffset
+          columnWidth:(CGFloat)columnWidth
+         columnHeight:(CGFloat)columnHeight
+         textPosition:(int)textPos
+ absoluteTextPosition:(int)allChapsTextPos {
+    //init with frame then do this init
+    self = [super initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
+    if (self) {
+        self.imagesWithMetadata = [NSMutableArray array];
+        self.shouldDrawRect = NO; //defaults to "don't draw" until otherwise instructed
+        self.backgroundColor = [UIColor clearColor];
+        self.frame = CGRectMake(colOffset.x, colOffset.y, columnWidth, columnHeight);
+        self.attString = attStr; //for link and image touches
+        self.links = chapLinks;
+        self.viewDelegate = viewDeleg;
+
+        CGRect colRect = CGRectMake(0, 0, columnViewFrame.size.width, columnViewFrame.size.height);
+        CGMutablePathRef path = CGPathCreateMutable();
+        CGPathAddRect(path, NULL, colRect);
+        frameRef = CTFramesetterCreateFrame(framesetter, CFRangeMake(textPos, 0), path, NULL);
+        CFRange frameRange = CTFrameGetVisibleStringRange(frameRef);
+
+        //see if any images exist in the column and load them in as well
+        for(int imgIndex = 0; imgIndex < [chapImages count]; imgIndex++) {
+            NSDictionary *imageInfo = [chapImages objectAtIndex:imgIndex];
+            int imgLocation = [[imageInfo objectForKey:@"location"] intValue];
+            
+            //local versus online images
+            NSString *imgFileName = [imageInfo objectForKey:@"fileName"];
+            NSString *fileNamePrefix = [imgFileName substringToIndex:[HttpPrefix length]];
+            
+            if(imgLocation >= textPos && imgLocation < textPos + frameRange.length) {
+                NSLog(@"imgFileName %@ exists in column between text post %d and %ld", imgFileName, textPos, (textPos + frameRange.length));
+                UIImage *img = nil;
+                
+                //remote image; load in async
+                if([fileNamePrefix isEqualToString:HttpPrefix]) {
+                    //placeholder image -- fill with color
+                    UIColor *color = [UIColor lightGrayColor];
+                    img = [UIImage imageWithColor:color];
+                    [self addImage:img imageInfo:imageInfo frameXOffset:frameXInset frameYOffset:frameYInset];
+                    
+                    //download the image asynchronously
+                    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                    [manager downloadWithURL:[NSURL URLWithString:imgFileName]
+                                     options:0
+                                    progress:^(NSUInteger receivedSize, long long expectedSize) { }
+                                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                                       if (image) {
+                                           [self replaceImage:image imageInfo:imageInfo];
+                                       }
+                                   }];
+                }
+                else {
+                    img = [UIImage imageNamed:imgFileName];
+                    NSLog(@"LOCAL image %@ loaded in; updating column", imgFileName);
+                    [self addImage:img imageInfo:imageInfo frameXOffset:frameXInset frameYOffset:frameYInset];
+                }
+            }
+        }
+        
+        self.textStart = allChapsTextPos;
+        self.textEnd = allChapsTextPos + frameRange.length;
+        
+        CFRelease(path);
+    }
+    
+    return self;
+}
+
 
 +(CTEColumnView *)columnWithDelegate:(id<CTEViewDelegate>)viewDelegate
                            attString:(NSAttributedString *)attString
@@ -37,87 +121,21 @@
                         columnHeight:(CGFloat)columnHeight
                         textPosition:(int)textPos
                 absoluteTextPosition:(int)allChapsTextPos {
-    CGRect colRect = CGRectMake(0, 0, columnViewFrame.size.width, columnViewFrame.size.height);
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, NULL, colRect);
-    
-    //use the column path
-    CTFrameRef frameRef = CTFramesetterCreateFrame(framesetter, CFRangeMake(textPos, 0), path, NULL);
-    CFRange frameRange = CTFrameGetVisibleStringRange(frameRef);
-    
-    //create an empty column view
-    CTEColumnView *columnView = [[CTEColumnView alloc] initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
-    columnView.backgroundColor = [UIColor clearColor];
-    columnView.frame = CGRectMake(colOffset.x, colOffset.y, columnWidth, columnHeight);
-    columnView.attString = attString; //for link and image touches
-    columnView.links = chapLinks;
-    columnView.viewDelegate = viewDelegate;
-    
-    //set the column view contents and add it as subview
-    [columnView setCTFrame:(__bridge id)frameRef];
-    
-    //see if any images exist in the column and load them in as well
-    for(int imgIndex = 0; imgIndex < [chapImages count]; imgIndex++) {
-        NSDictionary *imageInfo = [chapImages objectAtIndex:imgIndex];
-        int imgLocation = [[imageInfo objectForKey:@"location"] intValue];
-        
-        //local versus online images
-        NSString *imgFileName = [imageInfo objectForKey:@"fileName"];
-        NSString *fileNamePrefix = [imgFileName substringToIndex:[HttpPrefix length]];
-        
-        if(imgLocation >= textPos && imgLocation < textPos + frameRange.length) {
-            NSLog(@"imgFileName %@ exists in column between text post %d and %ld", imgFileName, textPos, (textPos + frameRange.length));
-            UIImage *img = nil;
-            
-            //remote image; load in async
-            if([fileNamePrefix isEqualToString:HttpPrefix]) {
-                //placeholder image -- fill with color
-                UIColor *color = [UIColor lightGrayColor];
-                img = [UIImage imageWithColor:color];
-                [columnView addImage:img imageInfo:imageInfo frameXOffset:frameXInset frameYOffset:frameYInset];
-                
-                //download the image asynchronously
-                SDWebImageManager *manager = [SDWebImageManager sharedManager];
-                [manager downloadWithURL:[NSURL URLWithString:imgFileName]
-                                 options:0
-                                progress:^(NSUInteger receivedSize, long long expectedSize) { }
-                               completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                                   if (image) {
-                                       [columnView replaceImage:image imageInfo:imageInfo];
-                                   }
-                               }];
-            }
-            else {
-                img = [UIImage imageNamed:imgFileName];
-                NSLog(@"LOCAL image %@ loaded in; updating column", imgFileName);
-                [columnView addImage:img imageInfo:imageInfo frameXOffset:frameXInset frameYOffset:frameYInset];
-            }
-        }
-    }
-    
-    //prepare for next frame
-    columnView.textStart = allChapsTextPos;
-    columnView.textEnd = allChapsTextPos + frameRange.length;
-    
-    CFRelease(frameRef);
-    CFRelease(path);
-    
+    CTEColumnView *columnView = [[CTEColumnView alloc] initWithDelegate:viewDelegate
+                                                              attString:attString
+                                                                 images:chapImages
+                                                                  links:chapLinks
+                                                                   size:contentSize
+                                                                  frame:columnViewFrame
+                                                            framesetter:framesetter
+                                                                 insetX:frameXInset
+                                                                 insetY:frameYInset
+                                                              colOffset:colOffset
+                                                            columnWidth:columnWidth
+                                                           columnHeight:columnHeight
+                                                           textPosition:textPos
+                                                   absoluteTextPosition:allChapsTextPos];
     return columnView;
-}
-
-//inits image array
--(id)initWithFrame:(CGRect)frame {
-    if ([super initWithFrame:frame]!=nil) {
-        self.imagesWithMetadata = [NSMutableArray array];
-        self.links = [NSMutableArray array];
-        self.shouldDrawRect = NO; //defaults to "don't draw" until otherwise instructed
-    }
-    return self;
-}
-
-//frame that column view will be drawn in
--(void)setCTFrame:(id)f {
-    ctFrame = f;
 }
 
 //inserts image and associated info
@@ -125,7 +143,6 @@
        imageInfo:(NSDictionary *)imageInfo
     frameXOffset:(float)frameXOffset
     frameYOffset:(float)frameYOffset {
-    CTFrameRef frameRef = (__bridge CTFrameRef)ctFrame;
     NSArray *lines = (__bridge NSArray *)CTFrameGetLines(frameRef);
     CGPoint origins[[lines count]];
     CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), origins);
@@ -197,21 +214,21 @@
 //End touch; determine location and if it's a link or image or other event
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     //kick out if ctFrame is null -- means it's an empty column
-    if(!ctFrame) {
+    if(!frameRef) {
         return;
     }
     
 	UITouch *touch = [touches anyObject];
 	CGPoint touchPoint = [touch locationInView:self];
 	touchPoint.y += (18.0 / 1.3); //TODO font size now is set in parser
-	CFArrayRef lines = CTFrameGetLines((__bridge CTFrameRef)(ctFrame));
+	CFArrayRef lines = CTFrameGetLines(frameRef);
 	CGPoint origins[CFArrayGetCount(lines)];
-	CTFrameGetLineOrigins((__bridge CTFrameRef)(ctFrame), CFRangeMake(0, 0), origins);
+	CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), origins);
 	CTLineRef line = NULL;
 	CGPoint lineOrigin = CGPointZero;
 	for (int i= 0; i < CFArrayGetCount(lines); i++) {
 		CGPoint origin = origins[i];
-		CGPathRef path = CTFrameGetPath((__bridge CTFrameRef)(ctFrame));
+		CGPathRef path = CTFrameGetPath(frameRef);
 		CGRect rect = CGPathGetBoundingBox(path);
 		CGFloat y = rect.origin.y + rect.size.height - origin.y;
         
@@ -348,7 +365,7 @@
     CGContextScaleCTM(context, 1.0, -1.0);
     
     //draw text
-    CTFrameDraw((__bridge CTFrameRef)ctFrame, context);
+    CTFrameDraw(frameRef, context);
     
     //draw images using size created in markup parser
     int imageIndex = 0;

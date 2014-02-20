@@ -165,8 +165,8 @@
                                                                      size:self.contentSize
                                                                     frame:columnViewFrame
                                                               framesetter:framesetter
-                                                                  insetX:frameXInset
-                                                                  insetY:frameXInset
+                                                                   insetX:frameXInset
+                                                                   insetY:frameXInset
                                                                 colOffset:colOffset
                                                               columnWidth:columnWidth
                                                              columnHeight:columnHeight

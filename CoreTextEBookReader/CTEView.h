@@ -44,6 +44,5 @@
 - (NSNumber *)pageNumberForChapterID:(NSNumber *)chapterID;
 - (int)indexOfColumn:(id)column;
 - (void)currentChapterNeedsUpdate;
-//- (void)addImage:(UIImage *)img forColumn:(CTEColumnView *)col frameRef:(CTFrameRef)frameRef imageInfo:(NSDictionary *)imageInfo;
-//- (void)replaceImage:(UIImage *)img forColumn:(CTEColumnView *)col imageInfo:(NSDictionary *)imageInfo;
+
 @end
