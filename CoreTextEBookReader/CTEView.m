@@ -213,8 +213,10 @@
 }
 
 //Returns column width with specified laft & right margins
-- (CGFloat)columnWidthWithInset:(float)leftMargin rightMargin:(float)rightMargin frameWidth:(CGFloat)frameWidth {
-    CGFloat colWidth = (frameWidth / self.currentColumnCount) - leftMargin - rightMargin;
+- (CGFloat)columnWidthWithInset:(float)inset
+                    rightMargin:(float)rightMargin
+                     frameWidth:(CGFloat)frameWidth {
+    CGFloat colWidth = (frameWidth / self.currentColumnCount) - inset - rightMargin;
     //iPad adjustments
     if(self.currentColumnCount == 1 && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         colWidth -= 50.0f;

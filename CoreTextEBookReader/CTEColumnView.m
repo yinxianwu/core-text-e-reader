@@ -15,6 +15,7 @@
 
 @interface CTEColumnView() {
     CTFrameRef frameRef;
+//    NSMutableArray *imagesToReplace;
 }
 @end
 @implementation CTEColumnView
@@ -51,6 +52,7 @@
         self.attString = attStr; //for link and image touches
         self.links = chapLinks;
         self.viewDelegate = viewDeleg;
+//        imagesToReplace = [NSMutableArray array];
 
         CGRect colRect = CGRectMake(0, 0, columnViewFrame.size.width, columnViewFrame.size.height);
         CGMutablePathRef path = CGPathCreateMutable();
@@ -77,6 +79,7 @@
                     UIColor *color = [UIColor lightGrayColor];
                     img = [UIImage imageWithColor:color];
                     [self addImage:img imageInfo:imageInfo frameXOffset:frameXInset frameYOffset:frameYInset];
+//                    [imagesToReplace addObject:imageInfo];
                     
                     //download the image asynchronously
                     SDWebImageManager *manager = [SDWebImageManager sharedManager];
@@ -207,6 +210,7 @@
     
     if(matchData) {
         [matchData replaceObjectAtIndex:0 withObject:img];
+//        [imagesToReplace removeObject:imageInfo];
         [self setNeedsDisplay];
     }
 }
@@ -406,6 +410,12 @@
              
         imageIndex++;
     }
+    
+    //verify if any images remain to be replaced -- if none, null out and deref the frameRef
+//    if([imagesToReplace count] == 0 && frameRef) {
+//        CFRelease(frameRef);
+//        frameRef = nil;
+//    }
 
     //add to the delegate's count of columns rendered
     [viewDelegate.columnsRendered addObject:self];
